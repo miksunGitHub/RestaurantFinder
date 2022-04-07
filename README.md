@@ -1,2 +1,2 @@
 # RestaurantFinder
-Restaurant application. A group project in Mobile Application Development-course in Metropolia University of Applied Sciences  
+Restaurant application. A group project done in Mobile Application Development-course at Metropolia University of Applied Sciences  
