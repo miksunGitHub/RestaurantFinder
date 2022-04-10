@@ -11,7 +11,9 @@ import SwiftUI
 struct RestaurantFinderApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                TabBarView()
+            }
         }
     }
 }
