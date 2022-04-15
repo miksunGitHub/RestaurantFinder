@@ -13,7 +13,15 @@ struct ListElementView: View {
     var body: some View {
         VStack{
             Spacer()
-            AsyncImage(url: URL(string: restaurant.imageURL))
+            AsyncImage(url: URL(string: restaurant.imageURL),
+                       content: {
+                            image in image.resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(maxWidth: 400, maxHeight: 200)
+                                       },
+                                       placeholder: {
+                                           ProgressView()
+                                   })
             Spacer()
             Text(restaurant.name)
             HStack{
