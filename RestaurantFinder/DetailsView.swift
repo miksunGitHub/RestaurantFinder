@@ -26,7 +26,8 @@ struct DetailsView: View {
                            placeholder: {
                     ProgressView()
                 })
-                Text(restaurant.name).padding()
+                Button("Click", action: {getFonts()})
+                Text(restaurant.name).font(.custom(FontsName.EBGara.rawValue, size: 30))
                 HStack{
                     Text("Rating: ")
                     ForEach(0..<restaurant.rating){ i in
@@ -37,6 +38,14 @@ struct DetailsView: View {
                 Text("Description:").padding()
                 Text(restaurant.description).padding()
                 Text("Address:\(restaurant.address)")
+            }
+        })
+    }
+    // Printing fonts 
+    func getFonts(){
+        UIFont.familyNames.forEach({ name in
+            for font_name in UIFont.fontNames(forFamilyName: name){
+                print("\n\(font_name)")
             }
         })
     }
