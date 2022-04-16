@@ -8,7 +8,6 @@
 import Foundation
 
 enum FontsName: String{
-    case EBGara = "EBGaramondRoman-SemiBold"
-    case EbGaraItalic = "EBGaramond-Italic"
-    case BeauRegular = "BeauRivage-Regular"
+    case EBGaraRomanSemiBold = "EBGaramondRoman-SemiBold"
+    case EBGaraRomanMedium = "EBGaramondRoman-Medium"
 }
