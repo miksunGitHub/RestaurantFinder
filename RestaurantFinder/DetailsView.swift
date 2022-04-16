@@ -27,18 +27,18 @@ struct DetailsView: View {
                     ProgressView()
                 })
                 // Button("Click", action: {getFonts()})
-                Text(restaurant.name).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 30))
+                Text(restaurant.name).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 30)).foregroundColor(.colorBrown)
                 VStack(alignment: .leading){
                     HStack{
-                        Text("Rating: ").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20))
+                        Text("Rating: ").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).foregroundColor(.colorDarkPurple)
                         ForEach(0..<restaurant.rating){ i in
                             Image(systemName: "star.fill").resizable().frame(width: 10, height: 10)
                         }
                     }
                     Link("Website", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20))
-                    Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1)
-                    Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5)
-                    Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top)
+                    Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
+                    Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
+                    Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
                 }
             }
         })
