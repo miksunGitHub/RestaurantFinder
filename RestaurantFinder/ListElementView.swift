@@ -9,24 +9,24 @@ import SwiftUI
 
 struct ListElementView: View {
     let restaurant: Restaurant
-
+    
     var body: some View {
         VStack{
             Spacer()
             AsyncImage(url: URL(string: restaurant.imageURL),
                        content: {
-                            image in image.resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(maxWidth: 400, maxHeight: 200)
-                                       },
-                                       placeholder: {
-                                           ProgressView()
-                                   })
+                image in image.resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 400, maxHeight: 200)
+            },
+                       placeholder: {
+                ProgressView()
+            })
             Spacer()
             Text(restaurant.name)
             HStack{
                 ForEach(0..<restaurant.rating){ i in
-                        Image(systemName: "star.fill").resizable().frame(width: 10, height: 10)
+                    Image(systemName: "star.fill").resizable().frame(width: 10, height: 10)
                 }
             }
             Spacer()
