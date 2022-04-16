@@ -19,9 +19,9 @@ struct DetailsView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxWidth: 270, maxHeight: 180)
                         .cornerRadius(10)
-                                .overlay(RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.orange, lineWidth: 2))
-                                .shadow(radius: 10)
+                        .overlay(RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.orange, lineWidth: 2))
+                        .shadow(radius: 10)
                 },
                            placeholder: {
                     ProgressView()
@@ -34,8 +34,9 @@ struct DetailsView: View {
                     }
                 }
                 Link("Website", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!)
-                Spacer()
-                
+                Text("Description:").padding()
+                Text(restaurant.description).padding()
+                Text("Address:\(restaurant.address)")
             }
         })
     }
