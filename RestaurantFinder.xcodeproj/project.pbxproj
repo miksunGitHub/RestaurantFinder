@@ -23,6 +23,7 @@
 		C600B6982803867F00CED028 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600B6972803867F00CED028 /* ProfileView.swift */; };
 		C600B69A2803870600CED028 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600B6992803870600CED028 /* LoginView.swift */; };
 		C600B69C2803873800CED028 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600B69B2803873800CED028 /* SignupView.swift */; };
+		C6D86BB5280BE235003B7BD4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D86BB4280BE235003B7BD4 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		C600B6972803867F00CED028 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C600B6992803870600CED028 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C600B69B2803873800CED028 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		C6D86BB2280BE235003B7BD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C6D86BB4280BE235003B7BD4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6D86BB5280BE235003B7BD4 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +100,7 @@
 				6A7B3D5127FEEBFF0066BE83 /* RestaurantFinderTests */,
 				6A7B3D5B27FEEBFF0066BE83 /* RestaurantFinderUITests */,
 				6A7B3D3F27FEEBFA0066BE83 /* Products */,
+				C6D86BB3280BE235003B7BD4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +117,7 @@
 		6A7B3D4027FEEBFA0066BE83 /* RestaurantFinder */ = {
 			isa = PBXGroup;
 			children = (
+				C6D86BB2280BE235003B7BD4 /* Info.plist */,
 				6A7B3DBD280489050066BE83 /* Models */,
 				6A7B3D4127FEEBFA0066BE83 /* RestaurantFinderApp.swift */,
 				6A7B3D4327FEEBFA0066BE83 /* TabBarView.swift */,
@@ -160,6 +166,14 @@
 				6A7B3DC02805B1620066BE83 /* Restaurant.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		C6D86BB3280BE235003B7BD4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C6D86BB4280BE235003B7BD4 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,6 +480,7 @@
 				DEVELOPMENT_TEAM = VKSCHWV8D3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RestaurantFinder/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -495,6 +510,7 @@
 				DEVELOPMENT_TEAM = VKSCHWV8D3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RestaurantFinder/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

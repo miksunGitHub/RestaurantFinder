@@ -18,41 +18,41 @@ struct RestaurantsView: View {
                 VStack(alignment: .leading){
                     Text("NEAR YOU")
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
-                        ScrollView(.horizontal, content:{
-                                   HStack{
-                                       ForEach(restaurants){ restaurant in
-                                           NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                               ListElementView(restaurant: restaurant)
-                                           }
-                                       }
-                                   }
-                        }
-                        )
-                        Text("TOP RATED")
-                        .font(.system(size: 28.0, weight: .bold, design: .serif))
-                        ScrollView(.horizontal, content:{
-                            HStack{
-                                ForEach(restaurantsByRating){ restaurant in
-                                    NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                        ListElementView(restaurant: restaurant)
-                                    }
+                    ScrollView(.horizontal, content:{
+                        HStack{
+                            ForEach(restaurants){ restaurant in
+                                NavigationLink(destination: DetailsView(restaurant: restaurant)) {
+                                    ListElementView(restaurant: restaurant)
                                 }
                             }
                         }
-                        )
-                        Text("BY PRICE")
-                        .font(.system(size: 28.0, weight: .bold, design: .serif))
-                        ScrollView(.horizontal, content:{
-                            HStack{
-                                ForEach(restaurants){ restaurant in
-                                    NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                        ListElementView(restaurant: restaurant)
-                                    }
-                                }
-                            }
-                        }
-                        )
                     }
+                    )
+                    Text("TOP RATED")
+                        .font(.system(size: 28.0, weight: .bold, design: .serif))
+                    ScrollView(.horizontal, content:{
+                        HStack{
+                            ForEach(restaurantsByRating){ restaurant in
+                                NavigationLink(destination: DetailsView(restaurant: restaurant)) {
+                                    ListElementView(restaurant: restaurant)
+                                }
+                            }
+                        }
+                    }
+                    )
+                    Text("BY PRICE")
+                        .font(.system(size: 28.0, weight: .bold, design: .serif))
+                    ScrollView(.horizontal, content:{
+                        HStack{
+                            ForEach(restaurants){ restaurant in
+                                NavigationLink(destination: DetailsView(restaurant: restaurant)) {
+                                    ListElementView(restaurant: restaurant)
+                                }
+                            }
+                        }
+                    }
+                    )
+                }
             }
             )
         }.navigationBarHidden(true)
