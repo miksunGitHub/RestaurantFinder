@@ -31,9 +31,9 @@ struct ListElementView: View {
             }
             Spacer()
         }
+        .padding(10)
         .frame(width: 150, height: 120)
         .border(Color.gray)
-        .padding(10)
         // .background(Color.cyan)
     }
 }

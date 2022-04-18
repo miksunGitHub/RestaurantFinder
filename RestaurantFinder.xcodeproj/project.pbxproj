@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A5D1FC6280C877D0082A5BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A5D1FC8280C877D0082A5BD /* Localizable.strings */; };
 		6A7B3D4227FEEBFA0066BE83 /* RestaurantFinderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B3D4127FEEBFA0066BE83 /* RestaurantFinderApp.swift */; };
 		6A7B3D4427FEEBFA0066BE83 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B3D4327FEEBFA0066BE83 /* TabBarView.swift */; };
 		6A7B3D4627FEEBFE0066BE83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A7B3D4527FEEBFE0066BE83 /* Assets.xcassets */; };
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A5D1FC7280C877D0082A5BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6A5D1FC9280C87800082A5BD /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A7B3D3E27FEEBFA0066BE83 /* RestaurantFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RestaurantFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7B3D4127FEEBFA0066BE83 /* RestaurantFinderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFinderApp.swift; sourceTree = "<group>"; };
 		6A7B3D4327FEEBFA0066BE83 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
@@ -130,6 +133,7 @@
 				6A7B3D4127FEEBFA0066BE83 /* RestaurantFinderApp.swift */,
 				6A7B3D4327FEEBFA0066BE83 /* TabBarView.swift */,
 				C600B6912803852B00CED028 /* HomeView.swift */,
+				6A5D1FC8280C877D0082A5BD /* Localizable.strings */,
 				C600B693280385F100CED028 /* RestaurantsView.swift */,
 				C600B6952803863000CED028 /* FavoritesView.swift */,
 				C600B6972803867F00CED028 /* ProfileView.swift */,
@@ -297,6 +301,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fi,
 			);
 			mainGroup = 6A7B3D3527FEEBFA0066BE83;
 			productRefGroup = 6A7B3D3F27FEEBFA0066BE83 /* Products */;
@@ -319,6 +324,7 @@
 				A7815D41280AC4480096B664 /* EBGaramond-Italic-VariableFont_wght.ttf in Resources */,
 				6A7B3D4927FEEBFE0066BE83 /* Preview Assets.xcassets in Resources */,
 				6A7B3D4627FEEBFE0066BE83 /* Assets.xcassets in Resources */,
+				6A5D1FC6280C877D0082A5BD /* Localizable.strings in Resources */,
 				A7815D4D280AC4480096B664 /* EBGaramond-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +397,18 @@
 			targetProxy = 6A7B3D5927FEEBFF0066BE83 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6A5D1FC8280C877D0082A5BD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A5D1FC7280C877D0082A5BD /* en */,
+				6A5D1FC9280C87800082A5BD /* fi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		6A7B3D6027FEEBFF0066BE83 /* Debug */ = {

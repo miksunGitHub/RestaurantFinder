@@ -16,7 +16,7 @@ struct RestaurantsView: View {
         NavigationView {
             ScrollView(.vertical, content:{
                 VStack(alignment: .leading){
-                    Text("NEAR YOU")
+                    Text(NSLocalizedString("nearYou", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
                         ScrollView(.horizontal, content:{
                                    HStack{
@@ -28,7 +28,7 @@ struct RestaurantsView: View {
                                    }
                         }
                         )
-                        Text("TOP RATED")
+                    Text(NSLocalizedString("topRated", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
                         ScrollView(.horizontal, content:{
                             HStack{
@@ -40,7 +40,7 @@ struct RestaurantsView: View {
                             }
                         }
                         )
-                        Text("BY PRICE")
+                        Text(NSLocalizedString("byPrice", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
                         ScrollView(.horizontal, content:{
                             HStack{

@@ -1,0 +1,10 @@
+/* 
+  Lozalizable.strings
+  RestaurantFinder
+
+  Created by iosdev on 17.4.2022.
+  
+*/
+"nearYou" = "NEAR YOU";
+"topRated" = "TOP RATED";
+"byPrice" = "BY PRICE";
