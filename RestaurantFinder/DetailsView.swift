@@ -44,14 +44,14 @@ struct DetailsView: View {
         })
     }
     
-//        // Sample test
+        // Sample test
         func parse (){
             let url = URL(string: "https://api.androidhive.info/contacts/")
             guard url != nil else{
                 print("Error creating url object")
                 return
             }
-            
+
             URLSession.shared.dataTask(with: (url as URL?)! , completionHandler: { (data, response, error) -> Void in
                 if error != nil{
                     print(error!.localizedDescription)
