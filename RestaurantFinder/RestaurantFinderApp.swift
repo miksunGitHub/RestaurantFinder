@@ -14,6 +14,7 @@ struct RestaurantFinderApp: App {
             NavigationView {
                 TabBarView()
             }
+            .navigationBarHidden(true)
         }
     }
 }
