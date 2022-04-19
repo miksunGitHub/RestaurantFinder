@@ -36,76 +36,69 @@ struct DetailsView: View {
                 }
                 Link("Website", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!)
                 Spacer()
-                Button(action: {parse()}, label: {
-                    Text("Click")
-                })
-                
+                //                Button(action: {parse()}, label: {
+                //                    Text("Click")
+                //                })
+                //
             }
         })
     }
     
-        // Sample test
-        func parse (){
-            let url = URL(string: "https://api.androidhive.info/contacts/")
-            guard url != nil else{
-                print("Error creating url object")
+    // Sample test
+    //        func parse (){
+    //            let url = URL(string: "https://api.androidhive.info/contacts/")
+    //            guard url != nil else{
+    //                print("Error creating url object")
+    //                return
+    //            }
+    //
+    //            URLSession.shared.dataTask(with: (url as URL?)! , completionHandler: { (data, response, error) -> Void in
+    //                if error != nil{
+    //                    print(error!.localizedDescription)
+    //                    return
+    //                }
+    //                    print("Data",data!)
+    //                do{
+    //                    let result = try JSONDecoder().decode(Welcome.self, from: data!)
+    //                    print("Result",result)
+    //
+    //                }catch{}
+    //            }).resume()
+    //        }
+    func fetchData (){
+        
+        let headers = [
+            "content-type": "application/x-www-form-urlencoded",
+            "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
+            "X-RapidAPI-Key": "60b315c809msh733da161b5bb9e9p1619b1jsn9a09d2994c39"
+        ]
+        
+        let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
+        postData.append("&limit=50".data(using: String.Encoding.utf8)!)
+        postData.append("&location_id=189932".data(using: String.Encoding.utf8)!)
+        postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
+        
+        let request = NSMutableURLRequest(url: NSURL(string: "https://worldwide-restaurants.p.rapidapi.com/search")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.httpBody = postData as Data
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if error != nil{
+                print(error!.localizedDescription)
                 return
             }
-
-            URLSession.shared.dataTask(with: (url as URL?)! , completionHandler: { (data, response, error) -> Void in
-                if error != nil{
-                    print(error!.localizedDescription)
-                    return
-                }
-                    print("Data",data!)
-                do{
-                    let result = try JSONDecoder().decode(Welcome.self, from: data!)
-                    print("Result",result)
-
-                }catch{}
-            }).resume()
-        }
-//    func fetchData (){
-//
-//        let headers = [
-//            "content-type": "application/x-www-form-urlencoded",
-//            "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
-//            "X-RapidAPI-Key": "60b315c809msh733da161b5bb9e9p1619b1jsn9a09d2994c39"
-//        ]
-//
-//        let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
-//        postData.append("&limit=50".data(using: String.Encoding.utf8)!)
-//        postData.append("&location_id=189932".data(using: String.Encoding.utf8)!)
-//        postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
-//
-//        let request = NSMutableURLRequest(url: NSURL(string: "https://worldwide-restaurants.p.rapidapi.com/search")! as URL,
-//                                          cachePolicy: .useProtocolCachePolicy,
-//                                          timeoutInterval: 10.0)
-//        request.httpMethod = "POST"
-//        request.allHTTPHeaderFields = headers
-//        request.httpBody = postData as Data
-//
-//        let session = URLSession.shared
-//        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-//            if error != nil{
-//                print(error!.localizedDescription)
-//                return
-//            }
-//
-//            do{
-//                print("Data",data)
-////                let result = try JSONDecoder().decode(Resturants.self, from: data!)
-////                let t = type(of: result)
-////                print("Type",t)
-////                print("Result",result)
-//
-//            }catch{
-//                print("Error parsing data")
-//            }
-//        })
-//
-//        dataTask.resume()
-//    }
+            
+            do {
+                if let results = 
+            }
+        })
+        
+        dataTask.resume()
+    }
 }
 
 struct DetailsView_Previews: PreviewProvider {
