@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct RestaurantsView: View {
+    
     let restaurants: [Restaurant]
     
     var body: some View {
@@ -16,6 +18,8 @@ struct RestaurantsView: View {
         NavigationView {
             ScrollView(.vertical, content:{
                 VStack(alignment: .leading){
+                    
+                    
                     Text(NSLocalizedString("nearYou", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
                         ScrollView(.horizontal, content:{
@@ -57,6 +61,7 @@ struct RestaurantsView: View {
             )
         }.navigationBarHidden(true)
     }
+    
 }
 
 struct RestaurantsView_Previews: PreviewProvider {

@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ListElementView: View {
     let restaurant: Restaurant
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(
+        entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
 
     var body: some View {
         VStack{
@@ -25,16 +30,45 @@ struct ListElementView: View {
             Spacer()
             Text(restaurant.name)
             HStack{
-                ForEach(0..<restaurant.rating){ i in
+                ForEach(0..<Int(restaurant.rating)){ i in
                         Image(systemName: "star.fill").resizable().frame(width: 10, height: 10)
                 }
             }
             Spacer()
+            Button(action: {
+                addItem()
+            }, label: {
+                Text("save")})
         }
         .padding(10)
         .frame(width: 150, height: 120)
         .border(Color.gray)
         // .background(Color.cyan)
+    }
+    
+    private func addItem() {
+        withAnimation {
+            let newFavourite = Favourite(context: viewContext)
+            newFavourite.name = restaurant.name
+            newFavourite.rating = restaurant.rating
+            newFavourite.price = restaurant.priceLevel
+            newFavourite.address = restaurant.address
+            newFavourite.url = restaurant.imageURL
+            newFavourite.desc = restaurant.description
+            print(newFavourite)
+            saveItems()
+        }
+    }
+
+    private func saveItems(){
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
     }
 }
 

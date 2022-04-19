@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct RestaurantFinderApp: App {
+    
+    let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 TabBarView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
             .navigationBarHidden(true)
         }
