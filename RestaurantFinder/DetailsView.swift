@@ -36,10 +36,10 @@ struct DetailsView: View {
                 }
                 Link("Website", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!)
                 Spacer()
-                //                Button(action: {parse()}, label: {
-                //                    Text("Click")
-                //                })
-                //
+                Button(action: {fetchData()}, label: {
+                    Text("Click")
+                })
+                
             }
         })
     }
@@ -92,9 +92,28 @@ struct DetailsView: View {
                 return
             }
             
-            do {
-                if let results = 
+//            do{
+//                let dictinary = try JSONSerialization.jsonObject(with: data!, options:.mutableContainers)
+//                as? [String:Any]
+//                let t = type(of: dictinary)
+//                print("type",t)
+//                print("Dicionary",dictinary)
+//
+//            }
+//            catch{
+//                print("Error printing")
+//            }
+            let stringData = String(data: data!, encoding: .utf8)
+//             print("data \(stringData)")
+            do{
+                
+                let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
+                print("Data \(jsonObject)")
             }
+            catch{
+                print("Error printing")
+            }
+            
         })
         
         dataTask.resume()
