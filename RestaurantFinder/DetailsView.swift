@@ -39,18 +39,67 @@ struct DetailsView: View {
                     Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
                     Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
                     Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
+                    Button(action: {fetchData()}, label: {
+                        Text("Click")
+                    })
                 }
             }
         })
     }
-    // Printing fonts
-    func getFonts(){
-        UIFont.familyNames.forEach({ name in
-            for font_name in UIFont.fontNames(forFamilyName: name){
-                print("\n\(font_name)")
-            }
-        })
-    }
+//      Printing fonts: To be deleted later
+//    func getFonts(){
+//        UIFont.familyNames.forEach({ name in
+//            for font_name in UIFont.fontNames(forFamilyName: name){
+//                print("\n\(font_name)")
+//            }
+//        })
+//    }
+    
+    // Fetching data from Api
+    func fetchData (){
+            
+            let headers = [
+                "content-type": "application/x-www-form-urlencoded",
+                "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
+                "X-RapidAPI-Key": "60b315c809msh733da161b5bb9e9p1619b1jsn9a09d2994c39"
+            ]
+            
+            let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
+            postData.append("&limit=100".data(using: String.Encoding.utf8)!)
+            postData.append("&location_id=189932".data(using: String.Encoding.utf8)!)
+            postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
+            
+            let request = NSMutableURLRequest(url: NSURL(string: "https://worldwide-restaurants.p.rapidapi.com/search")! as URL,
+                                              cachePolicy: .useProtocolCachePolicy,
+                                              timeoutInterval: 10.0)
+            request.httpMethod = "POST"
+            request.allHTTPHeaderFields = headers
+            request.httpBody = postData as Data
+            
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+                if error != nil{
+                    print(error!.localizedDescription)
+                    return
+                }
+                
+                // printing data as string
+                //            let stringData = String(data: data!, encoding: .utf8)
+                //             print("data \(stringData)")
+                do{
+                    
+                    let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
+//                    print("Data \(jsonObject.results.data.count)")
+                    print("Data \(jsonObject.results)")
+                }
+                catch{
+                    print("Error printing")
+                }
+                
+            })
+            
+            dataTask.resume()
+        }
 }
 
 struct DetailsView_Previews: PreviewProvider {
