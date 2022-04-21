@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @FetchRequest(sortDescriptors: []) var rd: FetchedResults<ResturantDetail>
+    
     var body: some View {
-        NavigationView {
-            Text("ProfileView  content....")
+//        NavigationView {
+//            Text("ProfileView  content....")
+//        }
+        List(rd){item in
+            Text(item.name ?? "Unknown")
         }
     }
 }

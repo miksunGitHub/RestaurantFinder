@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DetailsView: View {
     let restaurant: Restaurant
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var resturantDetail: FetchedResults<ResturantDetail>
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
@@ -39,7 +41,7 @@ struct DetailsView: View {
                     Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
                     Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
                     Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
-                    Button(action: {fetchLocationId()}, label: {
+                    Button(action: {fetchData()}, label: {
                         Text("Click")
                     })
                 }
@@ -135,7 +137,19 @@ struct DetailsView: View {
                 
                 let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
                 //                    print("Data \(jsonObject.results.data.count)")
-                print("Data \(jsonObject.results)")
+//                print("Data \(jsonObject.results.data)")
+                let arrayData = jsonObject.results.data
+                
+                let resturant = ResturantDetail(context: moc)
+                
+                for item in arrayData{
+                    print("Data", item.name)
+                    resturant.id = UUID()
+                    resturant.name = item.name
+                }
+                
+                try? moc.save()
+             
             }
             catch{
                 print("Error printing")

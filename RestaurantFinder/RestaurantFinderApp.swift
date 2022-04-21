@@ -9,12 +9,15 @@ import SwiftUI
 
 @main
 struct RestaurantFinderApp: App {
+    @StateObject private var dataController = DataController()
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 TabBarView()
             }
             .navigationBarHidden(true)
+            .environment(\.managedObjectContext,dataController.container.viewContext )
         }
     }
 }
