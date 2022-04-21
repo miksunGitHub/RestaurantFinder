@@ -74,7 +74,7 @@ struct DetailsView: View {
         ]
         
         let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
-        postData.append("&limit=50".data(using: String.Encoding.utf8)!)
+        postData.append("&limit=100".data(using: String.Encoding.utf8)!)
         postData.append("&location_id=189932".data(using: String.Encoding.utf8)!)
         postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
         
@@ -92,23 +92,13 @@ struct DetailsView: View {
                 return
             }
             
-//            do{
-//                let dictinary = try JSONSerialization.jsonObject(with: data!, options:.mutableContainers)
-//                as? [String:Any]
-//                let t = type(of: dictinary)
-//                print("type",t)
-//                print("Dicionary",dictinary)
-//
-//            }
-//            catch{
-//                print("Error printing")
-//            }
-            let stringData = String(data: data!, encoding: .utf8)
-//             print("data \(stringData)")
+            // printing data as string
+            //            let stringData = String(data: data!, encoding: .utf8)
+            //             print("data \(stringData)")
             do{
                 
                 let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
-                print("Data \(jsonObject)")
+                print("Data \(jsonObject.results.data.count)")
             }
             catch{
                 print("Error printing")
