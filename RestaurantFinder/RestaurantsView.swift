@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreData
+
 
 struct RestaurantsView: View {
     
@@ -18,39 +18,50 @@ struct RestaurantsView: View {
         NavigationView {
             ScrollView(.vertical, content:{
                 VStack(alignment: .leading){
-                    
-                    
                     Text(NSLocalizedString("nearYou", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
+                        .foregroundColor(Color.white)
+                        .padding(.leading, 10)
                         ScrollView(.horizontal, content:{
                                    HStack{
                                        ForEach(restaurants){ restaurant in
                                            NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                                ListElementView(restaurant: restaurant)
+                                                   .padding(.leading, 10)
                                            }
                                        }
+                                       }
                                    }
-                        }
-                        )
+                        ).frame(width: 500, height: 500)
                     Text(NSLocalizedString("topRated", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
+                        .foregroundColor(Color.white)
+                        .padding(.leading, 10)
+                        .padding(.top, 10)
                         ScrollView(.horizontal, content:{
+                            
                             HStack{
                                 ForEach(restaurantsByRating){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                         ListElementView(restaurant: restaurant)
+                                            padding(.leading, 10)
                                     }
                                 }
                             }
                         }
                         )
-                        Text(NSLocalizedString("byPrice", comment: ""))
-                        .font(.system(size: 28.0, weight: .bold, design: .serif))
-                        ScrollView(.horizontal, content:{
+                    Text(NSLocalizedString("byPrice", comment: ""))
+                    .font(.system(size: 28.0, weight: .bold, design: .serif))
+                    .foregroundColor(Color.white)
+                    .padding(.leading, 10)
+                    .padding(.top, 10)
+                    ScrollView(.horizontal, content:{
+                        
                             HStack{
                                 ForEach(restaurants){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                         ListElementView(restaurant: restaurant)
+                                            .padding(.leading, 10)
                                     }
                                 }
                             }
@@ -58,8 +69,10 @@ struct RestaurantsView: View {
                         )
                     }
             }
-            )
-        }.navigationBarHidden(true)
+            ).background(Color.colorDarkGrey)
+                
+        }
+        .navigationBarHidden(true)
     }
     
 }

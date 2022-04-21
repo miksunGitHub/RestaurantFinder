@@ -10,6 +10,7 @@ import CoreData
 
 struct ListElementView: View {
     let restaurant: Restaurant
+    
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -18,20 +19,26 @@ struct ListElementView: View {
     var body: some View {
         VStack{
             Spacer()
+            
             AsyncImage(url: URL(string: restaurant.imageURL),
                        content: {
+                
                             image in image.resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(maxWidth: 400, maxHeight: 200)
+                                        
                                        },
                                        placeholder: {
                                            ProgressView()
                                    })
             Spacer()
             Text(restaurant.name)
+                .foregroundColor(Color.white)
             HStack{
                 ForEach(0..<Int(restaurant.rating)){ i in
-                        Image(systemName: "star.fill").resizable().frame(width: 10, height: 10)
+                        Image(systemName: "star.fill")
+                        .resizable().frame(width: 10, height: 10)
+                        .foregroundColor(Color.white)
                 }
             }
             Spacer()
@@ -40,10 +47,11 @@ struct ListElementView: View {
             }, label: {
                 Text("save")})
         }
-        .padding(10)
-        .frame(width: 150, height: 120)
+        //.padding(10)
+        .frame(width: 150, height: 200)
         .border(Color.gray)
-        // .background(Color.cyan)
+        .background(Color.blueMansell)
+        .cornerRadius(10)
     }
     
     private func addItem() {
@@ -74,6 +82,7 @@ struct ListElementView: View {
 
 struct ListElementView_Previews: PreviewProvider {
     static var restaurant = Restaurant.sampleData[0]
+
     
     static var previews: some View {
         ListElementView(restaurant: restaurant)

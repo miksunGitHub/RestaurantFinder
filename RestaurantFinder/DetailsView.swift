@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailsView: View {
     let restaurant: Restaurant
     
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack{
