@@ -19,37 +19,48 @@ struct ListElementView: View {
     var body: some View {
         VStack{
             Spacer()
-            
+                .frame(width: 10)
             AsyncImage(url: URL(string: restaurant.imageURL),
                        content: {
-                
                             image in image.resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(maxWidth: 400, maxHeight: 200)
-                                        
+                                        .frame(maxWidth: 150, maxHeight: 100)
+                                        .scaledToFill()
+                                        .overlay(
+                                            Image(systemName: "bookmark")
+                                                .gesture(
+                                                    TapGesture().onEnded{
+                                                        addItem()
+                                                    }
+                                                )
+                                                .foregroundColor(Color.blueMansell)
+                                                .padding(.top, 15)
+                                                .padding(.trailing, 10)
+                                                .font(Font.system(size: 20, weight: .semibold))
+                                                ,
+                                            alignment: .topTrailing
+                                        )
                                        },
                                        placeholder: {
                                            ProgressView()
                                    })
+                
             Spacer()
             Text(restaurant.name)
                 .foregroundColor(Color.white)
             HStack{
                 ForEach(0..<Int(restaurant.rating)){ i in
                         Image(systemName: "star.fill")
-                        .resizable().frame(width: 10, height: 10)
+                        .resizable().frame(width: 14, height: 14)
                         .foregroundColor(Color.white)
                 }
             }
             Spacer()
-            Button(action: {
-                addItem()
-            }, label: {
-                Text("save")})
+                .frame(height: 20)
         }
         //.padding(10)
-        .frame(width: 150, height: 200)
-        .border(Color.gray)
+        .frame(width: 150, height: 160)
+        .border(Color.blueMansell)
         .background(Color.blueMansell)
         .cornerRadius(10)
     }

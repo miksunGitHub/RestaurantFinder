@@ -17,7 +17,6 @@ struct RestaurantFinderApp: App {
                 TabBarView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
-            .navigationBarHidden(true)
         }
     }
 }

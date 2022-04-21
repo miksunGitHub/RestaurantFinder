@@ -30,7 +30,6 @@ struct TabBarView: View {
                 }
             
             FavoritesView()
-                
                 .tabItem {
                     Image(systemName: "bookmark.fill")
                     Text("Favorites")

@@ -24,27 +24,28 @@ struct RestaurantsView: View {
                         .padding(.leading, 10)
                         ScrollView(.horizontal, content:{
                                    HStack{
+                                       Spacer()
+                                           .frame(width: 10)
                                        ForEach(restaurants){ restaurant in
                                            NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                                ListElementView(restaurant: restaurant)
-                                                   .padding(.leading, 10)
                                            }
                                        }
                                        }
                                    }
-                        ).frame(width: 500, height: 500)
+                        )
                     Text(NSLocalizedString("topRated", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
                         .foregroundColor(Color.white)
                         .padding(.leading, 10)
                         .padding(.top, 10)
                         ScrollView(.horizontal, content:{
-                            
                             HStack{
+                                Spacer()
+                                    .frame(width: 10)
                                 ForEach(restaurantsByRating){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                         ListElementView(restaurant: restaurant)
-                                            padding(.leading, 10)
                                     }
                                 }
                             }
@@ -58,17 +59,21 @@ struct RestaurantsView: View {
                     ScrollView(.horizontal, content:{
                         
                             HStack{
+                                Spacer()
+                                    .frame(width: 10)
                                 ForEach(restaurants){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                         ListElementView(restaurant: restaurant)
-                                            .padding(.leading, 10)
                                     }
                                 }
                             }
                         }
                         )
                     }
+                Spacer()
+                    .frame(height: 20)
             }
+                       
             ).background(Color.colorDarkGrey)
                 
         }
