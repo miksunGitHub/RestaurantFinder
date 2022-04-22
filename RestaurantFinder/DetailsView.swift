@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailsView: View {
     let restaurant: Restaurant
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var resturantDetail: FetchedResults<ResturantDetail>
+    @FetchRequest(sortDescriptors: []) var resturants: FetchedResults<Resturant>
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
@@ -41,7 +41,7 @@ struct DetailsView: View {
                     Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
                     Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
                     Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
-                    Button(action: {fetchData()}, label: {
+                    Button(action: {saveToCore()}, label: {
                         Text("Click")
                     })
                 }
@@ -57,6 +57,16 @@ struct DetailsView: View {
     //        })
     //    }
     
+    func saveToCore(){
+        let resturant = Resturant(context: moc)
+        let arrayData = ["Harry", "Larry", "Parry"]
+        
+            
+            resturant.id = UUID()
+            resturant.name = arrayData.randomElement()
+            try? moc.save()
+        
+    }
     
     // Fetching location id from location name
     func fetchLocationId(){
@@ -137,19 +147,17 @@ struct DetailsView: View {
                 
                 let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
                 //                    print("Data \(jsonObject.results.data.count)")
-//                print("Data \(jsonObject.results.data)")
+                //                print("Data \(jsonObject.results.data)")
                 let arrayData = jsonObject.results.data
                 
-                let resturant = ResturantDetail(context: moc)
-                
-                for item in arrayData{
-                    print("Data", item.name)
-                    resturant.id = UUID()
-                    resturant.name = item.name
-                }
-                
-                try? moc.save()
-             
+                //                let resturant = ResturantDetail(context: moc)
+                //
+                //                for item in arrayData{
+                //                    print("Data", item.name)
+                //                    resturant.id = UUID()
+                //                    resturant.name = item.name
+                //                    try? moc.save()
+                //                }
             }
             catch{
                 print("Error printing")

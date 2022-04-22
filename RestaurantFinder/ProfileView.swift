@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @FetchRequest(sortDescriptors: []) var rd: FetchedResults<ResturantDetail>
+    @FetchRequest(sortDescriptors: []) var rd: FetchedResults<Resturant>
     
     var body: some View {
 //        NavigationView {

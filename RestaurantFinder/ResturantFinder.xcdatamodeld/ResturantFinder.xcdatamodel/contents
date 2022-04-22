@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ResturantDetail" representedClassName="ResturantDetail" syncable="YES" codeGenerationType="class">
+    <entity name="Resturant" representedClassName="Resturant" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="resturantDetail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ResturantDetail" inverseName="resturant" inverseEntity="ResturantDetail"/>
+        <fetchedProperty name="fetchedProperty" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Resturant"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="ResturantDetail" representedClassName="ResturantDetail" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Transformable" customClassName="[Resturant]"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="resturant" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Resturant" inverseName="resturantDetail" inverseEntity="Resturant"/>
     </entity>
     <elements>
-        <element name="ResturantDetail" positionX="-54" positionY="-9" width="128" height="59"/>
+        <element name="ResturantDetail" positionX="-302.014892578125" positionY="-128.6775512695312" width="270.4971313476562" height="88"/>
+        <element name="Resturant" positionX="-69.15667724609375" positionY="53.73931884765625" width="128" height="116"/>
     </elements>
 </model>
