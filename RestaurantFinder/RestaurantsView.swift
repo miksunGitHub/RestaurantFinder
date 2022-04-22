@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+
 struct RestaurantsView: View {
-    let restaurants: [Restaurant]
+    
+    let restaurants: [RestaurantHC]
     
     var body: some View {
         let restaurantsByRating=restaurants.sorted{$0.rating > $1.rating}
@@ -18,20 +20,29 @@ struct RestaurantsView: View {
                 VStack(alignment: .leading){
                     Text(NSLocalizedString("nearYou", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
+                        .foregroundColor(Color.white)
+                        .padding(.leading, 10)
                         ScrollView(.horizontal, content:{
                                    HStack{
+                                       Spacer()
+                                           .frame(width: 10)
                                        ForEach(restaurants){ restaurant in
                                            NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                                ListElementView(restaurant: restaurant)
                                            }
                                        }
+                                       }
                                    }
-                        }
                         )
                     Text(NSLocalizedString("topRated", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
+                        .foregroundColor(Color.white)
+                        .padding(.leading, 10)
+                        .padding(.top, 10)
                         ScrollView(.horizontal, content:{
                             HStack{
+                                Spacer()
+                                    .frame(width: 10)
                                 ForEach(restaurantsByRating){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                         ListElementView(restaurant: restaurant)
@@ -40,10 +51,16 @@ struct RestaurantsView: View {
                             }
                         }
                         )
-                        Text(NSLocalizedString("byPrice", comment: ""))
-                        .font(.system(size: 28.0, weight: .bold, design: .serif))
-                        ScrollView(.horizontal, content:{
+                    Text(NSLocalizedString("byPrice", comment: ""))
+                    .font(.system(size: 28.0, weight: .bold, design: .serif))
+                    .foregroundColor(Color.white)
+                    .padding(.leading, 10)
+                    .padding(.top, 10)
+                    ScrollView(.horizontal, content:{
+                        
                             HStack{
+                                Spacer()
+                                    .frame(width: 10)
                                 ForEach(restaurants){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
                                         ListElementView(restaurant: restaurant)
@@ -53,14 +70,20 @@ struct RestaurantsView: View {
                         }
                         )
                     }
+                Spacer()
+                    .frame(height: 20)
             }
-            )
-        }.navigationBarHidden(true)
+                       
+            ).background(Color.colorDarkGrey)
+                
+        }
+        .navigationBarHidden(true)
     }
+    
 }
 
 struct RestaurantsView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantsView(restaurants: Restaurant.sampleData)
+        RestaurantsView(restaurants: RestaurantHC.sampleData)
     }
 }

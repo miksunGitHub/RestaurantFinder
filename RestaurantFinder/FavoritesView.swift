@@ -6,11 +6,25 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct FavoritesView: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(
+        entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
+    
     var body: some View {
         NavigationView {
-            Text("FavoritesView  content....")
+            VStack{
+                Button(action: {
+                    print(favourites)
+                }, label: {
+                    Text("print")
+                })
+                Text("FavoritesView  content....")
+                }
         }
     }
 }
@@ -18,5 +32,6 @@ struct FavoritesView: View {
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
         FavoritesView()
+            
     }
 }

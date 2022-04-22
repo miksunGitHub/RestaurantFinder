@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct TabBarView: View {
     
 //    init() {
@@ -22,7 +23,7 @@ struct TabBarView: View {
                     Text("Home")
                 }
             
-            RestaurantsView(restaurants: Restaurant.sampleData)
+            RestaurantsView(restaurants: RestaurantHC.sampleData)
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("Restaurants")
@@ -39,15 +40,14 @@ struct TabBarView: View {
                     Image(systemName: "person.circle.fill")
                     Text("Profile")
                 }
-            
-
         }
-
             }
+    
+    
 }
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView()
+        TabBarView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
