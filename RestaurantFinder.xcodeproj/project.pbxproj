@@ -21,7 +21,7 @@
 		A7100F612811B3FC001A5A6F /* ResturantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7100F602811B3FC001A5A6F /* ResturantData.swift */; };
 		A7100F632811B773001A5A6F /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7100F622811B773001A5A6F /* LocationData.swift */; };
 		A7100F692811BFB3001A5A6F /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7100F682811BFB3001A5A6F /* DataController.swift */; };
-		A7100F6C2811C292001A5A6F /* ResturantFinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A7100F6A2811C292001A5A6F /* ResturantFinder.xcdatamodeld */; };
+		A72A210A2813051B00119A22 /* ResturantFinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A72A21082813051B00119A22 /* ResturantFinder.xcdatamodeld */; };
 		A7815D2C280ABDE40096B664 /* CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7815D2B280ABDE40096B664 /* CustomFonts.swift */; };
 		A7815D31280AC38E0096B664 /* BeauRivage-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7815D2F280AC38E0096B664 /* BeauRivage-Regular.ttf */; };
 		A7815D41280AC4480096B664 /* EBGaramond-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7815D33280AC4480096B664 /* EBGaramond-Italic-VariableFont_wght.ttf */; };
@@ -71,7 +71,7 @@
 		A7100F602811B3FC001A5A6F /* ResturantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResturantData.swift; sourceTree = "<group>"; };
 		A7100F622811B773001A5A6F /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		A7100F682811BFB3001A5A6F /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		A7100F6B2811C292001A5A6F /* ResturantFinder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ResturantFinder.xcdatamodel; sourceTree = "<group>"; };
+		A72A21092813051B00119A22 /* ResturantFinder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ResturantFinder.xcdatamodel; sourceTree = "<group>"; };
 		A7815D25280AB97F0096B664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A7815D2B280ABDE40096B664 /* CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFonts.swift; sourceTree = "<group>"; };
 		A7815D2F280AC38E0096B664 /* BeauRivage-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeauRivage-Regular.ttf"; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 				6A7B3DC328070FB60066BE83 /* DetailsView.swift */,
 				6A7B3D4527FEEBFE0066BE83 /* Assets.xcassets */,
 				6A7B3D4727FEEBFE0066BE83 /* Preview Content */,
-				A7100F6A2811C292001A5A6F /* ResturantFinder.xcdatamodeld */,
+				A72A21082813051B00119A22 /* ResturantFinder.xcdatamodeld */,
 			);
 			path = RestaurantFinder;
 			sourceTree = "<group>";
@@ -371,7 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A7B3DC12805B1620066BE83 /* Restaurant.swift in Sources */,
-				A7100F6C2811C292001A5A6F /* ResturantFinder.xcdatamodeld in Sources */,
+				A72A210A2813051B00119A22 /* ResturantFinder.xcdatamodeld in Sources */,
 				C600B6962803863000CED028 /* FavoritesView.swift in Sources */,
 				C600B69A2803870600CED028 /* LoginView.swift in Sources */,
 				A7815D50280ACC230096B664 /* CustomColor.swift in Sources */,
@@ -729,12 +729,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A7100F6A2811C292001A5A6F /* ResturantFinder.xcdatamodeld */ = {
+		A72A21082813051B00119A22 /* ResturantFinder.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A7100F6B2811C292001A5A6F /* ResturantFinder.xcdatamodel */,
+				A72A21092813051B00119A22 /* ResturantFinder.xcdatamodel */,
 			);
-			currentVersion = A7100F6B2811C292001A5A6F /* ResturantFinder.xcdatamodel */;
+			currentVersion = A72A21092813051B00119A22 /* ResturantFinder.xcdatamodel */;
 			path = ResturantFinder.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

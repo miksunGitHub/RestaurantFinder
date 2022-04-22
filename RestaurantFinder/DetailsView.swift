@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DetailsView: View {
     let restaurant: Restaurant
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var resturants: FetchedResults<Resturant>
+    @FetchRequest(sortDescriptors: []) var resturants: FetchedResults<Test>
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
@@ -58,12 +59,14 @@ struct DetailsView: View {
     //    }
     
     func saveToCore(){
-        let resturant = Resturant(context: moc)
         let arrayData = ["Harry", "Larry", "Parry"]
-        
-            
-            resturant.id = UUID()
-            resturant.name = arrayData.randomElement()
+        let entity = Test(context: moc)
+        arrayData.forEach{(item) in
+           
+            entity.id = UUID()
+            entity.name = item
+        }
+
             try? moc.save()
         
     }
