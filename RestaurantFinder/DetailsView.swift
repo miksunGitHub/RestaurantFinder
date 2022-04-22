@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailsView: View {
-    let restaurant: Restaurant
+    let restaurant: RestaurantHC
     
     
     var body: some View {
@@ -55,7 +55,7 @@ struct DetailsView: View {
 }
 
 struct DetailsView_Previews: PreviewProvider {
-    static var restaurant = Restaurant.sampleData[0]
+    static var restaurant = RestaurantHC.sampleData[0]
     
     static var previews: some View {
         DetailsView(restaurant: restaurant)

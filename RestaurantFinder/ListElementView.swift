@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ListElementView: View {
-    let restaurant: Restaurant
+    let restaurant: RestaurantHC
     
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -92,7 +92,7 @@ struct ListElementView: View {
 }
 
 struct ListElementView_Previews: PreviewProvider {
-    static var restaurant = Restaurant.sampleData[0]
+    static var restaurant = RestaurantHC.sampleData[0]
 
     
     static var previews: some View {

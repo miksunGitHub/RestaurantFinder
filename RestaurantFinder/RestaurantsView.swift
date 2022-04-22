@@ -10,7 +10,7 @@ import SwiftUI
 
 struct RestaurantsView: View {
     
-    let restaurants: [Restaurant]
+    let restaurants: [RestaurantHC]
     
     var body: some View {
         let restaurantsByRating=restaurants.sorted{$0.rating > $1.rating}
@@ -84,6 +84,6 @@ struct RestaurantsView: View {
 
 struct RestaurantsView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantsView(restaurants: Restaurant.sampleData)
+        RestaurantsView(restaurants: RestaurantHC.sampleData)
     }
 }
