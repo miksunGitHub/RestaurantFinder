@@ -5,6 +5,8 @@
 //  Created by Alex on 11.4.2022.
 //
 
+//
+
 import SwiftUI
 import MapKit
 import CoreLocation
@@ -25,14 +27,12 @@ struct HomeView: View {
     let restaurants: [RestaurantHC]
     
     @State private var destination = CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)
-//    @State private var startPoint = CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996)
     
     @State private var point = CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)
     
     
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328), span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
     
-    @State var tbLocEntered : String = ""
     @State var routeSteps : [RouteSteps] = [RouteSteps(step: "Enter a destination")]
     
     @State var annotations = [
@@ -60,14 +60,17 @@ struct HomeView: View {
             HStack{
                 VStack {
                     HStack {
-                        Button("tracking") {
+                        Button(action: {
                             manage.desiredAccuracy = kCLLocationAccuracyBest
                             manage.requestWhenInUseAuthorization()
                             manage.startUpdatingHeading()
                             print("startpoint is \($startPoint)")
                             print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
                             region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
-                        }
+                        }, label: {
+                          Text("tracking")
+                        })
+
                         Button(action: {
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                             print("user's location is \(UserDefaults.standard.string(forKey: "city"))")
@@ -111,7 +114,8 @@ struct HomeView: View {
             MKMapView.appearance().mapType = .mutedStandard
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
             self.isNavigationBarHidden = true
-            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+            
         }
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
@@ -175,7 +179,7 @@ struct HomeView: View {
 
 }
 
-// get user location
+
 class LocationHelper: NSObject, ObservableObject {
     static let shared = LocationHelper()
     static let DefaultLocation = CLLocationCoordinate2D(latitude: 63.157803, longitude: 25.934328)
