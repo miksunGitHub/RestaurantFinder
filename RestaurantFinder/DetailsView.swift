@@ -139,16 +139,18 @@ struct DetailsView: View {
                 let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
                 
                 // print("Data \(jsonObject.results)")
-                jsonObject.results.data.forEach{item in
-                    print(item.name)
+                jsonObject.results.data.forEach{resturant in
+//                    print(resturant)
+                    print(resturant.address_obj.country)
+
                 }
-                jsonObject.results.data.forEach{ item in
-                    let resturant = ResturantObject(context: moc)
-                    resturant.name = item.name
-                    resturant.origin = ResturantArray(context: moc)
-                }
-                
-                try? moc.save()
+//                jsonObject.results.data.forEach{ item in
+//                    let resturant = ResturantObject(context: moc)
+//                    resturant.name = item.name
+//                    resturant.origin = ResturantArray(context: moc)
+//                }
+//
+//                try? moc.save()
             }
             catch{
                 print("Error printing")
