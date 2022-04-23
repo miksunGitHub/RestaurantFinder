@@ -33,6 +33,7 @@
 		C600B6982803867F00CED028 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600B6972803867F00CED028 /* ProfileView.swift */; };
 		C600B69A2803870600CED028 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600B6992803870600CED028 /* LoginView.swift */; };
 		C600B69C2803873800CED028 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600B69B2803873800CED028 /* SignupView.swift */; };
+		C61811A82813DD6C00D52CB8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61811A72813DD6C00D52CB8 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		C600B6972803867F00CED028 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C600B6992803870600CED028 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C600B69B2803873800CED028 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		C61811A72813DD6C00D52CB8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C61811A82813DD6C00D52CB8 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +121,7 @@
 				6A7B3D5127FEEBFF0066BE83 /* RestaurantFinderTests */,
 				6A7B3D5B27FEEBFF0066BE83 /* RestaurantFinderUITests */,
 				6A7B3D3F27FEEBFA0066BE83 /* Products */,
+				C61811A62813DD6C00D52CB8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -185,7 +189,6 @@
 		6A7B3DBD280489050066BE83 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-
 				6A7B3DC02805B1620066BE83 /* RestaurantHC.swift */,
 				A7100F602811B3FC001A5A6F /* ResturantData.swift */,
 				A7100F622811B773001A5A6F /* LocationData.swift */,
@@ -226,6 +229,14 @@
 				A7815D4F280ACC230096B664 /* CustomColor.swift */,
 			);
 			path = Color;
+			sourceTree = "<group>";
+		};
+		C61811A62813DD6C00D52CB8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C61811A72813DD6C00D52CB8 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
