@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DetailsView: View {
     let restaurant: RestaurantHC
-    
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var resturantArray: FetchedResults<ResturantArray>
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
@@ -40,7 +41,7 @@ struct DetailsView: View {
                     Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
                     Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
                     Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
-                    Button(action: {fetchLocationId()}, label: {
+                    Button(action: {fetchData()}, label: {
                         Text("Click")
                     })
                 }
@@ -91,6 +92,7 @@ struct DetailsView: View {
                 let jsonObject = try JSONDecoder().decode(LocationData.self, from: data!)
                 //                    print("Data \(jsonObject.results.data.count)")
                 print("Data \(jsonObject.results)")
+                
             }
             catch{
                 print("Error printing")
@@ -135,8 +137,18 @@ struct DetailsView: View {
             do{
                 
                 let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
-                //                    print("Data \(jsonObject.results.data.count)")
-                print("Data \(jsonObject.results)")
+                
+                // print("Data \(jsonObject.results)")
+                jsonObject.results.data.forEach{item in
+                    print(item.name)
+                }
+                jsonObject.results.data.forEach{ item in
+                    let resturant = ResturantObject(context: moc)
+                    resturant.name = item.name
+                    resturant.origin = ResturantArray(context: moc)
+                }
+                
+                try? moc.save()
             }
             catch{
                 print("Error printing")
