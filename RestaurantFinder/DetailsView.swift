@@ -10,8 +10,8 @@ import CoreData
 
 struct DetailsView: View {
     let restaurant: Restaurant
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var resturants: FetchedResults<Test>
+//    @Environment(\.managedObjectContext) var moc
+//    @FetchRequest(sortDescriptors: []) var resturants: FetchedResults<Test>
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
@@ -42,9 +42,9 @@ struct DetailsView: View {
                     Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
                     Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
                     Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
-                    Button(action: {saveToCore()}, label: {
-                        Text("Click")
-                    })
+//                    Button(action: {saveToCore()}, label: {
+//                        Text("Click")
+//                    })
                 }
             }
         })
@@ -58,18 +58,18 @@ struct DetailsView: View {
     //        })
     //    }
     
-    func saveToCore(){
-        let arrayData = ["Harry", "Larry", "Parry"]
-        let entity = Test(context: moc)
-        arrayData.forEach{(item) in
-           
-            entity.id = UUID()
-            entity.name = item
-        }
-
-            try? moc.save()
-        
-    }
+//    func saveToCore(){
+//        let arrayData = ["Harry", "Larry", "Parry"]
+//        let entity = Test(context: moc)
+//        arrayData.forEach{(item) in
+//           
+//            entity.id = UUID()
+//            entity.name = item
+//        }
+//
+//            try? moc.save()
+//        
+//    }
     
     // Fetching location id from location name
     func fetchLocationId(){
