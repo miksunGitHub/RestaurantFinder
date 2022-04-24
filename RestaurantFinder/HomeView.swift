@@ -5,7 +5,7 @@
 //  Created by Alex on 11.4.2022.
 //
 
-//
+//60,159803 24,934328
 
 import SwiftUI
 import MapKit
@@ -44,8 +44,6 @@ struct HomeView: View {
     ]
     private let manage = CLLocationManager()
     
-    
-    
     @State var isNavigationBarHidden: Bool = true
     @State var mapFilters: MKPointOfInterestFilter = MKPointOfInterestFilter(including: [])
     @State private var showDirections = false
@@ -53,6 +51,9 @@ struct HomeView: View {
     @State var tracking : MapUserTrackingMode = .follow
     
     @State private var startPoint = LocationHelper.currentLocation
+    
+    @State private var city = "no city"
+    
 
     var body: some View {
         
@@ -67,16 +68,19 @@ struct HomeView: View {
                             print("startpoint is \($startPoint)")
                             print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
                             region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
-                        }, label: {
-                          Text("tracking")
-                        })
-
-                        Button(action: {
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-                            print("user's location is \(UserDefaults.standard.string(forKey: "city"))")
                         }, label: {
-                          Text("print city name")
+                            Text("tracking")
                         })
+                        
+                        Button(action: {
+                                                        convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                            print("user's location is \(UserDefaults.standard.string(forKey: "city"))")
+                            print("user's cityName is \(city)")
+                        }, label: {
+                            Text("print city name")
+                        })
+                        Text(city)
                     }
                     
                 }
@@ -85,8 +89,8 @@ struct HomeView: View {
             Map(coordinateRegion: $region,
                 interactionModes: .all,
                 showsUserLocation: true,
-                userTrackingMode: .constant(.follow),
-//                userTrackingMode: $tracking,
+//                userTrackingMode: .constant(.follow),
+                userTrackingMode: $tracking,
                 annotationItems: restaurants)
             { restaurant in
                 MapAnnotation(coordinate: restaurant.coordinate) {
@@ -114,8 +118,10 @@ struct HomeView: View {
             MKMapView.appearance().mapType = .mutedStandard
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
             self.isNavigationBarHidden = true
-                convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-            
+            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+            print("onAppear UserDefaults  \(UserDefaults.standard.string(forKey: "city"))")
+            print("onAppear cityName \(city)")
+            print(LocationHelper.currentLocation)
         }
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
@@ -170,6 +176,7 @@ struct HomeView: View {
 
             if let city = placeMark.locality {
                 print(city)
+                self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
                 
             }
@@ -192,21 +199,22 @@ class LocationHelper: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     private override init() {
         super.init()
-        locationManager.delegate = self
+//        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
     }
 }
-extension LocationHelper: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) { }
-    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location manager failed with error: \(error.localizedDescription)")
-    }
-    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print("Location manager changed the status: \(status)")
-    }
-}
+//extension LocationHelper: CLLocationManagerDelegate {
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) { }
+//    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        print("Location manager failed with error: \(error.localizedDescription)")
+//    }
+//    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        print("Location manager changed the status: \(status)")
+//    }
+//}
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
