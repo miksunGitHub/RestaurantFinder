@@ -33,7 +33,7 @@ struct HomeView: View {
     
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328), span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
     
-    @State var routeSteps : [RouteSteps] = [RouteSteps(step: "Enter a destination")]
+    @State var routeSteps : [RouteSteps] = []
     
     @State var annotations = [
         Location(name: "Baskeri & Basso", coordinate: CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)),
@@ -54,7 +54,7 @@ struct HomeView: View {
     
     @State private var city = "no city"
     
-
+    
     var body: some View {
         
         VStack {
@@ -74,13 +74,17 @@ struct HomeView: View {
                         })
                         
                         Button(action: {
-                                                        convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                             print("user's location is \(UserDefaults.standard.string(forKey: "city"))")
                             print("user's cityName is \(city)")
                         }, label: {
                             Text("print city name")
                         })
                         Text(city)
+                    }
+                    .onAppear (){
+                        region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
+                        convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                     }
                     
                 }
@@ -89,7 +93,7 @@ struct HomeView: View {
             Map(coordinateRegion: $region,
                 interactionModes: .all,
                 showsUserLocation: true,
-//                userTrackingMode: .constant(.follow),
+                //                userTrackingMode: .constant(.follow),
                 userTrackingMode: $tracking,
                 annotationItems: restaurants)
             { restaurant in
@@ -102,11 +106,12 @@ struct HomeView: View {
                         //                            .stroke(.red, lineWidth: 3)
                             .frame(width: 15, height: 15)
                             .onTapGesture {
+                                convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                                 print("Tapped on \(restaurant.name)")
                                 destination = restaurant.coordinate
                                 findDirections()
                                 self.showDirections.toggle()
-                                print(startPoint)
+                                print(city)
                             }
                         Text(restaurant.name)
                     }
@@ -138,7 +143,7 @@ struct HomeView: View {
                 
             }
         })
-    
+        
     }
     
     func findDirections(){
@@ -162,7 +167,7 @@ struct HomeView: View {
                 }
             }
         })
-    
+        
         
     }
     
@@ -173,23 +178,28 @@ struct HomeView: View {
             
             var placeMark: CLPlacemark!
             placeMark = placemarks?[0]
-
+            
             if let city = placeMark.locality {
                 print(city)
                 self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
                 
             }
+            
+            if let street = placeMark.thoroughfare {
+                print(street)
+                
+            }
         })
         
     }
-
+    
 }
 
 
 class LocationHelper: NSObject, ObservableObject {
     static let shared = LocationHelper()
-    static let DefaultLocation = CLLocationCoordinate2D(latitude: 63.157803, longitude: 25.934328)
+    static let DefaultLocation = CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328)
     static var currentLocation: CLLocationCoordinate2D {
         guard let location = shared.locationManager.location else {
             return DefaultLocation
@@ -199,7 +209,7 @@ class LocationHelper: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     private override init() {
         super.init()
-//        locationManager.delegate = self
+        //        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.distanceFilter = kCLDistanceFilterNone
