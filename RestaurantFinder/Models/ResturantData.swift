@@ -30,6 +30,7 @@ struct Resturant : Codable{
     let web_url: String
     let write_review: String
     let address_obj: Address
+//    let photo: Images
     //    let hours
     //    let cuisine
     //    let dietary_restrictions
@@ -43,5 +44,21 @@ struct Address: Codable{
     let state : String?
     let country : String?
     let postalcode : String?
+}
 
+struct Images: Codable{
+    let thumbnail : Thumbnail
+    let original: Original
+}
+
+struct Thumbnail: Codable{
+    let width : String
+    let url: String
+    let height: String
+}
+
+struct Original: Codable{
+    let width : String
+    let url: String
+    let height: String
 }

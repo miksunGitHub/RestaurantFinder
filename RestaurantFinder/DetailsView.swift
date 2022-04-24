@@ -141,7 +141,7 @@ struct DetailsView: View {
                 // print("Data \(jsonObject.results)")
                 jsonObject.results.data.forEach{resturant in
 //                    print(resturant)
-                    print(resturant.address_obj.country)
+                    print(resturant)
 
                 }
 //                jsonObject.results.data.forEach{ item in
