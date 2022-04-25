@@ -20,7 +20,7 @@ struct ListElementView: View {
     
 
     var body: some View {
-        VStack{
+        VStack(){
             Spacer()
                 .frame(width: 10)
             AsyncImage(url: URL(string: restaurant.imageURL),
@@ -51,9 +51,10 @@ struct ListElementView: View {
             Spacer()
             Text(restaurant.name)
                 .foregroundColor(Color.white)
+            Spacer()
             HStack{
                 ForEach(0..<Int(restaurant.rating)){ i in
-                        Image(systemName: "star.fill")
+                        Image(systemName: "star")
                         .resizable().frame(width: 14, height: 14)
                         .foregroundColor(Color.white)
                 }

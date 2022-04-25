@@ -18,6 +18,7 @@ struct RestaurantsView: View {
         let restaurantsByRating=restaurants.sorted{$0.rating > $1.rating}
         
         NavigationView {
+            
             ScrollView(.vertical, content:{
                 VStack(alignment: .leading){
                     Text(NSLocalizedString("nearYou", comment: ""))
@@ -80,7 +81,8 @@ struct RestaurantsView: View {
             ).background(Color.colorDarkGrey)
                 .navigationBarTitle("")
                     .navigationBarHidden(true)
-        }
+                    .padding(.bottom, 0.5)
+            }
         
     }
     

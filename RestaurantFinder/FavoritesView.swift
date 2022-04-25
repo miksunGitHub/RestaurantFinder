@@ -22,16 +22,15 @@ struct FavoritesView: View {
     
     var body: some View {
         NavigationView {
-            
                 ScrollView(.vertical, content:{
-                    VStack{
+                    VStack(alignment: .leading){
                 Text(NSLocalizedString("favorites", comment: ""))
                     .font(.system(size: 28.0, weight: .bold, design: .serif))
                     .foregroundColor(Color.white)
                     .padding(.init(top: 20, leading: 10, bottom: 10, trailing: 10))
                     .frame(alignment: .topLeading)
             LazyVGrid(columns: columns,
-                      alignment: .leading){
+                      alignment: .leading, spacing: 10){
                                    ForEach(favourites){ favourite in
                                        let newFavourite = RestaurantHC(
                                         name: favourite.name ?? "no name",
@@ -48,13 +47,13 @@ struct FavoritesView: View {
                                    
                                }
                         Spacer()
-                    }
-            }
+                    }.padding(10)
+                }
                 )
                 .background(Color.colorDarkGrey)
                     .navigationBarTitle("")
                     .navigationBarHidden(true)
-                    
+                    .padding(.bottom, 0.5)
             }
     }
         
