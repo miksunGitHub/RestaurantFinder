@@ -9,10 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     let restaurant: RestaurantHC
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var resturantArray: FetchedResults<ResturantArray>
-    let location =  UserDefaults.standard.string(forKey: "city")!
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack{
@@ -42,10 +39,6 @@ struct DetailsView: View {
                     Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
                     Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
                     Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
-                   
-                    Button(action: { fetchLocationId(location)}, label: {
-                        Text("Click")
-                    })
                 }
             }
         })

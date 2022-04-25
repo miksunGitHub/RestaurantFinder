@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct RestaurantFinderApp: App {
-    
+    let location =  UserDefaults.standard.string(forKey: "city")!
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {

@@ -16,8 +16,8 @@
         <relationship name="origin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ResturantArray" inverseName="resturantObject" inverseEntity="ResturantArray"/>
     </entity>
     <elements>
-        <element name="Favourite" positionX="-36" positionY="9" width="128" height="119"/>
-        <element name="ResturantObject" positionX="-36" positionY="54" width="128" height="59"/>
-        <element name="ResturantArray" positionX="-36" positionY="54" width="128" height="44"/>
+        <element name="Favourite" positionX="278.7108154296875" positionY="-239.5139465332031" width="128" height="119"/>
+        <element name="ResturantArray" positionX="-20.11102294921875" positionY="196.9680786132812" width="128" height="58"/>
+        <element name="ResturantObject" positionX="-32.90087890625" positionY="-65.15780639648438" width="128" height="59"/>
     </elements>
 </model>

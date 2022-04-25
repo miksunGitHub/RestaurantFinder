@@ -10,6 +10,9 @@ import SwiftUI
 
 // Fetching resurant data from  Api
 func fetchData (_ location_id: String){
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var resturantArray: FetchedResults<ResturantArray>
+    
     let headers = [
         "content-type": "application/x-www-form-urlencoded",
         "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
@@ -35,25 +38,21 @@ func fetchData (_ location_id: String){
             return
         }
         
-        // printing data as string
-        //            let stringData = String(data: data!, encoding: .utf8)
-        //             print("data \(stringData)")
         do{
             
             let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
             
-            // print("Data \(jsonObject.results)")
             jsonObject.results.data.forEach{resturant in
-//                    print(resturant)
                 print(resturant)
             }
-//                jsonObject.results.data.forEach{ item in
-//                    let resturant = ResturantObject(context: moc)
-//                    resturant.name = item.name
-//                    resturant.origin = ResturantArray(context: moc)
-//                }
+            
+//            jsonObject.results.data.forEach{ item in
+//                let resturant = ResturantObject(context: moc)
+//                resturant.name = item.name
+//                resturant.origin = ResturantArray(context: moc)
+//            }
 //
-//                try? moc.save()
+//            try? moc.save()
         }
         catch{
             print("Error printing \(error)")

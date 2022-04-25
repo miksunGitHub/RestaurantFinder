@@ -171,8 +171,9 @@ struct HomeView: View {
             if let city = placeMark.locality {
                 print(city)
                 UserDefaults.standard.set(city, forKey: "city")
-                
+                fetchLocationId(city)
             }
+            
         })
         
     }
