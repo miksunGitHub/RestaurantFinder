@@ -22,6 +22,8 @@
 		6A7B3DC428070FB60066BE83 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B3DC328070FB60066BE83 /* DetailsView.swift */; };
 		A7100F612811B3FC001A5A6F /* ResturantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7100F602811B3FC001A5A6F /* ResturantData.swift */; };
 		A7100F632811B773001A5A6F /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7100F622811B773001A5A6F /* LocationData.swift */; };
+		A712993B2815AF1100582C24 /* ResturantApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712993A2815AF1100582C24 /* ResturantApi.swift */; };
+		A712993D2815AFA600582C24 /* LocationApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712993C2815AFA600582C24 /* LocationApi.swift */; };
 		A7397AA92814492800CA3670 /* ResturantObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7397AA52814492800CA3670 /* ResturantObject+CoreDataClass.swift */; };
 		A7397AAA2814492800CA3670 /* ResturantObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7397AA62814492800CA3670 /* ResturantObject+CoreDataProperties.swift */; };
 		A7397AAB2814492800CA3670 /* ResturantArray+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7397AA72814492800CA3670 /* ResturantArray+CoreDataClass.swift */; };
@@ -78,6 +80,8 @@
 		6A7B3DC328070FB60066BE83 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		A7100F602811B3FC001A5A6F /* ResturantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResturantData.swift; sourceTree = "<group>"; };
 		A7100F622811B773001A5A6F /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
+		A712993A2815AF1100582C24 /* ResturantApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResturantApi.swift; sourceTree = "<group>"; };
+		A712993C2815AFA600582C24 /* LocationApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationApi.swift; sourceTree = "<group>"; };
 		A7397AA52814492800CA3670 /* ResturantObject+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResturantObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		A7397AA62814492800CA3670 /* ResturantObject+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResturantObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A7397AA72814492800CA3670 /* ResturantArray+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResturantArray+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 		6A7B3D4027FEEBFA0066BE83 /* RestaurantFinder */ = {
 			isa = PBXGroup;
 			children = (
+				A71299392815AEF200582C24 /* Api */,
 				A7397AAD28144A8200CA3670 /* Controller */,
 				A7397AA4281448E700CA3670 /* CoreData */,
 				6A6C8BC8280F089000DB81CF /* RestaurantFinder.xcdatamodeld */,
@@ -206,6 +211,15 @@
 				A7100F622811B773001A5A6F /* LocationData.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		A71299392815AEF200582C24 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				A712993A2815AF1100582C24 /* ResturantApi.swift */,
+				A712993C2815AFA600582C24 /* LocationApi.swift */,
+			);
+			path = Api;
 			sourceTree = "<group>";
 		};
 		A7397AA4281448E700CA3670 /* CoreData */ = {
@@ -409,6 +423,7 @@
 				C600B6962803863000CED028 /* FavoritesView.swift in Sources */,
 				C600B69A2803870600CED028 /* LoginView.swift in Sources */,
 				A7815D50280ACC230096B664 /* CustomColor.swift in Sources */,
+				A712993B2815AF1100582C24 /* ResturantApi.swift in Sources */,
 				C600B6922803852B00CED028 /* HomeView.swift in Sources */,
 				6A7B3D4427FEEBFA0066BE83 /* TabBarView.swift in Sources */,
 				A7100F612811B3FC001A5A6F /* ResturantData.swift in Sources */,
@@ -419,6 +434,7 @@
 				6A6C8BCA280F089000DB81CF /* RestaurantFinder.xcdatamodeld in Sources */,
 				A7397AAB2814492800CA3670 /* ResturantArray+CoreDataClass.swift in Sources */,
 				A7397AAC2814492800CA3670 /* ResturantArray+CoreDataProperties.swift in Sources */,
+				A712993D2815AFA600582C24 /* LocationApi.swift in Sources */,
 				A7100F632811B773001A5A6F /* LocationData.swift in Sources */,
 				6A7B3D4227FEEBFA0066BE83 /* RestaurantFinderApp.swift in Sources */,
 				A7397AA92814492800CA3670 /* ResturantObject+CoreDataClass.swift in Sources */,
