@@ -54,6 +54,8 @@ struct HomeView: View {
     
     @State private var city = "no city"
     
+    @State var walking: Bool = true
+    
     
     var body: some View {
         
@@ -69,6 +71,7 @@ struct HomeView: View {
                             print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
                             region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                            print("Tracking user's cityName is \(city)")
                         }, label: {
                             Text("tracking")
                         })
@@ -78,13 +81,19 @@ struct HomeView: View {
                             print("user's location is \(UserDefaults.standard.string(forKey: "city"))")
                             print("user's cityName is \(city)")
                         }, label: {
-                            Text("print city name")
+                            Text("City name")
                         })
                         Text(city)
+                        Button(action: {
+                            self.walking.toggle()
+                        }, label: {
+                            Text(walking ? "Walking" : " Automobile")
+                        })
                     }
                     .onAppear (){
                         region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
                         convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                        print("user's cityName is \(city)")
                     }
                     
                 }
@@ -102,8 +111,6 @@ struct HomeView: View {
                         DetailsView(restaurant: restaurant)
                     } label:{
                         Image(systemName: "house.circle")
-                        //                        Circle()
-                        //                            .stroke(.red, lineWidth: 3)
                             .frame(width: 15, height: 15)
                             .onTapGesture {
                                 convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
@@ -118,7 +125,8 @@ struct HomeView: View {
                 }
             }
         }
-        .navigationBarHidden(self.isNavigationBarHidden)
+//        .navigationBarHidden(self.isNavigationBarHidden)
+        .navigationBarHidden(true)
         .onAppear(){
             MKMapView.appearance().mapType = .mutedStandard
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
@@ -155,8 +163,8 @@ struct HomeView: View {
         request.destination = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil)))
         
         request.requestsAlternateRoutes = false
-        request.transportType = .walking
         
+        request.transportType = walking ? .walking : .automobile
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
             for route in (response?.routes)! {
@@ -183,6 +191,7 @@ struct HomeView: View {
                 print(city)
                 self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
+                print("cityName \(city)")
                 
             }
             
@@ -209,22 +218,12 @@ class LocationHelper: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     private override init() {
         super.init()
-        //        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
     }
 }
-//extension LocationHelper: CLLocationManagerDelegate {
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) { }
-//    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print("Location manager failed with error: \(error.localizedDescription)")
-//    }
-//    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        print("Location manager changed the status: \(status)")
-//    }
-//}
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
