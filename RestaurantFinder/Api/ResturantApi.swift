@@ -46,24 +46,29 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
             
             let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
             
-            jsonObject.results.data.forEach{resturant in
+            jsonObject.results.data.forEach{restaurant in
                 //print(String(resturant.photo?.images?.medium?.url ?? "none") )
                 
-                //print(resturant.address_obj?.street1)
+                print(restaurant.latitude ?? "60.163624")
+                print(restaurant.longitude ?? "24.947996")
+            
+                
             }
             
             jsonObject.results.data.forEach{ item in
                 //let restarant = Restarant(context: moc)
                 //restarant.name = item.name
                 
-                    let newRestaurant = Restaurant(context: moc)
-                    newRestaurant.name = String(item.name ?? "no name")
-                    newRestaurant.url = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
-                    newRestaurant.address = String(item.address_obj?.street1 ?? "no address")
-                    newRestaurant.desc = String(item.description ?? "no description")
-                    newRestaurant.rating = Int64(item.rating ?? "1") ?? 1
-                newRestaurant.price=Int64(5)
-                    print(newRestaurant)
+                let newRestaurant = Restaurant(context: moc)
+                newRestaurant.name = String(item.name ?? "no name")
+                newRestaurant.url = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
+                newRestaurant.address = String(item.address_obj?.street1 ?? "no address")
+                newRestaurant.desc = String(item.description ?? "no description")
+                newRestaurant.rating = Int64(item.rating ?? "1") ?? 1
+                newRestaurant.price = Int64(5)
+                newRestaurant.latitude = item.latitude
+                newRestaurant.longitude = item.longitude
+                    //print(newRestaurant)
                     
                     do {
                         try moc.save()

@@ -36,6 +36,8 @@ struct RestaurantsView: View {
                                        Spacer()
                                            .frame(width: 10)
                                        ForEach(restaurants.prefix(5)){ restaurant in
+                                           let latitude = Double(restaurant.latitude ?? "60.16364")
+                                           let longitude = Double(restaurant.longitude ?? "24.947996")
                                            let newRestaurant = RestaurantHC(
                                             name: restaurant.name ?? "no name",
                                             imageURL: restaurant.url ?? "no",
@@ -43,7 +45,10 @@ struct RestaurantsView: View {
                                             description: restaurant.desc ?? "no descpription",
                                             address: restaurant.address ?? "no address",
                                             priceLevel: restaurant.price ?? 5,
-                                            coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
+                                            coordinate: CLLocationCoordinate2D(
+                                               latitude: latitude ?? 60.16364,
+                                               longitude: longitude ?? 24.947996)
+                                           )
                                            NavigationLink(destination: DetailsView(restaurant: newRestaurant)) {
                                                ListElementView(restaurant: newRestaurant, color: colors.randomElement() ?? .customBlue)
                                            }
@@ -61,6 +66,8 @@ struct RestaurantsView: View {
                                 Spacer()
                                     .frame(width: 10)
                                 ForEach(restaurants.prefix(5)){ restaurant in
+                                    let latitude = Double(restaurant.latitude ?? "60.16364")
+                                    let longitude = Double(restaurant.longitude ?? "24.947996")
                                     let newRestaurant = RestaurantHC(
                                      name: restaurant.name ?? "no name",
                                      imageURL: restaurant.url ?? "no",
@@ -68,7 +75,10 @@ struct RestaurantsView: View {
                                      description: restaurant.desc ?? "no description",
                                      address: restaurant.address ?? "no address",
                                      priceLevel: restaurant.price ?? 5,
-                                     coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
+                                     coordinate: CLLocationCoordinate2D(
+                                        latitude: latitude ?? 60.16364,
+                                        longitude: longitude ?? 24.947996)
+                                    )
                                     NavigationLink(destination: DetailsView(restaurant: newRestaurant)) {
                                         ListElementView(restaurant: newRestaurant, color: colors.randomElement() ?? .customBlue)
                                     }
@@ -86,6 +96,8 @@ struct RestaurantsView: View {
                                 Spacer()
                                     .frame(width: 10)
                                 ForEach(restaurants.prefix(5)){ restaurant in
+                                    let latitude = Double(restaurant.latitude ?? "60.16364")
+                                    let longitude = Double(restaurant.longitude ?? "24.947996")
                                     let newRestaurant = RestaurantHC(
                                      name: restaurant.name ?? "no name",
                                      imageURL: restaurant.url ?? "no",
@@ -93,7 +105,10 @@ struct RestaurantsView: View {
                                      description: restaurant.desc ?? "no description",
                                      address: restaurant.address ?? "no address",
                                      priceLevel: restaurant.price ?? 5,
-                                     coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
+                                     coordinate: CLLocationCoordinate2D(
+                                        latitude: latitude ?? 60.16364,
+                                        longitude: longitude ?? 24.947996)
+                                    )
                                     NavigationLink(destination: DetailsView(restaurant: newRestaurant)) {
                                         ListElementView(restaurant: newRestaurant, color: colors.randomElement() ?? .customBlue)
                                     }
