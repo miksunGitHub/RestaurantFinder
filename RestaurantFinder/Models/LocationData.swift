@@ -25,3 +25,4 @@ struct LocationObject: Codable{
     let location_id: String
     let name: String
 }
+

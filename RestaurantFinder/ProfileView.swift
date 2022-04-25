@@ -8,9 +8,20 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @FetchRequest(sortDescriptors: []) var resturantArray: FetchedResults<ResturantArray>
+    
     var body: some View {
-        NavigationView {
-            Text("ProfileView  content....")
+//                NavigationView {
+//                    Text("ProfileView  content....")
+//                }
+        VStack{
+            List{
+                ForEach(resturantArray, id: \.self){ resturant in
+                    ForEach(resturant.resturantArray, id: \.self){ item in
+                        Text(item.wrappedName)
+                    }
+                }
+            }
         }
     }
 }
