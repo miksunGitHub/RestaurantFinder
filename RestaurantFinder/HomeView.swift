@@ -90,11 +90,6 @@ struct HomeView: View {
                             Text(walking ? "Walking" : " Automobile")
                         })
                     }
-                    .onAppear (){
-                        region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
-                        convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-                        print("user's cityName is \(city)")
-                    }
                     
                 }
                 
