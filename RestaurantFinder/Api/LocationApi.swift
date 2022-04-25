@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 // Fetching location id from location name
-func fetchLocationId(_ location: String){
+func fetchLocationId(_ location: String, context: NSManagedObjectContext){
     let headers = [
         "content-type": "application/x-www-form-urlencoded",
         "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
@@ -39,7 +40,7 @@ func fetchLocationId(_ location: String){
             //                    print("Data \(jsonObject.results.data.count)")
 //            print("Data \(jsonObject.results.data[0].result_object.location_id)")
             let location_id = jsonObject.results.data[0].result_object.location_id
-            fetchData(location_id)
+            fetchData(location_id, context: context)
             
         }
         catch{

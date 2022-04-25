@@ -7,11 +7,15 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 // Fetching resurant data from  Api
-func fetchData (_ location_id: String){
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var resturantArray: FetchedResults<ResturantArray>
+func fetchData (_ location_id: String, context: NSManagedObjectContext){
+    
+    let moc = context
+    //@Environment(\.managedObjectContext) var moc
+    @FetchRequest(
+        entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
     
     let headers = [
         "content-type": "application/x-www-form-urlencoded",
@@ -43,17 +47,38 @@ func fetchData (_ location_id: String){
             let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
             
             jsonObject.results.data.forEach{resturant in
-                print(resturant)
+                //print(String(resturant.photo?.images?.medium?.url ?? "none") )
+                
+                //print(resturant.address_obj?.street1)
             }
             
-//            jsonObject.results.data.forEach{ item in
-//                let resturant = ResturantObject(context: moc)
-//                resturant.name = item.name
-//                resturant.origin = ResturantArray(context: moc)
-//            }
-//
-//            try? moc.save()
-        }
+            jsonObject.results.data.forEach{ item in
+                //let restarant = Restarant(context: moc)
+                //restarant.name = item.name
+                
+                    let newRestaurant = Restaurant(context: moc)
+                    newRestaurant.name = String(item.name ?? "no name")
+                    newRestaurant.url = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
+                    newRestaurant.address = String(item.address_obj?.street1 ?? "no address")
+                    newRestaurant.desc = String(item.description ?? "no description")
+                    newRestaurant.rating = Int64(item.rating ?? "1") ?? 1
+                newRestaurant.price=Int64(5)
+                    print(newRestaurant)
+                    
+                    do {
+                        try moc.save()
+                    } catch {
+                        // Replace this implementation with code to handle the error appropriately.
+                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                        let nsError = error as NSError
+                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    }
+                }
+                
+            }
+
+            //try? moc.save()
+        
         catch{
             print("Error printing \(error)")
         }

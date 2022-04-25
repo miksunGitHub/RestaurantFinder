@@ -6,16 +6,22 @@
 //
 
 import SwiftUI
-
+import CoreLocation
+import CoreData
 
 struct RestaurantsView: View {
     
-    let restaurants: [RestaurantHC]
+    @FetchRequest(
+        entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
+    
+    //let restaurants: [RestaurantHC]
     
     let colors: [Color] = [.customRed, .customBlue, .customGreen, .customOrange, .customYellow]
     
     var body: some View {
-        let restaurantsByRating=restaurants.sorted{$0.rating > $1.rating}
+        //let restaurantsByRating=restaurants.sorted{$0.rating > $1.rating}
+        
+        
         
         NavigationView {
             
@@ -29,10 +35,17 @@ struct RestaurantsView: View {
                                    HStack{
                                        Spacer()
                                            .frame(width: 10)
-                                       ForEach(restaurants){ restaurant in
-                                           
-                                           NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                               ListElementView(restaurant: restaurant, color: colors.randomElement() ?? .customBlue)
+                                       ForEach(restaurants.prefix(5)){ restaurant in
+                                           let newRestaurant = RestaurantHC(
+                                            name: restaurant.name ?? "no name",
+                                            imageURL: restaurant.url ?? "no",
+                                            rating: restaurant.rating ?? 1,
+                                            description: restaurant.desc ?? "no descpription",
+                                            address: restaurant.address ?? "no address",
+                                            priceLevel: restaurant.price ?? 5,
+                                            coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
+                                           NavigationLink(destination: DetailsView(restaurant: newRestaurant)) {
+                                               ListElementView(restaurant: newRestaurant, color: colors.randomElement() ?? .customBlue)
                                            }
                                        }
                                        }
@@ -47,9 +60,17 @@ struct RestaurantsView: View {
                             HStack{
                                 Spacer()
                                     .frame(width: 10)
-                                ForEach(restaurantsByRating){ restaurant in
-                                    NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                        ListElementView(restaurant: restaurant, color: colors.randomElement() ?? .customBlue)
+                                ForEach(restaurants.prefix(5)){ restaurant in
+                                    let newRestaurant = RestaurantHC(
+                                     name: restaurant.name ?? "no name",
+                                     imageURL: restaurant.url ?? "no",
+                                     rating: restaurant.rating ?? 1,
+                                     description: restaurant.desc ?? "no description",
+                                     address: restaurant.address ?? "no address",
+                                     priceLevel: restaurant.price ?? 5,
+                                     coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
+                                    NavigationLink(destination: DetailsView(restaurant: newRestaurant)) {
+                                        ListElementView(restaurant: newRestaurant, color: colors.randomElement() ?? .customBlue)
                                     }
                                 }
                             }
@@ -61,13 +82,20 @@ struct RestaurantsView: View {
                     .padding(.leading, 10)
                     .padding(.top, 10)
                     ScrollView(.horizontal, content:{
-                        
                             HStack{
                                 Spacer()
                                     .frame(width: 10)
-                                ForEach(restaurants){ restaurant in
-                                    NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                        ListElementView(restaurant: restaurant, color: colors.randomElement() ?? .customBlue)
+                                ForEach(restaurants.prefix(5)){ restaurant in
+                                    let newRestaurant = RestaurantHC(
+                                     name: restaurant.name ?? "no name",
+                                     imageURL: restaurant.url ?? "no",
+                                     rating: restaurant.rating ?? 1,
+                                     description: restaurant.desc ?? "no description",
+                                     address: restaurant.address ?? "no address",
+                                     priceLevel: restaurant.price ?? 5,
+                                     coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
+                                    NavigationLink(destination: DetailsView(restaurant: newRestaurant)) {
+                                        ListElementView(restaurant: newRestaurant, color: colors.randomElement() ?? .customBlue)
                                     }
                                 }
                             }
@@ -90,6 +118,6 @@ struct RestaurantsView: View {
 
 struct RestaurantsView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantsView(restaurants: RestaurantHC.sampleData)
+        RestaurantsView()
     }
 }

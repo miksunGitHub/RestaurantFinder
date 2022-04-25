@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ProfileView: View {
-    @FetchRequest(sortDescriptors: []) var resturantArray: FetchedResults<ResturantArray>
+    //@FetchRequest(sortDescriptors: []) var resturantArray: //FetchedResults<ResturantArray>
+    @FetchRequest(
+        entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
+    
+    
     
     var body: some View {
 //                NavigationView {
@@ -16,11 +21,11 @@ struct ProfileView: View {
 //                }
         VStack{
             List{
-                ForEach(resturantArray, id: \.self){ resturant in
-                    ForEach(resturant.resturantArray, id: \.self){ item in
-                        Text(item.wrappedName)
+                    ForEach(restaurants){ item in
+                        
+                        Text(item.name ?? "no name")
                     }
-                }
+                
             }
         }
     }
