@@ -18,26 +18,25 @@ struct Results: Codable{
 }
 
 struct Resturant : Codable{
-    let location_id: String
-    let name:String
-    let latitude: String
-    let longitude:String
-    let num_reviews:String
-    let timezone :String
-    let ranking: String
-    let rating: String
-    let description: String
-    let web_url: String
-    let write_review: String
-    let address_obj: Address
-//    let photo: Images?
+    let location_id: String?
+    let name:String?
+    let latitude: String?
+    let longitude:String?
+    let num_reviews:String?
+    let timezone :String?
+    let ranking: String?
+    let rating: String?
+    let description: String?
+    let web_url: String?
+    let write_review: String?
+    let address_obj: Address?
     let phone: String?
     let website : String?
     let email : String?
-//        let hours
-    let cuisine: [CusineType]
-    let dietary_restrictions: [CusineType]
-    
+    let booking: Booking?
+    let cuisine: [CusineType]?
+    let dietary_restrictions: [CusineType]?
+    let photo: ImagesObject?
 }
 
 struct Address: Codable{
@@ -49,19 +48,18 @@ struct Address: Codable{
     let postalcode : String?
 }
 
-struct Images: Codable{
-    let thumbnail : Thumbnail
-    let original: Original
+struct ImagesObject: Codable{
+    let images: Images?
 }
 
-struct Thumbnail: Codable{
-    let width : String?
-    let url: String?
-    let height: String?
+struct Images: Codable {
+    let small: ImageObject?
+    let medium: ImageObject?
+    let original: ImageObject?
 }
 
-struct Original: Codable{
-    let width : String?
+struct ImageObject : Codable {
+    let width: String?
     let url: String?
     let height: String?
 }
@@ -69,4 +67,8 @@ struct Original: Codable{
 struct CusineType: Codable{
     let key: String?
     let name: String?
+}
+
+struct Booking: Codable{
+    let url: String?
 }

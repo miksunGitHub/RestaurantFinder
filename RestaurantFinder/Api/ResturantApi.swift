@@ -56,7 +56,7 @@ func fetchData (_ location_id: String){
 //                try? moc.save()
         }
         catch{
-            print("Error printing")
+            print("Error printing \(error)")
         }
         
     })
