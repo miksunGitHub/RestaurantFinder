@@ -10,10 +10,10 @@ import SwiftUI
 
 struct TabBarView: View {
     
-//    init() {
-//    UITabBar.appearance().backgroundColor = UIColor.blue
-//
-//    }
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor.white
+
+    }
     
     var body: some View {
         TabView {
@@ -40,9 +40,9 @@ struct TabBarView: View {
                     Image(systemName: "person.circle.fill")
                     Text("Profile")
                 }
-        }
+        }.accentColor(.customBlue)
             }
-    
+        
     
 }
 

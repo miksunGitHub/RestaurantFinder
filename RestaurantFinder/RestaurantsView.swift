@@ -12,23 +12,27 @@ struct RestaurantsView: View {
     
     let restaurants: [RestaurantHC]
     
+    let colors: [Color] = [.customRed, .customBlue, .customGreen, .customOrange, .customYellow]
+    
     var body: some View {
         let restaurantsByRating=restaurants.sorted{$0.rating > $1.rating}
         
         NavigationView {
+            
             ScrollView(.vertical, content:{
                 VStack(alignment: .leading){
                     Text(NSLocalizedString("nearYou", comment: ""))
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
                         .foregroundColor(Color.white)
-                        .padding(.leading, 10)
+                        .padding(.init(top: 20, leading: 10, bottom: 10, trailing: 10))
                         ScrollView(.horizontal, content:{
                                    HStack{
                                        Spacer()
                                            .frame(width: 10)
                                        ForEach(restaurants){ restaurant in
+                                           
                                            NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                               ListElementView(restaurant: restaurant)
+                                               ListElementView(restaurant: restaurant, color: colors.randomElement() ?? .customBlue)
                                            }
                                        }
                                        }
@@ -45,7 +49,7 @@ struct RestaurantsView: View {
                                     .frame(width: 10)
                                 ForEach(restaurantsByRating){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                        ListElementView(restaurant: restaurant)
+                                        ListElementView(restaurant: restaurant, color: colors.randomElement() ?? .customBlue)
                                     }
                                 }
                             }
@@ -63,7 +67,7 @@ struct RestaurantsView: View {
                                     .frame(width: 10)
                                 ForEach(restaurants){ restaurant in
                                     NavigationLink(destination: DetailsView(restaurant: restaurant)) {
-                                        ListElementView(restaurant: restaurant)
+                                        ListElementView(restaurant: restaurant, color: colors.randomElement() ?? .customBlue)
                                     }
                                 }
                             }
@@ -75,9 +79,11 @@ struct RestaurantsView: View {
             }
                        
             ).background(Color.colorDarkGrey)
-                
-        }
-        .navigationBarHidden(true)
+                .navigationBarTitle("")
+                    .navigationBarHidden(true)
+                    .padding(.bottom, 0.5)
+            }
+        
     }
     
 }
