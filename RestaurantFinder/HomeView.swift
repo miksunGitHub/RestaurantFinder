@@ -5,7 +5,7 @@
 //  Created by Alex on 11.4.2022.
 //
 
-//
+//60,159803 24,934328
 
 import SwiftUI
 import MapKit
@@ -33,7 +33,7 @@ struct HomeView: View {
     
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328), span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
     
-    @State var routeSteps : [RouteSteps] = [RouteSteps(step: "Enter a destination")]
+    @State var routeSteps : [RouteSteps] = []
     
     @State var annotations = [
         Location(name: "Baskeri & Basso", coordinate: CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)),
@@ -44,8 +44,6 @@ struct HomeView: View {
     ]
     private let manage = CLLocationManager()
     
-    
-    
     @State var isNavigationBarHidden: Bool = true
     @State var mapFilters: MKPointOfInterestFilter = MKPointOfInterestFilter(including: [])
     @State private var showDirections = false
@@ -53,7 +51,12 @@ struct HomeView: View {
     @State var tracking : MapUserTrackingMode = .follow
     
     @State private var startPoint = LocationHelper.currentLocation
-
+    
+    @State private var city = "no city"
+    
+    @State var walking: Bool = true
+    
+    
     var body: some View {
         
         VStack {
@@ -67,16 +70,30 @@ struct HomeView: View {
                             print("startpoint is \($startPoint)")
                             print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
                             region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
+                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                            print("Tracking user's cityName is \(city)")
                         }, label: {
-                          Text("tracking")
+                            Text("tracking")
                         })
-
+                        
                         Button(action: {
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                             print("user's location is \(UserDefaults.standard.string(forKey: "city"))")
+                            print("user's cityName is \(city)")
                         }, label: {
-                          Text("print city name")
+                            Text("City name")
                         })
+                        Text(city)
+                        Button(action: {
+                            self.walking.toggle()
+                        }, label: {
+                            Text(walking ? "Walking" : " Automobile")
+                        })
+                    }
+                    .onAppear (){
+                        region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
+                        convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                        print("user's cityName is \(city)")
                     }
                     
                 }
@@ -85,8 +102,8 @@ struct HomeView: View {
             Map(coordinateRegion: $region,
                 interactionModes: .all,
                 showsUserLocation: true,
-                userTrackingMode: .constant(.follow),
-//                userTrackingMode: $tracking,
+                //                userTrackingMode: .constant(.follow),
+                userTrackingMode: $tracking,
                 annotationItems: restaurants)
             { restaurant in
                 MapAnnotation(coordinate: restaurant.coordinate) {
@@ -94,28 +111,30 @@ struct HomeView: View {
                         DetailsView(restaurant: restaurant)
                     } label:{
                         Image(systemName: "house.circle")
-                        //                        Circle()
-                        //                            .stroke(.red, lineWidth: 3)
                             .frame(width: 15, height: 15)
                             .onTapGesture {
+                                convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                                 print("Tapped on \(restaurant.name)")
                                 destination = restaurant.coordinate
                                 findDirections()
                                 self.showDirections.toggle()
-                                print(startPoint)
+                                print(city)
                             }
                         Text(restaurant.name)
                     }
                 }
             }
         }
-        .navigationBarHidden(self.isNavigationBarHidden)
+//        .navigationBarHidden(self.isNavigationBarHidden)
+        .navigationBarHidden(true)
         .onAppear(){
             MKMapView.appearance().mapType = .mutedStandard
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
             self.isNavigationBarHidden = true
-                convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-            
+            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+            print("onAppear UserDefaults  \(UserDefaults.standard.string(forKey: "city"))")
+            print("onAppear cityName \(city)")
+            print(LocationHelper.currentLocation)
         }
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
@@ -132,7 +151,7 @@ struct HomeView: View {
                 
             }
         })
-    
+        
     }
     
     func findDirections(){
@@ -144,8 +163,8 @@ struct HomeView: View {
         request.destination = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil)))
         
         request.requestsAlternateRoutes = false
-        request.transportType = .walking
         
+        request.transportType = walking ? .walking : .automobile
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
             for route in (response?.routes)! {
@@ -156,7 +175,7 @@ struct HomeView: View {
                 }
             }
         })
-    
+        
         
     }
     
@@ -167,23 +186,31 @@ struct HomeView: View {
             
             var placeMark: CLPlacemark!
             placeMark = placemarks?[0]
-
+            
             if let city = placeMark.locality {
                 print(city)
+                self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
                 fetchLocationId(city)
+                print("cityName \(city)")
+                
+            }
+            
+            if let street = placeMark.thoroughfare {
+                print(street)
+          
             }
             
         })
         
     }
-
+    
 }
 
 
 class LocationHelper: NSObject, ObservableObject {
     static let shared = LocationHelper()
-    static let DefaultLocation = CLLocationCoordinate2D(latitude: 63.157803, longitude: 25.934328)
+    static let DefaultLocation = CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328)
     static var currentLocation: CLLocationCoordinate2D {
         guard let location = shared.locationManager.location else {
             return DefaultLocation
@@ -193,19 +220,10 @@ class LocationHelper: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     private override init() {
         super.init()
-        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
-    }
-}
-extension LocationHelper: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) { }
-    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location manager failed with error: \(error.localizedDescription)")
-    }
-    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print("Location manager changed the status: \(status)")
     }
 }
 

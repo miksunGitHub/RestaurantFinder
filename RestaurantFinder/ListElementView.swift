@@ -10,14 +10,17 @@ import CoreData
 
 struct ListElementView: View {
     let restaurant: RestaurantHC
+    let color: Color
     
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
         entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
+    
+    
 
     var body: some View {
-        VStack{
+        VStack(){
             Spacer()
                 .frame(width: 10)
             AsyncImage(url: URL(string: restaurant.imageURL),
@@ -27,16 +30,16 @@ struct ListElementView: View {
                                         .frame(maxWidth: 150, maxHeight: 100)
                                         .scaledToFill()
                                         .overlay(
-                                            Image(systemName: "bookmark")
+                                            Image(systemName: "bookmark.fill")
                                                 .gesture(
                                                     TapGesture().onEnded{
                                                         addItem()
                                                     }
                                                 )
-                                                .foregroundColor(Color.blueMansell)
+                                                .foregroundColor(color)
                                                 .padding(.top, 15)
                                                 .padding(.trailing, 10)
-                                                .font(Font.system(size: 20, weight: .semibold))
+                                                .font(Font.system(size: 18, weight: .semibold))
                                                 ,
                                             alignment: .topTrailing
                                         )
@@ -48,9 +51,10 @@ struct ListElementView: View {
             Spacer()
             Text(restaurant.name)
                 .foregroundColor(Color.white)
+            Spacer()
             HStack{
                 ForEach(0..<Int(restaurant.rating)){ i in
-                        Image(systemName: "star.fill")
+                        Image(systemName: "star")
                         .resizable().frame(width: 14, height: 14)
                         .foregroundColor(Color.white)
                 }
@@ -60,8 +64,8 @@ struct ListElementView: View {
         }
         //.padding(10)
         .frame(width: 150, height: 160)
-        .border(Color.blueMansell)
-        .background(Color.blueMansell)
+        .border(color)
+        .background(color)
         .cornerRadius(10)
     }
     
@@ -96,6 +100,6 @@ struct ListElementView_Previews: PreviewProvider {
 
     
     static var previews: some View {
-        ListElementView(restaurant: restaurant)
+        ListElementView(restaurant: restaurant, color: .gray)
     }
 }
