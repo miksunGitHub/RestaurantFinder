@@ -108,7 +108,6 @@ struct HomeView: View {
                         Image(systemName: "house.circle")
                             .frame(width: 15, height: 15)
                             .onTapGesture {
-                                convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                                 print("Tapped on \(restaurant.name)")
                                 destination = restaurant.coordinate
                                 findDirections()
