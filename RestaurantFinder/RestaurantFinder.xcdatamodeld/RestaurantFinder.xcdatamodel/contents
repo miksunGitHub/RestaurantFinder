@@ -3,6 +3,8 @@
     <entity name="Favourite" representedClassName="Favourite" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -11,6 +13,8 @@
     <entity name="Restaurant" representedClassName="Restaurant" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -24,8 +28,8 @@
         <relationship name="origin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ResturantArray" inverseName="resturantObject" inverseEntity="ResturantArray"/>
     </entity>
     <elements>
-        <element name="Favourite" positionX="278.7108154296875" positionY="-239.5139465332031" width="128" height="119"/>
-        <element name="Restaurant" positionX="135" positionY="-72" width="128" height="119"/>
+        <element name="Favourite" positionX="278.7108154296875" positionY="-239.5139465332031" width="128" height="149"/>
+        <element name="Restaurant" positionX="135" positionY="-72" width="128" height="149"/>
         <element name="ResturantArray" positionX="-20.11102294921875" positionY="196.9680786132812" width="128" height="58"/>
         <element name="ResturantObject" positionX="-32.90087890625" positionY="-65.15780639648438" width="128" height="59"/>
     </elements>

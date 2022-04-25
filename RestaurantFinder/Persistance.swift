@@ -21,6 +21,8 @@ struct PersistenceController {
             newRestaurant.desc = "Nice place"
             newRestaurant.address = "Fleminginkatu 21"
             newRestaurant.url = "https://www.ravintolacella.fi/"
+            newRestaurant.latitude = "60.163624"
+            newRestaurant.longitude = "24.947996"
         }
         
         do {

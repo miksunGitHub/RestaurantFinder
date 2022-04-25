@@ -33,6 +33,10 @@ struct FavoritesView: View {
             LazyVGrid(columns: columns,
                       alignment: .leading, spacing: 10){
                                    ForEach(favourites){ favourite in
+                                       
+                                       let latitude = Double(favourite.latitude ?? "60.16364")
+                                       let longitude = Double(favourite.longitude ?? "24.947996")
+                                       
                                        let newFavourite = RestaurantHC(
                                         name: favourite.name ?? "no name",
                                         imageURL: favourite.url ?? "no",
@@ -40,7 +44,10 @@ struct FavoritesView: View {
                                         description: favourite.desc ?? "no descriotion",
                                         address: favourite.address ?? "no address",
                                         priceLevel: favourite.price,
-                                        coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
+                                        coordinate: CLLocationCoordinate2D(
+                                            latitude: latitude ?? 60.16364,
+                                            longitude: longitude ?? 24.947996)
+                                       )
                                        
                                        NavigationLink(destination: DetailsView(restaurant: newFavourite)) {
                                            ListElementView(restaurant: newFavourite, color: colors.randomElement() ?? .gray)
