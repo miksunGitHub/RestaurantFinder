@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import CoreLocation
 
 struct FavoritesView: View {
     
@@ -38,7 +39,8 @@ struct FavoritesView: View {
                                         rating: favourite.rating ,
                                         description: favourite.desc ?? "no descriotion",
                                         address: favourite.address ?? "no address",
-                                        priceLevel: favourite.price )
+                                        priceLevel: favourite.price,
+                                        coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996))
                                        
                                        NavigationLink(destination: DetailsView(restaurant: newFavourite)) {
                                            ListElementView(restaurant: newFavourite, color: colors.randomElement() ?? .gray)

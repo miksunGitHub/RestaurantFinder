@@ -17,7 +17,7 @@
         <attribute name="url" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Favourite" positionX="-36" positionY="9" width="128" height="119"/>
+        <element name="Favourite" positionX="-36" positionY="9" width="128" height="14"/>
         <element name="Restaurant" positionX="-36" positionY="54" width="128" height="119"/>
     </elements>
 </model>
