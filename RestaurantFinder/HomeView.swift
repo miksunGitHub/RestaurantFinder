@@ -168,7 +168,7 @@ struct HomeView: View {
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
             for route in (response?.routes)! {
-                self.routeSteps = []
+                self.routeSteps = [RouteSteps(step: walking ? "By walking" : " By automobile")]
                 
                 for step in route.steps {
                     self.routeSteps.append(RouteSteps(step: step.instructions))
