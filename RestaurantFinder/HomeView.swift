@@ -31,7 +31,7 @@ struct HomeView: View {
     @State private var point = CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)
     
     
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328), span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328), span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
     
     @State var routeSteps : [RouteSteps] = []
     
