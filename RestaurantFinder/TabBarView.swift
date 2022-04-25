@@ -23,7 +23,7 @@ struct TabBarView: View {
                     Text("Home")
                 }
             
-            RestaurantsView(restaurants: RestaurantHC.sampleData)
+            RestaurantsView()
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("Restaurants")

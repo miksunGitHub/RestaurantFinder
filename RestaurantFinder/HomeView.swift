@@ -24,6 +24,8 @@ struct Location : Identifiable {
 
 struct HomeView: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     let restaurants: [RestaurantHC]
     
     @State private var destination = CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)
@@ -185,7 +187,7 @@ struct HomeView: View {
                 print(city)
                 self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
-                fetchLocationId(city)
+                fetchLocationId(city, context: viewContext)
                 print("cityName \(city)")
                 
             }
