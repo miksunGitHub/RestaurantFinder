@@ -138,7 +138,7 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
-                Text("Directions")
+                Text("Directions \(walking ? " by walking" : " by automobile")")
                     .font(.largeTitle)
                     .bold()
                     .padding()
@@ -168,7 +168,7 @@ struct HomeView: View {
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
             for route in (response?.routes)! {
-                self.routeSteps = [RouteSteps(step: walking ? "By walking" : " By automobile")]
+                self.routeSteps = []
                 
                 for step in route.steps {
                     self.routeSteps.append(RouteSteps(step: step.instructions))
