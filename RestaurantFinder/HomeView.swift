@@ -26,6 +26,26 @@ struct HomeView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    // Search
+    @State private var searchText = ""
+    @State private var isEditing = false
+    @FetchRequest(
+        entity: Restaurant.entity(), sortDescriptors: [])
+    var fetchedRestaurants: FetchedResults<Restaurant>
+    var searchQuery: Binding<String> {
+        Binding {
+            searchText
+        } set: { newValue in
+            searchText = newValue
+            guard !newValue.isEmpty else {
+                fetchedRestaurants.nsPredicate = nil
+                return
+            }
+            fetchedRestaurants.nsPredicate = NSPredicate(
+                format: "name contains[cd] %@", newValue)
+        }
+    }
+    
     let restaurants: [RestaurantHC]
     
     @State private var destination = CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)
@@ -96,29 +116,101 @@ struct HomeView: View {
                 }
                 
             }
-            Map(coordinateRegion: $region,
-                interactionModes: .all,
-                showsUserLocation: true,
-                //                userTrackingMode: .constant(.follow),
-                userTrackingMode: $tracking,
-                annotationItems: restaurants)
-            { restaurant in
-                MapAnnotation(coordinate: restaurant.coordinate) {
-                    NavigationLink {
-                        DetailsView(restaurant: restaurant)
-                    } label:{
-                        Image(systemName: "house.circle")
-                            .frame(width: 15, height: 15)
-                            .onTapGesture {
-                                print("Tapped on \(restaurant.name)")
-                                destination = restaurant.coordinate
-                                findDirections()
-                                self.showDirections.toggle()
-                                print(city)
-                            }
-                        Text(restaurant.name)
+            ZStack {
+                Map(coordinateRegion: $region,
+                    interactionModes: .all,
+                    showsUserLocation: true,
+                    //                userTrackingMode: .constant(.follow),
+                    userTrackingMode: $tracking,
+                    annotationItems: restaurants)
+                { restaurant in
+                    MapAnnotation(coordinate: restaurant.coordinate) {
+                        NavigationLink {
+                            DetailsView(restaurant: restaurant)
+                        } label:{
+                            Image(systemName: "house.circle")
+                                .frame(width: 15, height: 15)
+                                .onTapGesture {
+                                    print("Tapped on \(restaurant.name)")
+                                    destination = restaurant.coordinate
+                                    findDirections()
+                                    self.showDirections.toggle()
+                                    print(city)
+                                }
+                            Text(restaurant.name)
+                        }
                     }
                 }
+                VStack {
+                    HStack {
+                        TextField("Search ...", text: searchQuery)
+                            .padding(7)
+                            .padding(.horizontal, 25)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
+                            .overlay(
+                                HStack {
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(.gray)
+                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                        .padding(.leading, 8)
+                                    
+                                    if isEditing {
+                                        Button(action: {
+                                            searchText = ""
+                                        }) {
+                                            Image(systemName: "multiply.circle.fill")
+                                                .foregroundColor(.gray)
+                                                .padding(.trailing, 8)
+                                        }
+                                    }
+                                }
+                            )
+                            .padding(.horizontal, 10)
+                            .onTapGesture {
+                                isEditing = true
+                            }
+                        
+                        if isEditing {
+                            Button(action: {
+                                isEditing = false
+                                searchText = ""
+                                // Dismiss the keyboard
+                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            }) {
+                                Text("Cancel")
+                            }
+                            .padding(.trailing, 10)
+                            .transition(.move(edge: .trailing))
+                            .animation(.default)
+                        }
+                    }.padding(.top, 10)
+                    
+                    if(isEditing) {
+                        List {
+                            ForEach(fetchedRestaurants) { place in
+                                VStack {
+                                    Text(place.name ?? "")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.leading)
+                                    HStack {
+                                        Text(place.address ?? "")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.leading)
+                                        Spacer()
+                                        Image(systemName: "location")
+                                            .foregroundColor(.gray)
+                                            .padding(.trailing, 8)
+                                            .onTapGesture {
+                                                // selectSearchResult(place: place)
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Spacer()
+                }.background(isEditing ? Color(.white) : nil)
             }
         }
 //        .navigationBarHidden(self.isNavigationBarHidden)
