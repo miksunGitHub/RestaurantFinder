@@ -15,23 +15,57 @@ struct FavoritesView: View {
     @FetchRequest(
         entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
     
+    let colors: [Color] = [.customRed, .customBlue, .customGreen, .customOrange, .customYellow]
+    
+    let columns = [GridItem(.flexible()),
+                   GridItem(.flexible())]
+    
     var body: some View {
         NavigationView {
-            VStack{
-                Button(action: {
-                    print(favourites)
-                }, label: {
-                    Text("print")
-                })
-                Text("FavoritesView  content....")
-                }
-        }
+            
+                ScrollView(.vertical, content:{
+                    VStack{
+                Text(NSLocalizedString("favorites", comment: ""))
+                    .font(.system(size: 28.0, weight: .bold, design: .serif))
+                    .foregroundColor(Color.white)
+                    .padding(.init(top: 20, leading: 10, bottom: 10, trailing: 10))
+                    .frame(alignment: .topLeading)
+            LazyVGrid(columns: columns,
+                      alignment: .leading){
+                                   ForEach(favourites){ favourite in
+                                       let newFavourite = RestaurantHC(
+                                        name: favourite.name ?? "no name",
+                                        imageURL: favourite.url ?? "no",
+                                        rating: favourite.rating ,
+                                        description: favourite.desc ?? "no descriotion",
+                                        address: favourite.address ?? "no address",
+                                        priceLevel: favourite.price )
+                                       
+                                       NavigationLink(destination: DetailsView(restaurant: newFavourite)) {
+                                           ListElementView(restaurant: newFavourite, color: colors.randomElement() ?? .gray)
+                                       }
+                                   }
+                                   
+                               }
+                        Spacer()
+                    }
+            }
+                )
+                .background(Color.colorDarkGrey)
+                    .navigationBarTitle("")
+                    .navigationBarHidden(true)
+                    
+            }
     }
+        
+    
 }
+                            
+
 
 struct FavoritesView_Previews: PreviewProvider {
+    
     static var previews: some View {
         FavoritesView()
-            
     }
 }

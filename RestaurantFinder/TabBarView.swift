@@ -11,7 +11,7 @@ import SwiftUI
 struct TabBarView: View {
     
 //    init() {
-//    UITabBar.appearance().backgroundColor = UIColor.blue
+//      UITabBar.appearance().backgroundColor = UIColor.blue
 //
 //    }
     
@@ -40,9 +40,9 @@ struct TabBarView: View {
                     Image(systemName: "person.circle.fill")
                     Text("Profile")
                 }
-        }
+        }//.accentColor(.customRed)
             }
-    
+        
     
 }
 

@@ -11,7 +11,9 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             Text("HomeView  content....")
-        }
+                
+        }.navigationBarTitle("")
+            .navigationBarHidden(true)
     }
 }
 
