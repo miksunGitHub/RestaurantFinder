@@ -30,6 +30,7 @@
 		A7397AAB2814492800CA3670 /* ResturantArray+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7397AA72814492800CA3670 /* ResturantArray+CoreDataClass.swift */; };
 		A7397AAC2814492800CA3670 /* ResturantArray+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7397AA82814492800CA3670 /* ResturantArray+CoreDataProperties.swift */; };
 		A7397AAF28144A9700CA3670 /* ResturantController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7397AAE28144A9700CA3670 /* ResturantController.swift */; };
+		A75D6CBD281828AC006333A8 /* DeleteCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D6CBC281828AC006333A8 /* DeleteCoreData.swift */; };
 		A7815D2C280ABDE40096B664 /* CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7815D2B280ABDE40096B664 /* CustomFonts.swift */; };
 		A7815D31280AC38E0096B664 /* BeauRivage-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7815D2F280AC38E0096B664 /* BeauRivage-Regular.ttf */; };
 		A7815D41280AC4480096B664 /* EBGaramond-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7815D33280AC4480096B664 /* EBGaramond-Italic-VariableFont_wght.ttf */; };
@@ -89,6 +90,7 @@
 		A7397AA72814492800CA3670 /* ResturantArray+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResturantArray+CoreDataClass.swift"; sourceTree = "<group>"; };
 		A7397AA82814492800CA3670 /* ResturantArray+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResturantArray+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A7397AAE28144A9700CA3670 /* ResturantController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResturantController.swift; sourceTree = "<group>"; };
+		A75D6CBC281828AC006333A8 /* DeleteCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCoreData.swift; sourceTree = "<group>"; };
 		A7815D25280AB97F0096B664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A7815D2B280ABDE40096B664 /* CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFonts.swift; sourceTree = "<group>"; };
 		A7815D2F280AC38E0096B664 /* BeauRivage-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeauRivage-Regular.ttf"; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				A7397AAE28144A9700CA3670 /* ResturantController.swift */,
+				A75D6CBC281828AC006333A8 /* DeleteCoreData.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				A7397AAA2814492800CA3670 /* ResturantObject+CoreDataProperties.swift in Sources */,
 				6A6C8BCA280F089000DB81CF /* RestaurantFinder.xcdatamodeld in Sources */,
 				A7397AAB2814492800CA3670 /* ResturantArray+CoreDataClass.swift in Sources */,
+				A75D6CBD281828AC006333A8 /* DeleteCoreData.swift in Sources */,
 				A7397AAC2814492800CA3670 /* ResturantArray+CoreDataProperties.swift in Sources */,
 				A712993D2815AFA600582C24 /* LocationApi.swift in Sources */,
 				A7100F632811B773001A5A6F /* LocationData.swift in Sources */,
