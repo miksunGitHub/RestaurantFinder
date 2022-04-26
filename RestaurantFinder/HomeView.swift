@@ -277,18 +277,12 @@ struct HomeView: View {
             
             if let city = placeMark.locality {
                 print(city)
+                if self.city != city {
+                    fetchLocationId(city, context: viewContext)
+                }
                 self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
-                fetchLocationId(city, context: viewContext)
-                print("cityName \(city)")
-                
             }
-            
-            if let street = placeMark.thoroughfare {
-                print(street)
-          
-            }
-            
         })
         
     }
