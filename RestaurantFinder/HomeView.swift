@@ -142,6 +142,7 @@ struct HomeView: View {
                             DetailsView(restaurant: newRestaurant)
                         } label:{
                             Image(systemName: "house.circle")
+                                .foregroundColor(.red)
                                 .frame(width: 15, height: 15)
                                 .onTapGesture {
                                     print("Tapped on \(String(describing: restaurant.name))")
@@ -151,6 +152,7 @@ struct HomeView: View {
                                     print(city)
                                 }
                             Text(restaurant.name!)
+                                
                         }
                     }
                 }
@@ -214,10 +216,11 @@ struct HomeView: View {
                                         Image(systemName: "location")
                                             .foregroundColor(.gray)
                                             .padding(.trailing, 8)
-                                            .onTapGesture {
-                                                // selectSearchResult(place: place)
-                                            }
+                                            
                                     }
+                                }.onTapGesture {
+                                    region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(place.latitude!)!, longitude: Double(place.longitude!)!), span: MKCoordinateSpan(latitudeDelta: 0.002,longitudeDelta: 0.002))
+                                    isEditing = false
                                 }
                             }
                         }
@@ -310,9 +313,6 @@ struct HomeView: View {
 }
 
 extension CLLocationCoordinate2D {
-    /// Returns distance from coordianate in meters.
-    /// - Parameter from: coordinate which will be used as end point.
-    /// - Returns: Returns distance in meters.
     func distance(from: CLLocationCoordinate2D) -> CLLocationDistance {
         let from = CLLocation(latitude: from.latitude, longitude: from.longitude)
         let to = CLLocation(latitude: self.latitude, longitude: self.longitude)
