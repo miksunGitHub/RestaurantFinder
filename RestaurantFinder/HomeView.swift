@@ -100,7 +100,7 @@ struct HomeView: View {
                         
                         Button(action: {
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-                            print("user's location is \(UserDefaults.standard.string(forKey: "city"))")
+                            print("user's location is \(String(describing: UserDefaults.standard.string(forKey: "city")))")
                             print("user's cityName is \(city)")
                         }, label: {
                             Text("City name")
@@ -122,22 +122,35 @@ struct HomeView: View {
                     showsUserLocation: true,
                     //                userTrackingMode: .constant(.follow),
                     userTrackingMode: $tracking,
-                    annotationItems: restaurants)
+                    annotationItems: fetchedRestaurants)
                 { restaurant in
-                    MapAnnotation(coordinate: restaurant.coordinate) {
+                    MapAnnotation(coordinate: CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude!)!, longitude: Double(restaurant.longitude!)!)) {
+                        let latitude = Double(restaurant.latitude ?? "60.16364")
+                        let longitude = Double(restaurant.longitude ?? "24.947996")
+                        let newRestaurant = RestaurantHC(
+                         name: restaurant.name ?? "no name",
+                         imageURL: restaurant.url ?? "no",
+                         rating: restaurant.rating ,
+                         description: restaurant.desc ?? "no descpription",
+                         address: restaurant.address ?? "no address",
+                         priceLevel: restaurant.price ,
+                         coordinate: CLLocationCoordinate2D(
+                            latitude: latitude ?? 60.16364,
+                            longitude: longitude ?? 24.947996)
+                        )
                         NavigationLink {
-                            DetailsView(restaurant: restaurant)
+                            DetailsView(restaurant: newRestaurant)
                         } label:{
                             Image(systemName: "house.circle")
                                 .frame(width: 15, height: 15)
                                 .onTapGesture {
-                                    print("Tapped on \(restaurant.name)")
-                                    destination = restaurant.coordinate
+                                    print("Tapped on \(String(describing: restaurant.name))")
+                                    destination = CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude!)!, longitude: Double(restaurant.longitude!)!)
                                     findDirections()
                                     self.showDirections.toggle()
                                     print(city)
                                 }
-                            Text(restaurant.name)
+                            Text(restaurant.name!)
                         }
                     }
                 }
@@ -220,7 +233,7 @@ struct HomeView: View {
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
             self.isNavigationBarHidden = true
             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-            print("onAppear UserDefaults  \(UserDefaults.standard.string(forKey: "city"))")
+            print("onAppear UserDefaults  \(String(describing: UserDefaults.standard.string(forKey: "city")))")
             print("onAppear cityName \(city)")
             print(LocationHelper.currentLocation)
         }
@@ -242,6 +255,11 @@ struct HomeView: View {
         
     }
     
+    func CLLocationCoordinate2DMaker(latitude: Double, longitude: Double) -> CLLocationCoordinate2D{
+        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        return location
+    }
+    
     func findDirections(){
         
         let request = MKDirections.Request()
@@ -252,11 +270,13 @@ struct HomeView: View {
         
         request.requestsAlternateRoutes = false
         
+        let distance = LocationHelper.currentLocation.distance(from: destination)
+        
         request.transportType = walking ? .walking : .automobile
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
             for route in (response?.routes)! {
-                self.routeSteps = []
+                self.routeSteps = [RouteSteps(step: "Distance: \(Int(distance))m")]
                 
                 for step in route.steps {
                     self.routeSteps.append(RouteSteps(step: step.instructions))
@@ -287,6 +307,17 @@ struct HomeView: View {
         
     }
     
+}
+
+extension CLLocationCoordinate2D {
+    /// Returns distance from coordianate in meters.
+    /// - Parameter from: coordinate which will be used as end point.
+    /// - Returns: Returns distance in meters.
+    func distance(from: CLLocationCoordinate2D) -> CLLocationDistance {
+        let from = CLLocation(latitude: from.latitude, longitude: from.longitude)
+        let to = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        return from.distance(from: to)
+    }
 }
 
 
