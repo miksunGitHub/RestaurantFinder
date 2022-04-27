@@ -26,12 +26,13 @@ struct FavoritesView: View {
                 ScrollView(.vertical, content:{
                     VStack(alignment: .leading){
                 Text(NSLocalizedString("favorites", comment: ""))
+                            .tracking(1)
                     .font(.system(size: 28.0, weight: .bold, design: .serif))
                     .foregroundColor(Color.white)
-                    .padding(.init(top: 20, leading: 10, bottom: 10, trailing: 10))
+                    .padding(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
                     .frame(alignment: .topLeading)
             LazyVGrid(columns: columns,
-                      alignment: .leading, spacing: 10){
+                      alignment: .center, spacing: 10){
                                    ForEach(favourites){ favourite in
                                        
                                        let latitude = Double(favourite.latitude ?? "60.16364")
