@@ -300,12 +300,12 @@ struct HomeView: View {
             
             if let city = placeMark.locality {
                 print(city)
-                if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
+                self.city = city
+                if UserDefaults.standard.string(forKey: "city") == city {
                     return
                 } else {
                     fetchLocationId(city, context: viewContext)
                 }
-                self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
             }
         })
