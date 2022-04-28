@@ -278,13 +278,19 @@ struct HomeView: View {
         request.transportType = walking ? .walking : .automobile
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
-            for route in (response?.routes)! {
-                self.routeSteps = [RouteSteps(step: "Distance: \(Int(distance))m")]
-                
-                for step in route.steps {
-                    self.routeSteps.append(RouteSteps(step: step.instructions))
+            
+            if response?.routes != nil {
+                for route in (response?.routes)! {
+                    self.routeSteps = [RouteSteps(step: "Distance: \(Int(distance))m")]
+                    
+                    for step in route.steps {
+                        self.routeSteps.append(RouteSteps(step: step.instructions))
+                    }
                 }
+            } else {
+                self.routeSteps = [RouteSteps(step: "Directions calculation failed, because you are not located in the same city as the restaurant you selected")]
             }
+            
         })
         
         
@@ -300,12 +306,13 @@ struct HomeView: View {
             
             if let city = placeMark.locality {
                 print(city)
-                self.city = city
-                if UserDefaults.standard.string(forKey: "city") == city {
+                
+                if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
                     return
                 } else {
                     fetchLocationId(city, context: viewContext)
                 }
+                self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
             }
         })
