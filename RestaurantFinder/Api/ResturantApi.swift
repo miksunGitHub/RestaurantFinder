@@ -74,6 +74,9 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 newRestaurant.price = Int64(5)
                 newRestaurant.latitude = item.latitude
                 newRestaurant.longitude = item.longitude
+                newRestaurant.postalcode = item.address_obj?.postalcode ?? "Postal code not found"
+                newRestaurant.review = item.write_review ?? "Review link not found"
+                
                     //print(newRestaurant)
                     
                     do {
