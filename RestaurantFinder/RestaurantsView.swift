@@ -18,6 +18,8 @@ struct RestaurantsView: View {
     
     let colors: [Color] = [.customRed, .customBlue, .customGreen, .customOrange, .customYellow]
     
+    let listLength: Int = 15
+    
     var body: some View {
         let restaurantsByRating=restaurants.sorted{$0.rating > $1.rating}
         
@@ -36,7 +38,7 @@ struct RestaurantsView: View {
                                    HStack{
                                        Spacer()
                                            .frame(width: 10)
-                                       ForEach(restaurants.prefix(8)){ restaurant in
+                                       ForEach(restaurants.prefix(listLength)){ restaurant in
                                            let latitude = Double(restaurant.latitude ?? "60.16364")
                                            let longitude = Double(restaurant.longitude ?? "24.947996")
                                            let newRestaurant = RestaurantHC(
@@ -67,7 +69,7 @@ struct RestaurantsView: View {
                             HStack{
                                 Spacer()
                                     .frame(width: 10)
-                                ForEach(restaurantsByRating.prefix(5)){ restaurant in
+                                ForEach(restaurantsByRating.prefix(listLength)){ restaurant in
                                     let latitude = Double(restaurant.latitude ?? "60.16364")
                                     let longitude = Double(restaurant.longitude ?? "24.947996")
                                     let newRestaurant = RestaurantHC(
@@ -98,7 +100,7 @@ struct RestaurantsView: View {
                             HStack{
                                 Spacer()
                                     .frame(width: 10)
-                                ForEach(restaurants.prefix(5)){ restaurant in
+                                ForEach(restaurants.prefix(listLength)){ restaurant in
                                     let latitude = Double(restaurant.latitude ?? "60.16364")
                                     let longitude = Double(restaurant.longitude ?? "24.947996")
                                     let newRestaurant = RestaurantHC(
