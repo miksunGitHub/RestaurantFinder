@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     let restaurant: RestaurantHC
-
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack{

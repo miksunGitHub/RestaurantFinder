@@ -11,9 +11,7 @@ import CoreData
 
 // Fetching resurant data from  Api
 func fetchData (_ location_id: String, context: NSManagedObjectContext){
-    
     let moc = context
-    //@Environment(\.managedObjectContext) var moc
     @FetchRequest(
         entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
     
@@ -55,10 +53,18 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 
             }
             
+            // Fucntion call for deleting Core-Data data
+            let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
+              do {
+                  let data = try context.fetch(fetchRequest)
+                  if data.count > 0 {
+                      try batchDelete(in: context, fetchRequest: fetchRequest)
+                  }
+              } catch {
+                  print("Error deleting core-data")
+              }
+           
             jsonObject.results.data.forEach{ item in
-                //let restarant = Restarant(context: moc)
-                //restarant.name = item.name
-                
                 let newRestaurant = Restaurant(context: moc)
                 newRestaurant.name = String(item.name ?? "no name")
                 newRestaurant.url = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
@@ -68,6 +74,9 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 newRestaurant.price = Int64(5)
                 newRestaurant.latitude = item.latitude
                 newRestaurant.longitude = item.longitude
+                newRestaurant.postalcode = item.address_obj?.postalcode ?? "Postal code not found"
+                newRestaurant.review = item.write_review ?? "Review link not found"
+                
                     //print(newRestaurant)
                     
                     do {
