@@ -12,13 +12,13 @@ struct RestaurantHC: Identifiable {
     let id: UUID
     var name: String
     var imageURL: String
-    var rating: Int64
+    var rating: Double
     var description: String
     var address: String
     var priceLevel: Int64
     var coordinate: CLLocationCoordinate2D
     
-    init(id: UUID = UUID(), name: String, imageURL: String, rating: Int64, description: String, address: String, priceLevel: Int64, coordinate: CLLocationCoordinate2D) {
+    init(id: UUID = UUID(), name: String, imageURL: String, rating: Double, description: String, address: String, priceLevel: Int64, coordinate: CLLocationCoordinate2D) {
         self.id = id
         self.name = name
         self.imageURL = imageURL

@@ -25,10 +25,12 @@ struct ListElementView: View {
                 .frame(width: 10)
             AsyncImage(url: URL(string: restaurant.imageURL),
                        content: {
-                            image in image.resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(maxWidth: 150, maxHeight: 100)
-                                        .scaledToFill()
+                            image in image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 90, alignment: .center)
+                                        //.scaledToFill()
+                            .background(Color.colorDarkGrey)
                                         .overlay(
                                             Image(systemName: "bookmark.fill")
                                                 .gesture(
@@ -38,7 +40,7 @@ struct ListElementView: View {
                                                 )
                                                 .foregroundColor(color)
                                                 .padding(.top, 15)
-                                                .padding(.trailing, 10)
+                                                .padding(.trailing, 20)
                                                 .font(Font.system(size: 18, weight: .semibold))
                                                 ,
                                             alignment: .topTrailing
@@ -51,9 +53,10 @@ struct ListElementView: View {
             Spacer()
             Text(restaurant.name)
                 .foregroundColor(Color.white)
+                .font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 18))
             Spacer()
             HStack{
-                ForEach(0..<Int(restaurant.rating)){ i in
+                ForEach(0..<Int(round(restaurant.rating))){ i in
                         Image(systemName: "star")
                         .resizable().frame(width: 14, height: 14)
                         .foregroundColor(Color.white)
@@ -63,8 +66,8 @@ struct ListElementView: View {
                 .frame(height: 20)
         }
         //.padding(10)
-        .frame(width: 150, height: 160)
-        .border(color)
+        .frame(width: 130, height: 150)
+        .border(color, width: 2)
         .background(color)
         .cornerRadius(10)
     }
