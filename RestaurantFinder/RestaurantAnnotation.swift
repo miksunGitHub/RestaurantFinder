@@ -12,7 +12,11 @@ import CoreLocation
 struct RestaurantAnnotation: View {
     @State private var showTitle = true
     @State private var defaultColor = true
+    
     let restaurant: RestaurantHC
+    @Binding var routeSteps : [RouteSteps]
+    @Binding var showDirections : Bool
+    @Binding var walking: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -27,6 +31,8 @@ struct RestaurantAnnotation: View {
                         .frame(width: 15, height: 15)
                         .onTapGesture {
                             print("Directions to \(String(describing: restaurant.name))")
+                            findDirections()
+                            self.showDirections.toggle()
                             
                         }
                 }
@@ -65,6 +71,39 @@ struct RestaurantAnnotation: View {
             }
         }
     }
+    func findDirections(){
+            
+            let request = MKDirections.Request()
+            
+            request.source = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: LocationHelper.currentLocation, addressDictionary: nil)))
+            
+        request.destination = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: restaurant.coordinate, addressDictionary: nil)))
+            
+            request.requestsAlternateRoutes = false
+            
+        let distance = LocationHelper.currentLocation.distance(from: restaurant.coordinate)
+            
+            request.transportType = walking ? .walking : .automobile
+//        request.transportType = .automobile
+            let directions = MKDirections(request: request)
+            directions.calculate(completionHandler: {response, error in
+                
+                if response?.routes != nil {
+                    for route in (response?.routes)! {
+                        routeSteps = [RouteSteps(step: "Distance: \(Int(distance))m")]
+                        
+                        for step in route.steps {
+                            routeSteps.append(RouteSteps(step: step.instructions))
+                        }
+                    }
+                } else {
+                    routeSteps = [RouteSteps(step: "Directions calculation failed, because you are not located in the same city as the restaurant you selected")]
+                }
+                
+            })
+            
+            
+        }
 }
 
 

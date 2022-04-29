@@ -138,7 +138,7 @@ struct HomeView: View {
                                 longitude: longitude ?? 24.947996)
                         )
                         
-                        RestaurantAnnotation(restaurant: newRestaurant)
+                        RestaurantAnnotation(restaurant: newRestaurant, routeSteps: $routeSteps, showDirections: $showDirections, walking: $walking)
                         /*
                         NavigationLink {
                             DetailsView(restaurant: newRestaurant)
@@ -268,38 +268,6 @@ struct HomeView: View {
         return location
     }
     
-    func findDirections(){
-        
-        let request = MKDirections.Request()
-        
-        request.source = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: LocationHelper.currentLocation, addressDictionary: nil)))
-        
-        request.destination = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil)))
-        
-        request.requestsAlternateRoutes = false
-        
-        let distance = LocationHelper.currentLocation.distance(from: destination)
-        
-        request.transportType = walking ? .walking : .automobile
-        let directions = MKDirections(request: request)
-        directions.calculate(completionHandler: {response, error in
-            
-            if response?.routes != nil {
-                for route in (response?.routes)! {
-                    self.routeSteps = [RouteSteps(step: "Distance: \(Int(distance))m")]
-                    
-                    for step in route.steps {
-                        self.routeSteps.append(RouteSteps(step: step.instructions))
-                    }
-                }
-            } else {
-                self.routeSteps = [RouteSteps(step: "Directions calculation failed, because you are not located in the same city as the restaurant you selected")]
-            }
-            
-        })
-        
-        
-    }
     
     func convertLatLongToAddress(latitude:Double,longitude:Double){
         let geoCoder = CLGeocoder()
