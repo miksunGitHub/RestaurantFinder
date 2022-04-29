@@ -112,9 +112,7 @@ struct HomeView: View {
                             Text(walking ? "Walking" : " Automobile")
                         })
                     }
-                    
                 }
-                
             }
             ZStack {
                 Map(coordinateRegion: $region,
@@ -125,19 +123,23 @@ struct HomeView: View {
                     annotationItems: fetchedRestaurants)
                 { restaurant in
                     MapAnnotation(coordinate: CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude!)!, longitude: Double(restaurant.longitude!)!)) {
+                        
                         let latitude = Double(restaurant.latitude ?? "60.16364")
                         let longitude = Double(restaurant.longitude ?? "24.947996")
                         let newRestaurant = RestaurantHC(
-                         name: restaurant.name ?? "no name",
-                         imageURL: restaurant.url ?? "no",
-                         rating: restaurant.rating ,
-                         description: restaurant.desc ?? "no descpription",
-                         address: restaurant.address ?? "no address",
-                         priceLevel: restaurant.price ,
-                         coordinate: CLLocationCoordinate2D(
-                            latitude: latitude ?? 60.16364,
-                            longitude: longitude ?? 24.947996)
+                            name: restaurant.name ?? "no name",
+                            imageURL: restaurant.url ?? "no",
+                            rating: restaurant.rating ,
+                            description: restaurant.desc ?? "no descpription",
+                            address: restaurant.address ?? "no address",
+                            priceLevel: restaurant.price ,
+                            coordinate: CLLocationCoordinate2D(
+                                latitude: latitude ?? 60.16364,
+                                longitude: longitude ?? 24.947996)
                         )
+                        
+                        RestaurantAnnotation(restaurant: newRestaurant)
+                        /*
                         NavigationLink {
                             DetailsView(restaurant: newRestaurant)
                         } label:{
@@ -152,8 +154,9 @@ struct HomeView: View {
                                     print(city)
                                 }
                             Text(restaurant.name!)
-                                
+                            
                         }
+                        */
                     }
                 }
                 VStack {
@@ -163,6 +166,7 @@ struct HomeView: View {
                             .padding(.horizontal, 25)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
+                            .shadow(color: .black, radius: 1)
                             .overlay(
                                 HStack {
                                     Image(systemName: "magnifyingglass")
@@ -216,20 +220,21 @@ struct HomeView: View {
                                         Image(systemName: "location")
                                             .foregroundColor(.gray)
                                             .padding(.trailing, 8)
-                                            
+                                            .onTapGesture {
+                                                region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(place.latitude!)!, longitude: Double(place.longitude!)!), span: MKCoordinateSpan(latitudeDelta: 0.002,longitudeDelta: 0.002))
+                                                isEditing = false
+                                            }
+                                        
                                     }
-                                }.onTapGesture {
-                                    region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(place.latitude!)!, longitude: Double(place.longitude!)!), span: MKCoordinateSpan(latitudeDelta: 0.002,longitudeDelta: 0.002))
-                                    isEditing = false
                                 }
                             }
                         }
                     }
                     Spacer()
-                }.background(isEditing ? Color(.white) : nil)
+                }.background(isEditing ? Color(.systemGray6) : nil)
             }
         }
-//        .navigationBarHidden(self.isNavigationBarHidden)
+        //        .navigationBarHidden(self.isNavigationBarHidden)
         .navigationBarHidden(true)
         .onAppear(){
             MKMapView.appearance().mapType = .mutedStandard
