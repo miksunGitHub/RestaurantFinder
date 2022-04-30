@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
+
 // Fetching resurant data from  Api
 func fetchData (_ location_id: String, context: NSManagedObjectContext){
     let moc = context
