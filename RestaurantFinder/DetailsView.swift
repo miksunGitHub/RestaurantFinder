@@ -30,7 +30,7 @@ struct DetailsView: View {
                 Text(restaurant.name).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 30)).foregroundColor(.colorBrown)
                 VStack(alignment: .leading){
                     HStack{
-                        Text("Rating: ").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).foregroundColor(.colorDarkPurple)
+                        Text(NSLocalizedString("rating", comment: "")).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).foregroundColor(.colorDarkPurple)
                         ForEach(0..<Int(restaurant.rating)){ i in
                             Image(systemName: "star.fill").resizable().frame(width: 10, height: 10)
                         }
