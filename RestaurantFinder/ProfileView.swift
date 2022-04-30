@@ -12,7 +12,7 @@ struct ProfileView: View {
     //@FetchRequest(sortDescriptors: []) var resturantArray: //FetchedResults<ResturantArray>
     @FetchRequest(
         entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
-    
+    @State var coreDataViewModel = CoreDataViewModel()
     
     
     var body: some View {
@@ -21,9 +21,8 @@ struct ProfileView: View {
 //                }
         VStack{
             List{
-                    ForEach(restaurants){ item in
-                        
-                        Text(item.name ?? "no name")
+                ForEach(coreDataViewModel.fetchedEntities){ item in
+                    Text(item.postalcode ?? "no name")
                     }
                 
             }

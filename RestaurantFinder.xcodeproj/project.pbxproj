@@ -28,6 +28,7 @@
 		A75D6CBD281828AC006333A8 /* DeleteCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D6CBC281828AC006333A8 /* DeleteCoreData.swift */; };
 		A7775E77281D236300B6DD69 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7775E76281D236300B6DD69 /* ApiService.swift */; };
 		A7775E79281D279300B6DD69 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7775E78281D279300B6DD69 /* ApiError.swift */; };
+		A7775E7B281D515600B6DD69 /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7775E7A281D515600B6DD69 /* CoreDataViewModel.swift */; };
 		A7815D2C280ABDE40096B664 /* CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7815D2B280ABDE40096B664 /* CustomFonts.swift */; };
 		A7815D31280AC38E0096B664 /* BeauRivage-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7815D2F280AC38E0096B664 /* BeauRivage-Regular.ttf */; };
 		A7815D41280AC4480096B664 /* EBGaramond-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7815D33280AC4480096B664 /* EBGaramond-Italic-VariableFont_wght.ttf */; };
@@ -85,6 +86,7 @@
 		A75D6CBC281828AC006333A8 /* DeleteCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCoreData.swift; sourceTree = "<group>"; };
 		A7775E76281D236300B6DD69 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		A7775E78281D279300B6DD69 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
+		A7775E7A281D515600B6DD69 /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
 		A7815D25280AB97F0096B664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A7815D2B280ABDE40096B664 /* CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFonts.swift; sourceTree = "<group>"; };
 		A7815D2F280AC38E0096B664 /* BeauRivage-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BeauRivage-Regular.ttf"; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				6A7B3DC02805B1620066BE83 /* RestaurantHC.swift */,
 				A7100F602811B3FC001A5A6F /* ResturantData.swift */,
 				A7100F622811B773001A5A6F /* LocationData.swift */,
+				A7775E7A281D515600B6DD69 /* CoreDataViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A7B3DC12805B1620066BE83 /* RestaurantHC.swift in Sources */,
+				A7775E7B281D515600B6DD69 /* CoreDataViewModel.swift in Sources */,
 				C600B6962803863000CED028 /* FavoritesView.swift in Sources */,
 				C600B69A2803870600CED028 /* LoginView.swift in Sources */,
 				A7815D50280ACC230096B664 /* CustomColor.swift in Sources */,

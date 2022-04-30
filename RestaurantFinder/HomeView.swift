@@ -23,7 +23,7 @@ struct Location : Identifiable {
 }
 
 struct HomeView: View {
-    @State var apiService = ApiService()
+    @ObservedObject var apiService = ApiService()
     @Environment(\.managedObjectContext) private var viewContext
     
     // Search
@@ -292,7 +292,7 @@ struct HomeView: View {
             }
             
         })
-        
+    
         
     }
     
@@ -310,7 +310,7 @@ struct HomeView: View {
                 if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
                     return
                 } else {
-//                    fetchLocationId(city, context: viewContext)
+//                    apiService.location = $city
                 }
                 self.city = city
                 UserDefaults.standard.set(city, forKey: "city")

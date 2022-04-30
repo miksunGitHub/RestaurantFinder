@@ -25,7 +25,7 @@ class ApiService :ObservableObject {
         locationService()
     }
     
-    // Craeting instance of LocationApi and Fetching value on success
+    // Creating instance of LocationApi and Fetching value on success
     func locationService(){
         let service = LocationApi()
         service.fetchLocationId(headers, location){[unowned self] result in
@@ -35,13 +35,14 @@ class ApiService :ObservableObject {
                     self.errorMessage = error.localizedDescription
                 case .success(let locationData):
                     self.location_id = locationData.results.data[0].result_object.location_id
-                    print("From class", self.location_id!)
+//                    print("From class", self.location_id!)
                     resturantService()
                 }
             }
         }
     }
     
+    // Creating instance of ResturantApi and Fetching value on success
     func resturantService(){
         let service = ResturantApi()
         service.fetchResturants(headers, self.location_id!){[unowned self] result in
@@ -51,10 +52,9 @@ class ApiService :ObservableObject {
                     self.errorMessage = error.localizedDescription
                 case .success(let resturants):
                     self.resturants = resturants.results.data
-                    print("Resturants",self.resturants)
+//                    print("Resturants",self.resturants)
                 }
             }
-
         }
     }
 

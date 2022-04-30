@@ -17,7 +17,7 @@ struct ResturantApi {
         //            completion(Result.failure(error))
         //            return
         //        }
-        print("location", location_id)
+      
         let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
            postData.append("&limit=100".data(using: String.Encoding.utf8)!)
            // hard coded location id(needs to be taken from fetchlocation function)
