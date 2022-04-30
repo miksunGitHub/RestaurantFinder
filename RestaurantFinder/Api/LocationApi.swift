@@ -12,37 +12,27 @@ import CoreData
 
 // Fetching location id from location name
 struct LocationApi {
+    
     func fetchLocationId(_ headers: [String: String],_ location: String, completion: @escaping (Result <LocationData, APIError> ) -> Void){
-//        let headers = [
-//            "content-type": "application/x-www-form-urlencoded",
-//            "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
-//            "X-RapidAPI-Key": "60b315c809msh733da161b5bb9e9p1619b1jsn9a09d2994c39"
-//        ]
-//
-//        guard let url = URL(string: "https://worldwide-restaurants.p.rapidapi.com/typeahead") else {
-//            let error = APIError.badURL
-//            completion(Result.failure(error))
-//            return
-//        }
-
-       
-       let postData = NSMutableData(data: "q=\(location)".data(using: String.Encoding.utf8)!)
+        //        guard let url = URL(string: "https://worldwide-restaurants.p.rapidapi.com/typeahead") else {
+        //            let error = APIError.badURL
+        //            completion(Result.failure(error))
+        //            return
+        //        }
+        
+        let postData = NSMutableData(data: "q=\(location)".data(using: String.Encoding.utf8)!)
         postData.append("&language=en_US".data(using: String.Encoding.utf8)!)
-
+        
         let request = NSMutableURLRequest(url: NSURL(string: "https://worldwide-restaurants.p.rapidapi.com/typeahead")! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.httpBody = postData as Data
-
+        
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-//            if error != nil{
-//                print(error!.localizedDescription)
-//                return
-//            }
-
+            
             if let error = error as? URLError{
                 completion(Result.failure(APIError.url(error)))
             }else if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode){
@@ -50,23 +40,16 @@ struct LocationApi {
             } else if let data = data {
                 do{
                     let locationData = try JSONDecoder().decode(LocationData.self, from: data)
-                    
-                    //                    print("Data \(jsonObject.results.data.count)")
-//                    print("Data \(locationData)")
+                    //                    print("Data \(locationData)")
                     completion(Result.success(locationData))
                     
-                    
-        //            fetchData(location_id, context: context)
-
                 }
                 catch{
                     completion(Result.failure(APIError.parsing(error as? DecodingError)))
                 }
             }
-
+            
         })
         dataTask.resume()
     }
-
-
 }

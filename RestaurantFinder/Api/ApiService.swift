@@ -9,9 +9,12 @@ import Foundation
 import SwiftUI
 class ApiService :ObservableObject {
     @Environment(\.managedObjectContext) private var viewContext
+    
     @Published var location: String = UserDefaults.standard.string(forKey: "city")!
     @Published var location_id: String? = nil
     @Published var errorMessage: String? = nil
+    @Published var resturants = [Resturant]()
+    
     let headers = [
         "content-type": "application/x-www-form-urlencoded",
         "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
@@ -20,22 +23,38 @@ class ApiService :ObservableObject {
     
     init(){
         locationService()
-//        fetchLocationId(UserDefaults.standard.string(forKey: "city")!, context: viewContext, headers)
     }
     
     // Craeting instance of LocationApi and Fetching value on success
     func locationService(){
         let service = LocationApi()
         service.fetchLocationId(headers, location){[unowned self] result in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 switch result{
                 case.failure(let error):
                     self.errorMessage = error.localizedDescription
                 case .success(let locationData):
                     self.location_id = locationData.results.data[0].result_object.location_id
                     print("From class", self.location_id!)
+                    resturantService()
                 }
             }
+        }
+    }
+    
+    func resturantService(){
+        let service = ResturantApi()
+        service.fetchResturants(headers, self.location_id!){[unowned self] result in
+            DispatchQueue.main.async { [self] in
+                switch result{
+                case.failure(let error):
+                    self.errorMessage = error.localizedDescription
+                case .success(let resturants):
+                    self.resturants = resturants.results.data
+                    print("Resturants",self.resturants)
+                }
+            }
+
         }
     }
 
