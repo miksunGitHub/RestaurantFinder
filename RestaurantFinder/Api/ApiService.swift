@@ -53,9 +53,11 @@ class ApiService :ObservableObject {
                 case .success(let resturants):
                     self.resturants = resturants.results.data
 //                    print("Resturants",self.resturants)
+                    self.resturants.forEach{ item in
+//                        print("name", item.name)
+                    }
                 }
             }
         }
     }
-
 }

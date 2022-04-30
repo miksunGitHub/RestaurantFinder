@@ -24,6 +24,8 @@ struct Location : Identifiable {
 
 struct HomeView: View {
     @ObservedObject var apiService = ApiService()
+//    @ObservedObject var coreDataViewModel = CoreDataViewModel()
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     // Search

@@ -10,18 +10,25 @@ import SwiftUI
 import CoreData
 
 class CoreDataViewModel: ObservableObject {
-    @ObservedObject var apiService = ApiService()
+//    @Environment(\.managedObjectContext) private var context
+    @State var apiService = ApiService()
     @Published var fetchedEntities: [Restaurant] = []
-    let container: NSPersistentContainer
+    @State var deleteData = DeleteData()
+    let container = NSPersistentContainer(name: "RestaurantFinder")
     
     init() {
-        container = NSPersistentContainer(name: "RestaurantFinder")
-        container.loadPersistentStores{(desciption, error) in
-            if let error = error {
-                print("Error loading core data. \(error)")
-            }
-        }
-        fetchFromCoreData()
+//        container = NSPersistentContainer(name: "RestaurantFinder")
+//        container.loadPersistentStores{(desciption, error) in
+//            if let error = error {
+//                print("Error loading core data. \(error)")
+//            }else{
+//                print("Success")
+//            }
+//        }
+        //deleteCoreData()
+        addResturants()
+//        fetchFromCoreData()
+        
     }
     
     func fetchFromCoreData(){
@@ -34,6 +41,11 @@ class CoreDataViewModel: ObservableObject {
     }
     
     func addResturants(){
+        // deleteCoreData()
+//        apiService.resturants.forEach{ restaurant in
+//            print("name");
+//        }
+        
         apiService.resturants.forEach{ item in
             let newRestaurant = Restaurant(context: container.viewContext)
             newRestaurant.name = String(item.name ?? "no name")
@@ -46,23 +58,34 @@ class CoreDataViewModel: ObservableObject {
             newRestaurant.longitude = item.longitude
             newRestaurant.postalcode = item.address_obj?.postalcode ?? "Postal code not found"
             newRestaurant.review = item.write_review ?? "Review link not found"
-            saveEntity()
             print("res", newRestaurant)
+            saveEntity()
         }
-        
-        
-        
+//        fetchFromCoreData()
     }
     
     func saveEntity(){
         do {
             try container.viewContext.save()
-            fetchFromCoreData()
+//            fetchFromCoreData()
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+    
+    private func deleteCoreData(){
+        let context = container.viewContext
+        let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
+        do {
+            let data = try context.fetch(fetchRequest)
+            if data.count > 0 {
+                try deleteData.batchDelete(in: context, fetchRequest: fetchRequest)
+            }
+        } catch {
+            print("Error deleting core-data")
         }
     }
     
