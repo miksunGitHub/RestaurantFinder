@@ -13,10 +13,10 @@ struct RestaurantsView: View {
     
     @FetchRequest(
         entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
-    /*
+    
     @FetchRequest(
         entity: Restaurant.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Restaurant.rating, ascending: false)]) var restaurantsByRating: FetchedResults<Restaurant>
-    */
+    
     var body: some View {
         
         NavigationView {
@@ -29,7 +29,8 @@ struct RestaurantsView: View {
                         .foregroundColor(Color.white)
                         .padding(.init(top: 20, leading: 10, bottom: 10, trailing: 10))
                     
-                    //ListingElement(restaurants: restaurants)
+                    ListingElement(restaurants: restaurants)
+                    
                     
                     Text(NSLocalizedString("topRated", comment: ""))
                         .tracking(1)
@@ -38,7 +39,7 @@ struct RestaurantsView: View {
                         .padding(.leading, 10)
                         .padding(.top, 10)
                     
-                    //ListingElement(restaurants: restaurantsByRating)
+                    ListingElement(restaurants: restaurantsByRating)
                     
                     Text(NSLocalizedString("byPrice", comment: ""))
                         .tracking(1)

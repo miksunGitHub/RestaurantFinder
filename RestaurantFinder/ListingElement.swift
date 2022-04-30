@@ -17,21 +17,13 @@ struct ListingElement: View {
     
     let listLength: Int = 15
     
-    /*
-    var listing: [String: FetchedResults<Restaurant>] = [
-        "near" : restaurants,
-        "ratings" : restaurantsByRating,
-        "price" : restaurants
-    ]*/
-    
-    //var showInListing = listing[sortedBy]
-    
     var body: some View {
+        
         ScrollView(.horizontal, content:{
             HStack{
                 Spacer()
                     .frame(width: 10)
-                ForEach(restaurants.prefix(listLength) ?? []){ restaurant in
+                ForEach(restaurants.prefix(listLength)){ restaurant in
                     let latitude = Double(restaurant.latitude ?? "60.16364")
                     let longitude = Double(restaurant.longitude ?? "24.947996")
                     let newRestaurant = RestaurantHC(
@@ -55,8 +47,18 @@ struct ListingElement: View {
     }
 }
 
+
+
 struct ListingElement_Previews: PreviewProvider {
     static var previews: some View {
-        ListingElement(sortedBy: "near")
+        let viewContext = PersistenceController.shared.container.viewContext
+   
+        @FetchRequest(
+            entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
+        
+        return ListingElement(restaurants: restaurants)
+            .environment(\.managedObjectContext, viewContext)
     }
 }
+
+
