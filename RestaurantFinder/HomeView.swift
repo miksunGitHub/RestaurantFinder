@@ -128,8 +128,9 @@ struct HomeView: View {
                         let longitude = Double(restaurant.longitude ?? "24.947996")
                         let newRestaurant = RestaurantHC(
                             name: restaurant.name ?? "no name",
-                            imageURL: restaurant.url ?? "no",
-                            rating: restaurant.rating ,
+                            imageURL: restaurant.imageurl ?? "no",
+                            url: restaurant.url ?? "no url",
+                            rating: restaurant.rating,
                             description: restaurant.desc ?? "no descpription",
                             address: restaurant.address ?? "no address",
                             priceLevel: restaurant.price ,
@@ -161,7 +162,7 @@ struct HomeView: View {
                 }
                 VStack {
                     HStack {
-                        TextField("Search ...", text: searchQuery)
+                        TextField(NSLocalizedString("search", comment: ""), text: searchQuery)
                             .padding(7)
                             .padding(.horizontal, 25)
                             .background(Color(.systemGray6))
@@ -197,7 +198,7 @@ struct HomeView: View {
                                 // Dismiss the keyboard
                                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }) {
-                                Text("Cancel")
+                                Text(NSLocalizedString("cancel", comment: ""))
                             }
                             .padding(.trailing, 10)
                             .transition(.move(edge: .trailing))

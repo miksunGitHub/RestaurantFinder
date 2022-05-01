@@ -3,6 +3,7 @@
     <entity name="Favourite" representedClassName="Favourite" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="imageurl" optional="YES" attributeType="String"/>
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -15,6 +16,7 @@
     <entity name="Restaurant" representedClassName="Restaurant" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="imageurl" optional="YES" attributeType="String"/>
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -25,7 +27,7 @@
         <attribute name="url" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Favourite" positionX="278.7108154296875" positionY="-239.5139465332031" width="128" height="179"/>
-        <element name="Restaurant" positionX="333.2494506835938" positionY="-48.76568603515625" width="128" height="179"/>
+        <element name="Favourite" positionX="278.7108154296875" positionY="-239.5139465332031" width="128" height="194"/>
+        <element name="Restaurant" positionX="333.2494506835938" positionY="-48.76568603515625" width="128" height="194"/>
     </elements>
 </model>

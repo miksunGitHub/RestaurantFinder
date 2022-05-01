@@ -21,8 +21,10 @@ struct PersistenceController {
             newRestaurant.desc = "Nice place"
             newRestaurant.address = "Fleminginkatu 21"
             newRestaurant.url = "https://www.ravintolacella.fi/"
+            newRestaurant.imageurl = "https://media-cdn.tripadvisor.com/media/photo-l/13/44/01/be/photo9jpg.jpg"
             newRestaurant.latitude = "60.163624"
             newRestaurant.longitude = "24.947996"
+            newRestaurant.postalcode = "00530"
         }
         
         do {

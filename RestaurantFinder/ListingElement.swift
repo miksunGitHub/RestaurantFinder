@@ -28,7 +28,8 @@ struct ListingElement: View {
                     let longitude = Double(restaurant.longitude ?? "24.947996")
                     let newRestaurant = RestaurantHC(
                         name: restaurant.name ?? "no name",
-                        imageURL: restaurant.url ?? "no",
+                        imageURL: restaurant.imageurl ?? "no",
+                        url: restaurant.url ?? "no url",
                         rating: restaurant.rating,
                         description: restaurant.desc ?? "no descpription",
                         address: restaurant.address ?? "no address",

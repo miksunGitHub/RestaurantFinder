@@ -74,12 +74,12 @@ struct DetailsView: View {
                     
                     Divider()
                     
-                    Text("About \(restaurant.name)")
+                    Text("About " + (restaurant.name))
                         .font(.title2)
                         .foregroundColor(Color.white)
                     Text(restaurant.description)
                         .foregroundColor(Color.white)
-                    Link("Website", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20))
+                    Link("Website", destination: URL(string: restaurant.url)!).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20))
                         .padding(.top, 15)
                 }
                 .padding()

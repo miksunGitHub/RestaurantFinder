@@ -9,3 +9,11 @@
 "topRated" = "PARHAAT ARVIOT";
 "byPrice" = "EDULLISIMMAT";
 "favorites" = "SUOSIKIT";
+"rating" = "Arviot:";
+"restaurants" = "Ravintolat";
+"favourites" = "Suosikit";
+"home" = "Koti";
+"cancel" = "Peru";
+"search" = "Hae ...";
+"details" = "Lisää";
+"about" = "Kuvaus ";

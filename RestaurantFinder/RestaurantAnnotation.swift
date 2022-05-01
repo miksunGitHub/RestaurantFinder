@@ -44,7 +44,7 @@ struct RestaurantAnnotation: View {
                     NavigationLink {
                         DetailsView(restaurant: restaurant)
                     } label: {
-                        Text("Details")
+                        Text(NSLocalizedString("details", comment: ""))
                     }
                     Spacer()
                 }

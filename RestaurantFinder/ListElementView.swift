@@ -15,38 +15,37 @@ struct ListElementView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-    
+        
         VStack(){
             Spacer()
                 .frame(width: 10)
-            //AsyncImage(url: URL(string: restaurant.imageURL),
-            AsyncImage(url: URL(string: restaurant.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
+            AsyncImage(url: URL(string: restaurant.imageurl ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
                        content: {
-                        image in image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 90, alignment: .center)
-                                        //.scaledToFill()
-                            .background(Color.colorDarkGrey)
-                                        .overlay(
-                                            Image(systemName: "bookmark.fill")
-                                                .gesture(
-                                                    TapGesture().onEnded{
-                                                        addItem()
-                                                    }
-                                                )
-                                                .foregroundColor(color)
-                                                .padding(.top, 15)
-                                                .padding(.trailing, 20)
-                                                .font(Font.system(size: 18, weight: .semibold))
-                                                ,
-                                                alignment: .topTrailing
-                                        )
+                image in image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 150, height: 90, alignment: .center)
+                //.scaledToFill()
+                    .background(Color.colorDarkGrey)
+                    .overlay(
+                        Image(systemName: "bookmark.fill")
+                            .gesture(
+                                TapGesture().onEnded{
+                                    addItem()
+                                }
+                            )
+                            .foregroundColor(color)
+                            .padding(.top, 15)
+                            .padding(.trailing, 20)
+                            .font(Font.system(size: 18, weight: .semibold))
+                        ,
+                        alignment: .topTrailing
+                    )
             },
                        placeholder: {
-                                           ProgressView()
+                ProgressView()
             })
-                
+            
             Spacer()
             Text(restaurant.name ?? "no name")
                 .foregroundColor(Color.white)
@@ -54,7 +53,7 @@ struct ListElementView: View {
             Spacer()
             HStack{
                 ForEach(0..<Int(round(restaurant.rating))){ i in
-                        Image(systemName: "star")
+                    Image(systemName: "star")
                         .resizable().frame(width: 14, height: 14)
                         .foregroundColor(Color.white)
                 }
@@ -62,7 +61,6 @@ struct ListElementView: View {
             Spacer()
                 .frame(height: 20)
         }
-        //.padding(10)
         .frame(width: 130, height: 150)
         .border(color, width: 2)
         .background(color)
@@ -77,12 +75,13 @@ struct ListElementView: View {
             newFavourite.price = restaurant.price
             newFavourite.address = restaurant.address
             newFavourite.url = restaurant.url
+            newFavourite.imageurl = restaurant.imageurl
             newFavourite.desc = restaurant.description
             print(newFavourite)
             saveItems()
         }
     }
-
+    
     private func saveItems(){
         do {
             try viewContext.save()
@@ -90,7 +89,8 @@ struct ListElementView: View {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            print(nsError)
+            //fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }
@@ -101,7 +101,8 @@ struct ListElementView_Previews: PreviewProvider {
         let viewContext = PersistenceController.shared.container.viewContext
         let newRestaurant = Restaurant(context: viewContext)
         newRestaurant.name = "Baskeri & Basso"
-        newRestaurant.url = "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"
+        newRestaurant.url = "https://basbas.fi/"
+        newRestaurant.imageurl = "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"
         newRestaurant.address = "Ulappakatu 3, Espoo"
         newRestaurant.desc = "no description"
         newRestaurant.rating = 4
