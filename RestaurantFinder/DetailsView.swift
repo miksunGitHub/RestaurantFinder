@@ -6,42 +6,87 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct DetailsView: View {
     let restaurant: RestaurantHC
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 34.011_286, longitude: -116.166_868),
+        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+    )
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false, content: {
-            VStack{
+        ScrollView {
+            VStack {
+                Map(coordinateRegion: $region)
+                    .ignoresSafeArea(edges: .top)
+                    .colorScheme(ColorScheme.dark)
+                    .frame(height: 300)
+                    .onAppear() {
+                        
+                        region = MKCoordinateRegion(
+                            center: CLLocationCoordinate2D(latitude: restaurant.coordinate.latitude, longitude: restaurant.coordinate.longitude),
+                            span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
+                        )
+                    }
+                
                 AsyncImage(url: URL(string: restaurant.imageURL),
                            content: {
                     image in image.resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 270, maxHeight: 180)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.orange, lineWidth: 2))
-                        .shadow(radius: 10)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 180, height: 180)
+                        .clipShape(Circle())
+                        .overlay {
+                            Circle().stroke(.white, lineWidth: 4)
+                        }
+                        .shadow(radius: 7)
+                        .offset(y: -130)
+                        .padding(.bottom, -130)
                 },
                            placeholder: {
                     ProgressView()
                 })
-                // Button("Click", action: {getFonts()})
-                Text(restaurant.name).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 30)).foregroundColor(.colorBrown)
-                VStack(alignment: .leading){
-                    HStack{
-                        Text(NSLocalizedString("rating", comment: "")).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).foregroundColor(.colorDarkPurple)
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        Spacer()
                         ForEach(0..<Int(restaurant.rating)){ i in
                             Image(systemName: "star.fill").resizable().frame(width: 10, height: 10)
+                                .foregroundColor(Color.white)
                         }
+                        Spacer()
                     }
+                    
+                    HStack {
+                        Text(restaurant.name)
+                        Spacer()
+                    }
+                    .foregroundColor(Color.white)
+                    .font(.title)
+                    
+                    HStack {
+                        Text(restaurant.address)
+                        Spacer()
+                        Text("City")
+                    }
+                    .font(.subheadline)
+                    .foregroundColor(Color.white)
+                    
+                    Divider()
+                    
+                    Text("About \(restaurant.name)")
+                        .font(.title2)
+                        .foregroundColor(Color.white)
+                    Text(restaurant.description)
+                        .foregroundColor(Color.white)
                     Link("Website", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!).font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20))
-                    Text("Description:").font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 20)).padding([.top],1).foregroundColor(.colorDarkPurple)
-                    Text(restaurant.description).font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding([.top],0.5).foregroundColor(.colorDarkPurple)
-                    Text("Address:\(restaurant.address)").font(.custom(FontsName.EBGaraRomanMedium.rawValue, size: 20)).padding(.top).foregroundColor(.colorDarkPurple)
+                        .padding(.top, 15)
                 }
+                .padding()
+                
+                Spacer()
             }
-        })
+        }.background(Color.colorDarkGrey)
     }
     //      Printing fonts: To be deleted later
     //    func getFonts(){
