@@ -95,7 +95,7 @@ struct HomeView: View {
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                             print("Tracking user's cityName is \(city)")
                         }, label: {
-                            Text("tracking")
+                            Text(NSLocalizedString("tracking", comment: ""))
                         })
                         
                         Button(action: {
@@ -103,13 +103,13 @@ struct HomeView: View {
                             print("user's location is \(String(describing: UserDefaults.standard.string(forKey: "city")))")
                             print("user's cityName is \(city)")
                         }, label: {
-                            Text("City name")
+                            Text(NSLocalizedString("cityName", comment: ""))
                         })
                         Text(city)
                         Button(action: {
                             self.walking.toggle()
                         }, label: {
-                            Text(walking ? "Walking" : " Automobile")
+                            Text(walking ? NSLocalizedString("walk", comment: "") : NSLocalizedString("car", comment: ""))
                         })
                     }
                 }
@@ -248,7 +248,7 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
-                Text("Directions \(walking ? " by walking" : " by automobile")")
+                Text(NSLocalizedString("directions", comment: "") + (walking ? NSLocalizedString("walking", comment: "") : NSLocalizedString("byCar", comment: "")))
                     .font(.largeTitle)
                     .bold()
                     .padding()

@@ -15,5 +15,14 @@
 "home" = "Koti";
 "cancel" = "Peru";
 "search" = "Hae ...";
-"details" = "Lisää";
-"about" = "Kuvaus ";
+"details" = "Lisätietoja";
+"about" = "Kuvaus: ";
+"walking" = "kävellen";
+"byCar" = "autolla";
+"directions" = "Reitti";
+"walk" = "Kävellen";
+"car" = " Autolla";
+"cityName" = "Kaupunki";
+"tracking" = "Sijainti";
+"city" = "Kaupunki";
+"website" = "Kotisivu";
