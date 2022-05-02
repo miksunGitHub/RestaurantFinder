@@ -23,7 +23,7 @@ struct FavouriteListElementView: View {
             Spacer()
                 .frame(width: 10)
             //AsyncImage(url: URL(string: restaurant.imageURL),
-            AsyncImage(url: URL(string: favourite.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
+            AsyncImage(url: URL(string: favourite.imageurl ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
                        content: {
                 image in image
                     .resizable()

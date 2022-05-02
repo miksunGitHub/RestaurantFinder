@@ -49,7 +49,7 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 
                 //print(restaurant.latitude ?? "60.163624")
                 //print(restaurant.longitude ?? "24.947996")
-                print(restaurant)
+                //print(restaurant)
                 
             }
             
@@ -65,11 +65,12 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
               }
            
             jsonObject.results.data.forEach{ item in
+                print(type(of: item.website))
                 let newRestaurant = Restaurant(context: moc)
                 newRestaurant.name = String(item.name ?? "no name")
                 newRestaurant.imageurl = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
-                //newRestaurant.url = String(item.web_url)
-                newRestaurant.url = "https://basbas.fi/"
+                newRestaurant.url = item.website
+                
                 newRestaurant.address = String(item.address_obj?.street1 ?? "no address")
                 newRestaurant.desc = String(item.description ?? "no description")
                 newRestaurant.rating = Double(item.rating ?? "1.0") ?? 1.0
@@ -79,7 +80,7 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 newRestaurant.postalcode = item.address_obj?.postalcode ?? "Postal code not found"
                 newRestaurant.review = item.write_review ?? "Review link not found"
                 
-                    //print(newRestaurant)
+                //print(newRestaurant)
                     
                     do {
                         try moc.save()
