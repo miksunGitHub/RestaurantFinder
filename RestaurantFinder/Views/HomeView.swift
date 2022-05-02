@@ -1,6 +1,7 @@
+
+//  HomeView.swift
 //  RestaurantFinder
-//  HomeView
-//  - INSERT CLASS COMMENT HERE -
+//  - INSERT CLASS COMMENT -
 //
 //  Created by Alex on 11.4.2022.
 //

@@ -1,6 +1,8 @@
 //
-//  MapAnnotation.swift
+//  RestaurantAnnotation.swift
 //  RestaurantFinder
+//
+//  Map annotation for restaurant locations
 //
 //  Created by iosdev on 27.4.2022.
 //
@@ -80,26 +82,17 @@ struct RestaurantAnnotation: View {
         }
     }
     func findDirections(){
-        
         let request = MKDirections.Request()
-        
         request.source = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: LocationHelper.currentLocation, addressDictionary: nil)))
-        
         request.destination = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: restaurant.coordinate, addressDictionary: nil)))
-        
         request.requestsAlternateRoutes = false
-        
         let distance = LocationHelper.currentLocation.distance(from: restaurant.coordinate)
-        
         request.transportType = walking ? .walking : .automobile
-        //        request.transportType = .automobile
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
-            
             if response?.routes != nil {
                 for route in (response?.routes)! {
                     routeSteps = [RouteSteps(step: NSLocalizedString("distance", comment: "") + String(Int(distance)) + "m" )]
-                    
                     for step in route.steps {
                         routeSteps.append(RouteSteps(step: step.instructions))
                     }
@@ -107,11 +100,6 @@ struct RestaurantAnnotation: View {
             } else {
                 routeSteps = [RouteSteps(step: "Directions calculation failed, because you are not located in the same city as the restaurant you selected")]
             }
-            
         })
-        
-        
     }
 }
-
-
