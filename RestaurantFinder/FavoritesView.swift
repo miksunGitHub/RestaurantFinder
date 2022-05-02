@@ -16,6 +16,7 @@ struct FavoritesView: View {
     @FetchRequest(
         entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
     
+    // list of colors used as back ground colors for the card
     let colors: [Color] = [.customRed, .customBlue, .customGreen, .customOrange, .customYellow]
     
     let columns = [GridItem(.flexible()),
@@ -57,7 +58,6 @@ struct FavoritesView: View {
                                 FavouriteListElementView(favourite: favourite, color: colors.randomElement() ?? .gray)
                             }
                         }
-                        
                     }
                     Spacer()
                 }.padding(10)
@@ -69,14 +69,9 @@ struct FavoritesView: View {
                 .padding(.bottom, 0.5)
         }
     }
-    
-    
 }
 
-
-
 struct FavoritesView_Previews: PreviewProvider {
-    
     static var previews: some View {
         FavoritesView()
     }

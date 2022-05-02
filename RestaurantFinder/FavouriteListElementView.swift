@@ -2,7 +2,7 @@
 //  FavouriteListElementView.swift
 //  RestaurantFinder
 //
-//  Created by iosdev on 28.4.2022.
+//  Created by Mikko on 28.4.2022.
 //
 
 import SwiftUI
@@ -14,15 +14,10 @@ struct FavouriteListElementView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(
-        entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
-    
-    
     var body: some View {
         VStack(){
             Spacer()
                 .frame(width: 10)
-            //AsyncImage(url: URL(string: restaurant.imageURL),
             AsyncImage(url: URL(string: favourite.imageurl ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
                        content: {
                 image in image
@@ -65,33 +60,33 @@ struct FavouriteListElementView: View {
             Spacer()
                 .frame(height: 20)
         }
-        //.padding(10)
         .frame(width: 130, height: 150)
         .border(color, width: 2)
         .background(color)
         .cornerRadius(10)
     }
     
+    // function for deleting items from core data
     private func deleteItem(){
         viewContext.delete(favourite)
         saveItems()
     }
     
+    // function to store data after deleting
     private func saveItems(){
         do {
             try viewContext.save()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             print(nsError)
-            //fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }
 
 struct FavouriteListElementView_Previews: PreviewProvider {
     static var previews: some View {
+        
+        //creating dummy core data to pass to the preview
         let viewContext = PersistenceController.shared.container.viewContext
         let newRestaurant = Favourite(context: viewContext)
         newRestaurant.name = "Baskeri & Basso"

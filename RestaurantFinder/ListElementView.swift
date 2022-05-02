@@ -32,7 +32,6 @@ struct ListElementView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 150, height: 90, alignment: .center)
-                //.scaledToFill()
                     .background(Color.colorDarkGrey)
                     .overlay(
                         Image(systemName: "bookmark.fill")
@@ -89,6 +88,7 @@ struct ListElementView: View {
         .cornerRadius(10)
     }
     
+    // function to create a new favourite to core data
     private func addItem() {
         withAnimation {
             let newFavourite = Favourite(context: viewContext)
@@ -98,7 +98,7 @@ struct ListElementView: View {
             newFavourite.address = restaurant.address
             newFavourite.url = restaurant.url
             newFavourite.imageurl = restaurant.imageurl
-            newFavourite.desc = restaurant.description
+            newFavourite.desc = restaurant.desc
             newFavourite.phone = restaurant.phone
             newFavourite.email = restaurant.email
             newFavourite.ranking = restaurant.ranking
@@ -106,27 +106,22 @@ struct ListElementView: View {
             newFavourite.latitude = restaurant.latitude
             newFavourite.longitude = restaurant.longitude
             newFavourite.postalcode = restaurant.postalcode
-            
-            print(newFavourite)
             saveItems()
         }
     }
     
+    // function to save the items
     private func saveItems(){
         do {
             try viewContext.save()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             print(nsError)
-            //fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }
 
 struct ListElementView_Previews: PreviewProvider {
-    
     static var previews: some View {
         let viewContext = PersistenceController.shared.container.viewContext
         let newRestaurant = Restaurant(context: viewContext)
@@ -144,7 +139,6 @@ struct ListElementView_Previews: PreviewProvider {
         newRestaurant.email = "bas@bas.fi"
         newRestaurant.phone = "0428347473"
         newRestaurant.ranking = "no ranking"
-        
         
         return ListElementView(restaurant: newRestaurant, color: .gray)
             .environment(\.managedObjectContext, viewContext)

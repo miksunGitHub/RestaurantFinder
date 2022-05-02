@@ -11,16 +11,16 @@ import CoreData
 
 struct RestaurantsView: View {
     
+    // fetch request without any sorting
     @FetchRequest(
         entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
     
+    // core data sorted by rating
     @FetchRequest(
         entity: Restaurant.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Restaurant.rating, ascending: false)]) var restaurantsByRating: FetchedResults<Restaurant>
     
     var body: some View {
-        
         NavigationView {
-            
             ScrollView(.vertical, content:{
                 VStack(alignment: .leading){
                     Text(NSLocalizedString("nearYou", comment: ""))
@@ -31,7 +31,6 @@ struct RestaurantsView: View {
                     
                     ListingElement(restaurants: restaurants)
                     
-                    
                     Text(NSLocalizedString("topRated", comment: ""))
                         .tracking(1)
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
@@ -41,6 +40,7 @@ struct RestaurantsView: View {
                     
                     ListingElement(restaurants: restaurantsByRating)
                     
+                    // This feature was not implemented, because the pricing data from the API was not usable in ghis context. The unsorted list is displayed instead.
                     Text(NSLocalizedString("byPrice", comment: ""))
                         .tracking(1)
                         .font(.system(size: 28.0, weight: .bold, design: .serif))
