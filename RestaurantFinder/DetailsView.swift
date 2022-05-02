@@ -88,15 +88,6 @@ struct DetailsView: View {
             }
         }.background(Color.colorDarkGrey)
     }
-    //      Printing fonts: To be deleted later
-    //    func getFonts(){
-    //        UIFont.familyNames.forEach({ name in
-    //            for font_name in UIFont.fontNames(forFamilyName: name){
-    //                print("\n\(font_name)")
-    //            }
-    //        })
-    //    }
-    
 }
 
 struct DetailsView_Previews: PreviewProvider {

@@ -20,9 +20,9 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
         "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
         "X-RapidAPI-Key": "60b315c809msh733da161b5bb9e9p1619b1jsn9a09d2994c39"
     ]
+    
     let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
     postData.append("&limit=100".data(using: String.Encoding.utf8)!)
-    // hard coded location id(needs to be taken from fetchlocation function)
     postData.append("&location_id=\(location_id)".data(using: String.Encoding.utf8)!)
     postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
     
@@ -44,26 +44,18 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
             
             let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
             
-            jsonObject.results.data.forEach{restaurant in
-                //print(String(resturant.photo?.images?.medium?.url ?? "none") )
-                
-                //print(restaurant.latitude ?? "60.163624")
-                //print(restaurant.longitude ?? "24.947996")
-                //print(restaurant)
-                
+            // Fucntion call to delete Core-Data data before adding new data
+            let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
+            do {
+                let data = try context.fetch(fetchRequest)
+                if data.count > 0 {
+                    try batchDelete(in: context, fetchRequest: fetchRequest)
+                }
+            } catch {
+                print("Error deleting core-data")
             }
             
-            // Fucntion call for deleting Core-Data data
-            let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
-              do {
-                  let data = try context.fetch(fetchRequest)
-                  if data.count > 0 {
-                      try batchDelete(in: context, fetchRequest: fetchRequest)
-                  }
-              } catch {
-                  print("Error deleting core-data")
-              }
-           
+            // Adding resturant data in core-data
             jsonObject.results.data.forEach{ item in
                 
                 let newRestaurant = Restaurant(context: moc)
@@ -83,26 +75,20 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 newRestaurant.phone = item.phone
                 newRestaurant.ranking = item.ranking
                 
-                print(newRestaurant)
-                    
-                    do {
-                        try moc.save()
-                    } catch {
-                        // Replace this implementation with code to handle the error appropriately.
-                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                        let nsError = error as NSError
-                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                    }
+                do {
+                    try moc.save()
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nsError = error as NSError
+                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                 }
-                
             }
-
-            //try? moc.save()
-        
+            
+        }
         catch{
             print("Error printing \(error)")
         }
-        
     })
     
     dataTask.resume()

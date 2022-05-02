@@ -17,7 +17,6 @@ func fetchLocationId(_ location: String, context: NSManagedObjectContext){
         "X-RapidAPI-Key": "60b315c809msh733da161b5bb9e9p1619b1jsn9a09d2994c39"
     ]
     
-    // hardcode location(Needs to be taken from input)
     let postData = NSMutableData(data: "q=\(location)".data(using: String.Encoding.utf8)!)
     postData.append("&language=en_US".data(using: String.Encoding.utf8)!)
     
@@ -37,16 +36,14 @@ func fetchLocationId(_ location: String, context: NSManagedObjectContext){
         
         do{
             let jsonObject = try JSONDecoder().decode(LocationData.self, from: data!)
-            //                    print("Data \(jsonObject.results.data.count)")
-//            print("Data \(jsonObject.results.data[0].result_object.location_id)")
             let location_id = jsonObject.results.data[0].result_object.location_id
-            fetchData(location_id, context: context)
             
+            // Fucntion call to fetch resturants detail via location_id
+            fetchData(location_id, context: context)
         }
         catch{
             print("Error printing \(type(of: location))")
         }
-        
     })
     dataTask.resume()
 }
