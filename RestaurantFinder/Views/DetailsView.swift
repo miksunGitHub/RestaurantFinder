@@ -89,10 +89,7 @@ struct DetailsView: View {
                     }
                     .font(.subheadline)
                     .foregroundColor(Color.white)
-                    
-                    
                     Divider()
-                    
                     Text(NSLocalizedString("about", comment: ""))
                         .font(.title2)
                         .foregroundColor(Color.white)
@@ -107,15 +104,6 @@ struct DetailsView: View {
             }
         }.background(Color.colorDarkGrey)
     }
-    //      Printing fonts: To be deleted later
-    //    func getFonts(){
-    //        UIFont.familyNames.forEach({ name in
-    //            for font_name in UIFont.fontNames(forFamilyName: name){
-    //                print("\n\(font_name)")
-    //            }
-    //        })
-    //    }
-    
 }
 
 struct DetailsView_Previews: PreviewProvider {
