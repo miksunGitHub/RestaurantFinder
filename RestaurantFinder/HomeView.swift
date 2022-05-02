@@ -71,7 +71,7 @@ struct HomeView: View {
                     userTrackingMode: $tracking,
                     annotationItems: fetchedRestaurants)
                 { restaurant in
-                    MapAnnotation(coordinate: CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude!)!, longitude: Double(restaurant.longitude!)!)) {
+                    MapAnnotation(coordinate: CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude ?? "60.16364")!, longitude: Double(restaurant.longitude ?? "24.947996")!)) {
                         
                         let latitude = Double(restaurant.latitude ?? "60.16364")
                         let longitude = Double(restaurant.longitude ?? "24.947996")
