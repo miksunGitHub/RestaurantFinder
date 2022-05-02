@@ -16,9 +16,9 @@
 "cancel" = "Peru";
 "search" = "Hae ...";
 "details" = "Lisätietoja";
-"about" = "Kuvaus: ";
-"walking" = " kävellen";
-"byCar" = " autolla";
+"about" = "Kuvaus ";
+"walking" = "kävellen";
+"byCar" = "autolla";
 "directions" = "Reitti";
 "walk" = "Kävellen";
 "car" = " Autolla";

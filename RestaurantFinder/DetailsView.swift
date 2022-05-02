@@ -56,6 +56,13 @@ struct DetailsView: View {
                         }
                         Spacer()
                     }
+                    HStack {
+                        Spacer()
+                        Text(restaurant.ranking)
+                            .font(.subheadline)
+                            .foregroundColor(Color.white)
+                        Spacer()
+                    }
                     
                     HStack {
                         Text(restaurant.name)
@@ -63,18 +70,30 @@ struct DetailsView: View {
                     }
                     .foregroundColor(Color.white)
                     .font(.title)
-                    
-                    HStack {
-                        Text(restaurant.address)
-                        Spacer()
-                        Text(NSLocalizedString("city", comment: ""))
+                    VStack {
+                        HStack {
+                            Text(restaurant.address)
+                            Spacer()
+                            Text(restaurant.city)
+                        }
+                        
+                        HStack {
+                            Text(restaurant.phone)
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            Text(restaurant.email)
+                            Spacer()
+                        }
                     }
                     .font(.subheadline)
                     .foregroundColor(Color.white)
                     
+                    
                     Divider()
                     
-                    Text(NSLocalizedString("about", comment: "") + (restaurant.name))
+                    Text(NSLocalizedString("about", comment: ""))
                         .font(.title2)
                         .foregroundColor(Color.white)
                     Text(restaurant.description)
