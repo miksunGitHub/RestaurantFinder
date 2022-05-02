@@ -9,98 +9,40 @@ import Foundation
 import SwiftUI
 import CoreData
 
-// Fetching resurant data from  Api
-func fetchData (_ location_id: String, context: NSManagedObjectContext){
-    let moc = context
-    @FetchRequest(
-        entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
+struct ResturantApi {
+    func fetchResturants(_ headers: [String: String],_ location_id: String, completion: @escaping (Result <ApiData, APIError> ) -> Void){
     
-    let headers = [
-        "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Host": "worldwide-restaurants.p.rapidapi.com",
-        "X-RapidAPI-Key": "60b315c809msh733da161b5bb9e9p1619b1jsn9a09d2994c39"
-    ]
-    let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
-    postData.append("&limit=100".data(using: String.Encoding.utf8)!)
-    // hard coded location id(needs to be taken from fetchlocation function)
-    postData.append("&location_id=\(location_id)".data(using: String.Encoding.utf8)!)
-    postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
-    
-    let request = NSMutableURLRequest(url: NSURL(string: "https://worldwide-restaurants.p.rapidapi.com/search")! as URL,
-                                      cachePolicy: .useProtocolCachePolicy,
-                                      timeoutInterval: 10.0)
-    request.httpMethod = "POST"
-    request.allHTTPHeaderFields = headers
-    request.httpBody = postData as Data
-    
-    let session = URLSession.shared
-    let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-        if error != nil{
-            print(error!.localizedDescription)
-            return
-        }
-        
-        do{
-            
-            let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
-            
-            jsonObject.results.data.forEach{restaurant in
-                //print(String(resturant.photo?.images?.medium?.url ?? "none") )
-                
-                //print(restaurant.latitude ?? "60.163624")
-                //print(restaurant.longitude ?? "24.947996")
-                //print(restaurant)
-                
-            }
-            
-            // Fucntion call for deleting Core-Data data
-            let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
-              do {
-                  let data = try context.fetch(fetchRequest)
-                  if data.count > 0 {
-                      try batchDelete(in: context, fetchRequest: fetchRequest)
-                  }
-              } catch {
-                  print("Error deleting core-data")
-              }
+        let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
+           postData.append("&limit=100".data(using: String.Encoding.utf8)!)
+           // hard coded location id(needs to be taken from fetchlocation function)
+           postData.append("&location_id=\(location_id)".data(using: String.Encoding.utf8)!)
+           postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
            
-            jsonObject.results.data.forEach{ item in
-                print(type(of: item.website))
-                let newRestaurant = Restaurant(context: moc)
-                newRestaurant.name = String(item.name ?? "no name")
-                newRestaurant.imageurl = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
-                newRestaurant.url = item.website
-                
-                newRestaurant.address = String(item.address_obj?.street1 ?? "no address")
-                newRestaurant.desc = String(item.description ?? "no description")
-                newRestaurant.rating = Double(item.rating ?? "1.0") ?? 1.0
-                newRestaurant.price = Int64(5)
-                newRestaurant.latitude = item.latitude
-                newRestaurant.longitude = item.longitude
-                newRestaurant.postalcode = item.address_obj?.postalcode ?? "Postal code not found"
-                newRestaurant.review = item.write_review ?? "Review link not found"
-                
-                //print(newRestaurant)
-                    
-                    do {
-                        try moc.save()
-                    } catch {
-                        // Replace this implementation with code to handle the error appropriately.
-                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                        let nsError = error as NSError
-                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                    }
+           let request = NSMutableURLRequest(url: NSURL(string: "https://worldwide-restaurants.p.rapidapi.com/search")! as URL,
+                                             cachePolicy: .useProtocolCachePolicy,
+                                             timeoutInterval: 10.0)
+           request.httpMethod = "POST"
+           request.allHTTPHeaderFields = headers
+           request.httpBody = postData as Data
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if let error = error as? URLError{
+                completion(Result.failure(APIError.url(error)))
+            }else if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode){
+                completion(Result.failure(APIError.badResponse(statusCode: response.statusCode)))
+            } else if let data = data {
+                do{
+                    let resturantData = try JSONDecoder().decode(ApiData.self, from: data)
+//                    print("Data \(resturantData.results.data)")
+                    completion(Result.success(resturantData))
                 }
-                
+                catch{
+                    completion(Result.failure(APIError.parsing(error as? DecodingError)))
+                }
             }
-
-            //try? moc.save()
-        
-        catch{
-            print("Error printing \(error)")
-        }
-        
-    })
-    
-    dataTask.resume()
+            
+        })
+        dataTask.resume()
+    }
 }

@@ -24,6 +24,9 @@ struct Location : Identifiable {
 
 struct HomeView: View {
     
+    //    @ObservedObject var coreDataViewModel = CoreDataViewModel()
+    @ObservedObject var apiService = ApiService()
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     // Search
@@ -284,7 +287,7 @@ struct HomeView: View {
                 if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
                     return
                 } else {
-                    fetchLocationId(city, context: viewContext)
+                    apiService.locationService(city)
                 }
                 self.city = city
                 UserDefaults.standard.set(city, forKey: "city")
