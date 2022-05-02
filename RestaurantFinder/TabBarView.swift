@@ -17,7 +17,7 @@ struct TabBarView: View {
     
     var body: some View {
         TabView {
-            HomeView(restaurants: RestaurantHC.sampleData)
+            HomeView()
                 .tabItem {
                     Image(systemName: "house")
                     Text(NSLocalizedString("home", comment: ""))
