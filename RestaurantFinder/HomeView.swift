@@ -23,8 +23,9 @@ struct Location : Identifiable {
 }
 
 struct HomeView: View {
+    
+    //    @ObservedObject var coreDataViewModel = CoreDataViewModel()
     @ObservedObject var apiService = ApiService()
-//    @ObservedObject var coreDataViewModel = CoreDataViewModel()
     
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -130,15 +131,15 @@ struct HomeView: View {
                         let latitude = Double(restaurant.latitude ?? "60.16364")
                         let longitude = Double(restaurant.longitude ?? "24.947996")
                         let newRestaurant = RestaurantHC(
-                         name: restaurant.name ?? "no name",
-                         imageURL: restaurant.url ?? "no",
-                         rating: restaurant.rating ,
-                         description: restaurant.desc ?? "no descpription",
-                         address: restaurant.address ?? "no address",
-                         priceLevel: restaurant.price ,
-                         coordinate: CLLocationCoordinate2D(
-                            latitude: latitude ?? 60.16364,
-                            longitude: longitude ?? 24.947996)
+                            name: restaurant.name ?? "no name",
+                            imageURL: restaurant.url ?? "no",
+                            rating: restaurant.rating ,
+                            description: restaurant.desc ?? "no descpription",
+                            address: restaurant.address ?? "no address",
+                            priceLevel: restaurant.price ,
+                            coordinate: CLLocationCoordinate2D(
+                                latitude: latitude ?? 60.16364,
+                                longitude: longitude ?? 24.947996)
                         )
                         NavigationLink {
                             DetailsView(restaurant: newRestaurant)
@@ -154,7 +155,7 @@ struct HomeView: View {
                                     print(city)
                                 }
                             Text(restaurant.name!)
-                                
+                            
                         }
                     }
                 }
@@ -218,7 +219,7 @@ struct HomeView: View {
                                         Image(systemName: "location")
                                             .foregroundColor(.gray)
                                             .padding(.trailing, 8)
-                                            
+                                        
                                     }
                                 }.onTapGesture {
                                     region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(place.latitude!)!, longitude: Double(place.longitude!)!), span: MKCoordinateSpan(latitudeDelta: 0.002,longitudeDelta: 0.002))
@@ -231,7 +232,7 @@ struct HomeView: View {
                 }.background(isEditing ? Color(.white) : nil)
             }
         }
-//        .navigationBarHidden(self.isNavigationBarHidden)
+        //        .navigationBarHidden(self.isNavigationBarHidden)
         .navigationBarHidden(true)
         .onAppear(){
             MKMapView.appearance().mapType = .mutedStandard
@@ -294,7 +295,7 @@ struct HomeView: View {
             }
             
         })
-    
+        
         
     }
     
@@ -312,7 +313,7 @@ struct HomeView: View {
                 if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
                     return
                 } else {
-//                    apiService.location = $city
+                    apiService.locationService(city)
                 }
                 self.city = city
                 UserDefaults.standard.set(city, forKey: "city")

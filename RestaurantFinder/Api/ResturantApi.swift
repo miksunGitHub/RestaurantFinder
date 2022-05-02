@@ -10,14 +10,8 @@ import SwiftUI
 import CoreData
 
 struct ResturantApi {
-    
     func fetchResturants(_ headers: [String: String],_ location_id: String, completion: @escaping (Result <ApiData, APIError> ) -> Void){
-        //        guard let url = URL(string: "https://worldwide-restaurants.p.rapidapi.com/typeahead") else {
-        //            let error = APIError.badURL
-        //            completion(Result.failure(error))
-        //            return
-        //        }
-      
+    
         let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
            postData.append("&limit=100".data(using: String.Encoding.utf8)!)
            // hard coded location id(needs to be taken from fetchlocation function)

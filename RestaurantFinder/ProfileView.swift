@@ -12,31 +12,32 @@ struct ProfileView: View {
     //@FetchRequest(sortDescriptors: []) var resturantArray: //FetchedResults<ResturantArray>
     //    @FetchRequest(
     //        entity: Restaurant.entity(), sortDescriptors: []) var restaurants: FetchedResults<Restaurant>
-    //    @StateObject var coreDataViewModel = CoreDataViewModel()
-    @State var vm = ApiService()
+//        @StateObject var coreDataViewModel = CoreDataViewModel()
+//    @State var vm = ApiService()
+    @ObservedObject var coreDataViewModel = CoreDataViewModel()
     
     
     var body: some View {
-        NavigationView {
-            Button(action: add){
-                Text("Hello")
-            }
-            
-        }
-        //        VStack{
-        //            List{
-        //                ForEach(coreDataViewModel.fetchedEntities){ item in
-        //                    Text(item.postalcode ?? "no name")
-        //                    }
-        //
-        //            }
-        //        }
+//        NavigationView {
+//            Button(action: add){
+//                Text("Hello")
+//            }
+//
+//        }
+                VStack{
+                    List{
+                        ForEach(coreDataViewModel.fetchedEntities){ item in
+                            Text(item.postalcode ?? "no name")
+                            }
+
+                    }
+                }
     }
     
     func add(){
-        vm.resturants.forEach{ item in
-            print(item.name!)
-        }
+//        vm.resturants.forEach{ item in
+//            print(item.name!)
+//        }
     }
 }
 

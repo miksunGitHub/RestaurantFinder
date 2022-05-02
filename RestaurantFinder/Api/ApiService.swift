@@ -7,11 +7,10 @@
 
 import Foundation
 import SwiftUI
-class ApiService :ObservableObject {
-    @Environment(\.managedObjectContext) private var viewContext
-    
+class ApiService: ObservableObject {
+//    @Environment(\.managedObjectContext) private var viewContext
     @Published var location: String = UserDefaults.standard.string(forKey: "city")!
-    @Published var location_id: String? = nil
+//    @Binding var location: String
     @Published var errorMessage: String? = nil
     @Published var resturants = [Resturant]()
     
@@ -22,42 +21,52 @@ class ApiService :ObservableObject {
     ]
     
     init(){
-        locationService()
+        locationService(self.location)
     }
     
     // Creating instance of LocationApi and Fetching value on success
-    func locationService(){
+    func locationService(_ location: String?){
         let service = LocationApi()
-        service.fetchLocationId(headers, location){[unowned self] result in
+        // Assigning newly changed location
+        self.location = location!
+        service.fetchLocationId(headers, self.location){[unowned self] result in
             DispatchQueue.main.async { [self] in
                 switch result{
-                case.failure(let error):
+                case .failure(let error):
                     self.errorMessage = error.localizedDescription
                 case .success(let locationData):
-                    self.location_id = locationData.results.data[0].result_object.location_id
+                    let location_id = locationData.results.data[0].result_object.location_id
 //                    print("From class", self.location_id!)
-                    resturantService()
+                    resturantService(location_id)
                 }
             }
+            
         }
     }
     
     // Creating instance of ResturantApi and Fetching value on success
-    func resturantService(){
+    func resturantService(_ location_id: String){
         let service = ResturantApi()
-        service.fetchResturants(headers, self.location_id!){[unowned self] result in
+        service.fetchResturants(headers, location_id){[unowned self] result in
             DispatchQueue.main.async { [self] in
                 switch result{
-                case.failure(let error):
+                case .failure(let error):
                     self.errorMessage = error.localizedDescription
                 case .success(let resturants):
                     self.resturants = resturants.results.data
-//                    print("Resturants",self.resturants)
-                    self.resturants.forEach{ item in
-//                        print("name", item.name)
+                    self.resturants.forEach{resturant in
+                        print(resturant.name!)
                     }
+                    addRestuarntToCoreData(self.resturants)
                 }
             }
+           
         }
+    }
+    
+    // Adding resturants to core data
+    func addRestuarntToCoreData(_ resturants: [Resturant]){
+       let coreData = CoreDataViewModel()
+        coreData.addResturants(resturants)
     }
 }

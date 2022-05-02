@@ -9,26 +9,23 @@ import Foundation
 import SwiftUI
 import CoreData
 
+// Core data view model
 class CoreDataViewModel: ObservableObject {
 //    @Environment(\.managedObjectContext) private var context
-    @State var apiService = ApiService()
+    let container: NSPersistentContainer
+//    @State var apiService = ApiService()
     @Published var fetchedEntities: [Restaurant] = []
     @State var deleteData = DeleteData()
-    let container = NSPersistentContainer(name: "RestaurantFinder")
     
     init() {
-//        container = NSPersistentContainer(name: "RestaurantFinder")
-//        container.loadPersistentStores{(desciption, error) in
-//            if let error = error {
-//                print("Error loading core data. \(error)")
-//            }else{
-//                print("Success")
-//            }
-//        }
-        //deleteCoreData()
-        addResturants()
-//        fetchFromCoreData()
-        
+        container = NSPersistentContainer(name: "RestaurantFinder")
+        container.loadPersistentStores{(desciption, error) in
+            if let error = error {
+                print("Error loading core data. \(error)")
+            }else{
+                print("Success")
+            }
+        }
     }
     
     func fetchFromCoreData(){
@@ -40,13 +37,10 @@ class CoreDataViewModel: ObservableObject {
         }
     }
     
-    func addResturants(){
-        // deleteCoreData()
-//        apiService.resturants.forEach{ restaurant in
-//            print("name");
-//        }
-        
-        apiService.resturants.forEach{ item in
+    // adding resturants to the core data
+    func addResturants(_ resturants: [Resturant]){
+         deleteCoreData()
+        resturants.forEach{ item in
             let newRestaurant = Restaurant(context: container.viewContext)
             newRestaurant.name = String(item.name ?? "no name")
             newRestaurant.url = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
@@ -58,16 +52,16 @@ class CoreDataViewModel: ObservableObject {
             newRestaurant.longitude = item.longitude
             newRestaurant.postalcode = item.address_obj?.postalcode ?? "Postal code not found"
             newRestaurant.review = item.write_review ?? "Review link not found"
-            print("res", newRestaurant)
             saveEntity()
         }
-//        fetchFromCoreData()
+        fetchFromCoreData()
     }
     
+    // Saving core data
     func saveEntity(){
         do {
             try container.viewContext.save()
-//            fetchFromCoreData()
+            fetchFromCoreData()
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -76,6 +70,7 @@ class CoreDataViewModel: ObservableObject {
         }
     }
     
+    // Deleting values from core data
     private func deleteCoreData(){
         let context = container.viewContext
         let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
