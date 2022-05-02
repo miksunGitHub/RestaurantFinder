@@ -11,15 +11,10 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
+// for create a route steps for a direction
 struct RouteSteps: Identifiable {
     let id = UUID()
     let step : String
-}
-
-struct Location : Identifiable {
-    let id = UUID()
-    let name: String
-    let coordinate: CLLocationCoordinate2D
 }
 
 struct HomeView: View {
@@ -46,13 +41,6 @@ struct HomeView: View {
         }
     }
     
-    let restaurants: [RestaurantHC]
-    
-    @State private var destination = CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)
-    
-    @State private var point = CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)
-    
-    
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328), span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
     
     @State var routeSteps : [RouteSteps] = []
@@ -75,39 +63,6 @@ struct HomeView: View {
     var body: some View {
         
         VStack {
-//            HStack{
-//                VStack {
-//                    HStack {
-//                        Button(action: {
-//                            manage.desiredAccuracy = kCLLocationAccuracyBest
-//                            manage.requestWhenInUseAuthorization()
-//                            manage.startUpdatingHeading()
-//                            print("startpoint is \($startPoint)")
-//                            print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
-//                            region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
-//                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-//                            print("Tracking user's cityName is \(city)")
-//                        }, label: {
-//                            Text(NSLocalizedString("tracking", comment: ""))
-//                        })
-//
-//
-//                        Button(action: {
-//                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-//                            print("user's location is \(String(describing: UserDefaults.standard.string(forKey: "city")))")
-//                            print("user's cityName is \(city)")
-//                        }, label: {
-//                            Text(NSLocalizedString("cityName", comment: ""))
-//                        })
-//                        Text(city)
-//                        Button(action: {
-//                            self.walking.toggle()
-//                        }, label: {
-//                            Text(walking ? NSLocalizedString("walk", comment: "") : NSLocalizedString("car", comment: ""))
-//                        })
-//                    }
-//                }
-//            }
             ZStack {
                 Map(coordinateRegion: $region,
                     interactionModes: .all,
@@ -116,7 +71,7 @@ struct HomeView: View {
                     userTrackingMode: $tracking,
                     annotationItems: fetchedRestaurants)
                 { restaurant in
-                    MapAnnotation(coordinate: CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude!)!, longitude: Double(restaurant.longitude!)!)) {
+                    MapAnnotation(coordinate: CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude ?? "60.16364")!, longitude: Double(restaurant.longitude ?? "24.947996")!)) {
                         
                         let latitude = Double(restaurant.latitude ?? "60.16364")
                         let longitude = Double(restaurant.longitude ?? "24.947996")
@@ -215,14 +170,8 @@ struct HomeView: View {
                     Spacer()
                     if(!isEditing) {
                         Button(action:{
-                            manage.desiredAccuracy = kCLLocationAccuracyBest
-                            manage.requestWhenInUseAuthorization()
-                            manage.startUpdatingHeading()
-                            print("startpoint is \($startPoint)")
-                            print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
                             region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-                            print("Tracking user's cityName is \(city)")
                         }) {
                                 Label("", systemImage: "location.circle")
                                 .font(.system(size: 30.0))
@@ -235,16 +184,12 @@ struct HomeView: View {
                 }.background(isEditing ? Color(.systemGray6) : nil)
             }
         }
-        //        .navigationBarHidden(self.isNavigationBarHidden)
         .navigationBarHidden(true)
         .onAppear(){
             MKMapView.appearance().mapType = .mutedStandard
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
             self.isNavigationBarHidden = true
             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-            print("onAppear UserDefaults  \(String(describing: UserDefaults.standard.string(forKey: "city")))")
-            print("onAppear cityName \(city)")
-            print(LocationHelper.currentLocation)
         }
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
@@ -263,37 +208,38 @@ struct HomeView: View {
         })
         
     }
-    
+    //translate the latitude and longitude to CLLocationCoordinate2D data type
     func CLLocationCoordinate2DMaker(latitude: Double, longitude: Double) -> CLLocationCoordinate2D{
         let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         return location
     }
     
-    
+    //convert coordinator to a real address
     func convertLatLongToAddress(latitude:Double,longitude:Double){
-        let geoCoder = CLGeocoder()
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
-            
-            var placeMark: CLPlacemark!
-            placeMark = placemarks?[0]
-            
-            if let city = placeMark.locality {
-                print(city)
-                
-                if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
-                    return
-                } else {
-                    fetchLocationId(city, context: viewContext)
-                }
-                self.city = city
-                UserDefaults.standard.set(city, forKey: "city")
-            }
-        })
+    let geoCoder = CLGeocoder()
+    let location = CLLocation(latitude: latitude, longitude: longitude)
+    geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
         
-    }
+        var placeMark: CLPlacemark!
+        placeMark = placemarks?[0]
+        
+        if let city = placeMark.locality {
+            print(city)
+            
+            if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
+                return
+            } else {
+                fetchLocationId(city, context: viewContext)
+            }
+            self.city = city
+            UserDefaults.standard.set(city, forKey: "city")
+        }
+    })
+    
+}
 }
 
+// add distance calculation function to CLLocationCoordinate2D protoco
 extension CLLocationCoordinate2D {
     func distance(from: CLLocationCoordinate2D) -> CLLocationDistance {
         let from = CLLocation(latitude: from.latitude, longitude: from.longitude)
@@ -302,7 +248,7 @@ extension CLLocationCoordinate2D {
     }
 }
 
-
+// for get user's coordinator of user's current location
 class LocationHelper: NSObject, ObservableObject {
     static let shared = LocationHelper()
     static let DefaultLocation = CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328)
@@ -324,6 +270,6 @@ class LocationHelper: NSObject, ObservableObject {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(restaurants: RestaurantHC.sampleData)
+        HomeView()
     }
 }
