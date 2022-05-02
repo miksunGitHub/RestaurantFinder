@@ -65,7 +65,7 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
               }
            
             jsonObject.results.data.forEach{ item in
-                print(type(of: item.website))
+                print(item)
                 let newRestaurant = Restaurant(context: moc)
                 newRestaurant.name = String(item.name ?? "no name")
                 newRestaurant.imageurl = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")

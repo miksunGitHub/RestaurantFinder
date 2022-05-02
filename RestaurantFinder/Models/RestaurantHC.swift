@@ -18,6 +18,11 @@ struct RestaurantHC: Identifiable {
     var address: String
     var priceLevel: Int64
     var coordinate: CLLocationCoordinate2D
+    var city: String
+    var email: String
+    var phone: String
+    
+    
     
     init(id: UUID = UUID(), name: String, imageURL: String, url: String, rating: Double, description: String, address: String, priceLevel: Int64, coordinate: CLLocationCoordinate2D) {
         self.id = id
