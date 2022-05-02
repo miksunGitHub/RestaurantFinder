@@ -47,7 +47,7 @@ class CoreDataViewModel: ObservableObject {
             newRestaurant.address = String(item.address_obj?.street1 ?? "no address")
             newRestaurant.desc = String(item.description ?? "no description")
             newRestaurant.rating = Double(item.rating ?? "1.0") ?? 1.0
-            newRestaurant.price = Int64(5)
+//            newRestaurant.price = Int64(5)
             newRestaurant.latitude = item.latitude
             newRestaurant.longitude = item.longitude
             newRestaurant.postalcode = item.address_obj?.postalcode ?? "Postal code not found"

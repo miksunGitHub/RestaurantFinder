@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 import CoreData
 
+// Fetcing resturants data
 struct ResturantApi {
     func fetchResturants(_ headers: [String: String],_ location_id: String, completion: @escaping (Result <ApiData, APIError> ) -> Void){
     
         let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
            postData.append("&limit=100".data(using: String.Encoding.utf8)!)
-           // hard coded location id(needs to be taken from fetchlocation function)
            postData.append("&location_id=\(location_id)".data(using: String.Encoding.utf8)!)
            postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
            
