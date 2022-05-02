@@ -36,7 +36,11 @@ struct ListingElement: View {
                         priceLevel: restaurant.price,
                         coordinate: CLLocationCoordinate2D(
                             latitude: latitude ?? 60.16364,
-                            longitude: longitude ?? 24.947996)
+                            longitude: longitude ?? 24.947996),
+                        city: restaurant.city ?? "Helsinki",
+                        email: restaurant.email ?? "no email",
+                        phone: restaurant.phone ?? "no phone",
+                        ranking: restaurant.ranking ?? "no ranking"
                     )
                     NavigationLink(destination: DetailsView(restaurant: newRestaurant)) {
                         ListElementView(restaurant: restaurant, color: colors.randomElement() ?? .customBlue)
