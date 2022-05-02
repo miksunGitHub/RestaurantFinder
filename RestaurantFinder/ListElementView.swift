@@ -9,10 +9,19 @@ import SwiftUI
 import CoreData
 
 struct ListElementView: View {
+    
     @ObservedObject var restaurant: Restaurant
+    
     let color: Color
     
     @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(
+        entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)])
+    var favourites: FetchedResults<Favourite>
+    
+    
+    @State private var showingAlert = false
     
     var body: some View {
     
@@ -29,16 +38,31 @@ struct ListElementView: View {
                                         //.scaledToFill()
                             .background(Color.colorDarkGrey)
                                         .overlay(
-                                            Image(systemName: "bookmark.fill")
-                                                .gesture(
-                                                    TapGesture().onEnded{
-                                                        addItem()
-                                                    }
-                                                )
-                                                .foregroundColor(color)
-                                                .padding(.top, 15)
-                                                .padding(.trailing, 20)
-                                                .font(Font.system(size: 18, weight: .semibold))
+                                                Image(systemName: "bookmark.fill")
+                                                    .gesture(
+                                                        TapGesture().onEnded{
+                                                            var notInFavourite = true
+
+                                                            favourites.forEach{
+                                                                favourite in
+                                                                if favourite.name == restaurant.name {
+                                                                    notInFavourite = false
+                                                                    showingAlert = true
+                                                                }
+                                                            }
+                                                            if notInFavourite {
+                                                                addItem()
+                                                            }
+                                                            
+                                                        }
+                                                    )
+                                                    .foregroundColor(color)
+                                                    .padding(.top, 15)
+                                                    .padding(.trailing, 10)
+                                                    .font(Font.system(size: 18, weight: .semibold))
+                                                    .alert("THis restaurant is already in your Favourite list!", isPresented: $showingAlert) {
+                                                                Button("OK", role: .cancel) { }
+                                                            }
                                                 ,
                                                 alignment: .topTrailing
                                         )
