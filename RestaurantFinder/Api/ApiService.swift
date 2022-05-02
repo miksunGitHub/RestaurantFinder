@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 class ApiService: ObservableObject {
 //    @Environment(\.managedObjectContext) private var viewContext
-    @Published var location: String = UserDefaults.standard.string(forKey: "city")!
+    @Published var location: String = "Helsinki"
 //    @Binding var location: String
     @Published var errorMessage: String? = nil
     @Published var resturants = [Resturant]()
