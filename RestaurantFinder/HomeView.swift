@@ -209,21 +209,24 @@ struct HomeView: View {
                         }
                     }
                     Spacer()
-                    Button(action:{
-                        manage.desiredAccuracy = kCLLocationAccuracyBest
-                        manage.requestWhenInUseAuthorization()
-                        manage.startUpdatingHeading()
-                        print("startpoint is \($startPoint)")
-                        print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
-                        region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
-                        convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-                        print("Tracking user's cityName is \(city)")
-                    }) {
-                            Label("", systemImage: "location.circle")
-                            .font(.system(size: 30.0))
-                        }
-                    .offset(x: 140)
-                    .padding(.bottom, 20)
+                    if(!isEditing) {
+                        Button(action:{
+                            manage.desiredAccuracy = kCLLocationAccuracyBest
+                            manage.requestWhenInUseAuthorization()
+                            manage.startUpdatingHeading()
+                            print("startpoint is \($startPoint)")
+                            print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
+                            region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
+                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                            print("Tracking user's cityName is \(city)")
+                        }) {
+                                Label("", systemImage: "location.circle")
+                                .font(.system(size: 30.0))
+                            }
+                        .offset(x: 140)
+                        .padding(.bottom, 20)
+                    }
+                    
                     
                 }.background(isEditing ? Color(.systemGray6) : nil)
             }
