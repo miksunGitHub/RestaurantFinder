@@ -98,7 +98,7 @@ struct HomeView: View {
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
                             print("Tracking user's cityName is \(city)")
                         }, label: {
-                            Text("tracking")
+                            Text(NSLocalizedString("tracking", comment: ""))
                         })
                         
                         Button(action: {
@@ -106,18 +106,16 @@ struct HomeView: View {
                             print("user's location is \(String(describing: UserDefaults.standard.string(forKey: "city")))")
                             print("user's cityName is \(city)")
                         }, label: {
-                            Text("City name")
+                            Text(NSLocalizedString("cityName", comment: ""))
                         })
                         Text(city)
                         Button(action: {
                             self.walking.toggle()
                         }, label: {
-                            Text(walking ? "Walking" : " Automobile")
+                            Text(walking ? NSLocalizedString("walk", comment: "") : NSLocalizedString("car", comment: ""))
                         })
                     }
-                    
                 }
-                
             }
             ZStack {
                 Map(coordinateRegion: $region,
@@ -128,12 +126,14 @@ struct HomeView: View {
                     annotationItems: fetchedRestaurants)
                 { restaurant in
                     MapAnnotation(coordinate: CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude!)!, longitude: Double(restaurant.longitude!)!)) {
+                        
                         let latitude = Double(restaurant.latitude ?? "60.16364")
                         let longitude = Double(restaurant.longitude ?? "24.947996")
                         let newRestaurant = RestaurantHC(
                             name: restaurant.name ?? "no name",
-                            imageURL: restaurant.url ?? "no",
-                            rating: restaurant.rating ,
+                            imageURL: restaurant.imageurl ?? "no",
+                            url: restaurant.url ?? "no url",
+                            rating: restaurant.rating,
                             description: restaurant.desc ?? "no descpription",
                             address: restaurant.address ?? "no address",
                             priceLevel: restaurant.price ,
@@ -141,6 +141,9 @@ struct HomeView: View {
                                 latitude: latitude ?? 60.16364,
                                 longitude: longitude ?? 24.947996)
                         )
+                        
+                        RestaurantAnnotation(restaurant: newRestaurant, routeSteps: $routeSteps, showDirections: $showDirections, walking: $walking)
+                        /*
                         NavigationLink {
                             DetailsView(restaurant: newRestaurant)
                         } label:{
@@ -157,15 +160,17 @@ struct HomeView: View {
                             Text(restaurant.name!)
                             
                         }
+                        */
                     }
                 }
                 VStack {
                     HStack {
-                        TextField("Search ...", text: searchQuery)
+                        TextField(NSLocalizedString("search", comment: ""), text: searchQuery)
                             .padding(7)
                             .padding(.horizontal, 25)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
+                            .shadow(color: .black, radius: 1)
                             .overlay(
                                 HStack {
                                     Image(systemName: "magnifyingglass")
@@ -196,7 +201,7 @@ struct HomeView: View {
                                 // Dismiss the keyboard
                                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }) {
-                                Text("Cancel")
+                                Text(NSLocalizedString("cancel", comment: ""))
                             }
                             .padding(.trailing, 10)
                             .transition(.move(edge: .trailing))
@@ -219,17 +224,18 @@ struct HomeView: View {
                                         Image(systemName: "location")
                                             .foregroundColor(.gray)
                                             .padding(.trailing, 8)
+                                            .onTapGesture {
+                                                region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(place.latitude!)!, longitude: Double(place.longitude!)!), span: MKCoordinateSpan(latitudeDelta: 0.002,longitudeDelta: 0.002))
+                                                isEditing = false
+                                            }
                                         
                                     }
-                                }.onTapGesture {
-                                    region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(place.latitude!)!, longitude: Double(place.longitude!)!), span: MKCoordinateSpan(latitudeDelta: 0.002,longitudeDelta: 0.002))
-                                    isEditing = false
                                 }
                             }
                         }
                     }
                     Spacer()
-                }.background(isEditing ? Color(.white) : nil)
+                }.background(isEditing ? Color(.systemGray6) : nil)
             }
         }
         //        .navigationBarHidden(self.isNavigationBarHidden)
@@ -245,7 +251,7 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
-                Text("Directions \(walking ? " by walking" : " by automobile")")
+                Text(NSLocalizedString("directions", comment: "") + (walking ? NSLocalizedString("walking", comment: "") : NSLocalizedString("byCar", comment: "")))
                     .font(.largeTitle)
                     .bold()
                     .padding()
@@ -266,38 +272,6 @@ struct HomeView: View {
         return location
     }
     
-    func findDirections(){
-        
-        let request = MKDirections.Request()
-        
-        request.source = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: LocationHelper.currentLocation, addressDictionary: nil)))
-        
-        request.destination = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil)))
-        
-        request.requestsAlternateRoutes = false
-        
-        let distance = LocationHelper.currentLocation.distance(from: destination)
-        
-        request.transportType = walking ? .walking : .automobile
-        let directions = MKDirections(request: request)
-        directions.calculate(completionHandler: {response, error in
-            
-            if response?.routes != nil {
-                for route in (response?.routes)! {
-                    self.routeSteps = [RouteSteps(step: "Distance: \(Int(distance))m")]
-                    
-                    for step in route.steps {
-                        self.routeSteps.append(RouteSteps(step: step.instructions))
-                    }
-                }
-            } else {
-                self.routeSteps = [RouteSteps(step: "Directions calculation failed, because you are not located in the same city as the restaurant you selected")]
-            }
-            
-        })
-        
-        
-    }
     
     func convertLatLongToAddress(latitude:Double,longitude:Double){
         let geoCoder = CLGeocoder()

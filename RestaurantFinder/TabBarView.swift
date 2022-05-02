@@ -20,19 +20,19 @@ struct TabBarView: View {
             HomeView(restaurants: RestaurantHC.sampleData)
                 .tabItem {
                     Image(systemName: "house")
-                    Text("Home")
+                    Text(NSLocalizedString("home", comment: ""))
                 }
             
             RestaurantsView()
                 .tabItem {
                     Image(systemName: "list.dash")
-                    Text("Restaurants")
+                    Text(NSLocalizedString("restaurants", comment: ""))
                 }
             
             FavoritesView()
                 .tabItem {
                     Image(systemName: "bookmark.fill")
-                    Text("Favorites")
+                    Text(NSLocalizedString("favourites", comment: ""))
                 }
             
             ProfileView()

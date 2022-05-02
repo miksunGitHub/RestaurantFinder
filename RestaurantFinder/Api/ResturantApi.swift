@@ -27,7 +27,6 @@ struct ResturantApi {
         
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            
             if let error = error as? URLError{
                 completion(Result.failure(APIError.url(error)))
             }else if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode){

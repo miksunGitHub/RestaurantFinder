@@ -1,25 +1,29 @@
 //
-//  ListElementView.swift
+//  FavouriteListElementView.swift
 //  RestaurantFinder
 //
-//  Created by Mikko Suhonen on 11.4.2022.
+//  Created by iosdev on 28.4.2022.
 //
 
 import SwiftUI
 import CoreData
 
-struct ListElementView: View {
-    @ObservedObject var restaurant: Restaurant
+struct FavouriteListElementView: View {
+    @ObservedObject var favourite: Favourite
     let color: Color
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    @FetchRequest(
+        entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
+    
+    
     var body: some View {
-        
         VStack(){
             Spacer()
                 .frame(width: 10)
-            AsyncImage(url: URL(string: restaurant.imageurl ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
+            //AsyncImage(url: URL(string: restaurant.imageURL),
+            AsyncImage(url: URL(string: favourite.imageurl ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
                        content: {
                 image in image
                     .resizable()
@@ -28,10 +32,10 @@ struct ListElementView: View {
                 //.scaledToFill()
                     .background(Color.colorDarkGrey)
                     .overlay(
-                        Image(systemName: "bookmark.fill")
+                        Image(systemName: "bookmark.slash.fill")
                             .gesture(
                                 TapGesture().onEnded{
-                                    addItem()
+                                    deleteItem()
                                 }
                             )
                             .foregroundColor(color)
@@ -47,12 +51,12 @@ struct ListElementView: View {
             })
             
             Spacer()
-            Text(restaurant.name ?? "no name")
+            Text(favourite.name ?? "no name")
                 .foregroundColor(Color.white)
                 .font(.custom(FontsName.EBGaraRomanSemiBold.rawValue, size: 18))
             Spacer()
             HStack{
-                ForEach(0..<Int(round(restaurant.rating))){ i in
+                ForEach(0..<Int(round(favourite.rating))){ i in
                     Image(systemName: "star")
                         .resizable().frame(width: 14, height: 14)
                         .foregroundColor(Color.white)
@@ -61,25 +65,16 @@ struct ListElementView: View {
             Spacer()
                 .frame(height: 20)
         }
+        //.padding(10)
         .frame(width: 130, height: 150)
         .border(color, width: 2)
         .background(color)
         .cornerRadius(10)
     }
     
-    private func addItem() {
-        withAnimation {
-            let newFavourite = Favourite(context: viewContext)
-            newFavourite.name = restaurant.name
-            newFavourite.rating = restaurant.rating
-            newFavourite.price = restaurant.price
-            newFavourite.address = restaurant.address
-            newFavourite.url = restaurant.url
-            newFavourite.imageurl = restaurant.imageurl
-            newFavourite.desc = restaurant.description
-            print(newFavourite)
-            saveItems()
-        }
+    private func deleteItem(){
+        viewContext.delete(favourite)
+        saveItems()
     }
     
     private func saveItems(){
@@ -95,11 +90,10 @@ struct ListElementView: View {
     }
 }
 
-struct ListElementView_Previews: PreviewProvider {
-    
+struct FavouriteListElementView_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.shared.container.viewContext
-        let newRestaurant = Restaurant(context: viewContext)
+        let newRestaurant = Favourite(context: viewContext)
         newRestaurant.name = "Baskeri & Basso"
         newRestaurant.url = "https://basbas.fi/"
         newRestaurant.imageurl = "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"
@@ -113,7 +107,7 @@ struct ListElementView_Previews: PreviewProvider {
         newRestaurant.review = "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"
         
         
-        return ListElementView(restaurant: newRestaurant, color: .gray)
+        return FavouriteListElementView(favourite: newRestaurant, color: .gray)
             .environment(\.managedObjectContext, viewContext)
     }
 }
