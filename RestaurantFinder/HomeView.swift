@@ -136,7 +136,11 @@ struct HomeView: View {
                             priceLevel: restaurant.price ,
                             coordinate: CLLocationCoordinate2D(
                                 latitude: latitude ?? 60.16364,
-                                longitude: longitude ?? 24.947996)
+                                longitude: longitude ?? 24.947996),
+                            city: restaurant.city ?? "no city",
+                            email: restaurant.email ?? "no email" ,
+                            phone: restaurant.phone ?? "no phone" ,
+                            ranking: restaurant.ranking ?? "no ranking"
                         )
                         
                         RestaurantAnnotation(restaurant: newRestaurant, routeSteps: $routeSteps, showDirections: $showDirections, walking: $walking)
@@ -292,7 +296,6 @@ struct HomeView: View {
         })
         
     }
-    
 }
 
 extension CLLocationCoordinate2D {

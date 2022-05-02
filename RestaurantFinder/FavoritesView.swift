@@ -46,7 +46,11 @@ struct FavoritesView: View {
                                 priceLevel: favourite.price,
                                 coordinate: CLLocationCoordinate2D(
                                     latitude: latitude ?? 60.16364,
-                                    longitude: longitude ?? 24.947996)
+                                    longitude: longitude ?? 24.947996),
+                                city: favourite.city ?? "no city",
+                                email: favourite.email ?? "no email",
+                                phone: favourite.phone ?? "no phone",
+                                ranking: favourite.ranking ?? "no ranking"
                             )
                             
                             NavigationLink(destination: DetailsView(restaurant: newFavourite)) {

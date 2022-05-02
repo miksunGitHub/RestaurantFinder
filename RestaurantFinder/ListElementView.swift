@@ -77,6 +77,14 @@ struct ListElementView: View {
             newFavourite.url = restaurant.url
             newFavourite.imageurl = restaurant.imageurl
             newFavourite.desc = restaurant.description
+            newFavourite.phone = restaurant.phone
+            newFavourite.email = restaurant.email
+            newFavourite.ranking = restaurant.ranking
+            newFavourite.city = restaurant.city
+            newFavourite.latitude = restaurant.latitude
+            newFavourite.longitude = restaurant.longitude
+            newFavourite.postalcode = restaurant.postalcode
+            
             print(newFavourite)
             saveItems()
         }
@@ -110,7 +118,10 @@ struct ListElementView_Previews: PreviewProvider {
         newRestaurant.latitude = "60.157803"
         newRestaurant.longitude = "24.934328"
         newRestaurant.postalcode = "00200"
-        newRestaurant.review = "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"
+        newRestaurant.city = "Helsinki"
+        newRestaurant.email = "bas@bas.fi"
+        newRestaurant.phone = "0428347473"
+        newRestaurant.ranking = "no ranking"
         
         
         return ListElementView(restaurant: newRestaurant, color: .gray)
