@@ -14,15 +14,10 @@ struct FavouriteListElementView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(
-        entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)]) var favourites: FetchedResults<Favourite>
-    
-    
     var body: some View {
         VStack(){
             Spacer()
                 .frame(width: 10)
-            //AsyncImage(url: URL(string: restaurant.imageURL),
             AsyncImage(url: URL(string: favourite.imageurl ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder"),
                        content: {
                 image in image
@@ -71,11 +66,13 @@ struct FavouriteListElementView: View {
         .cornerRadius(10)
     }
     
+    // function for deleting items from core data
     private func deleteItem(){
         viewContext.delete(favourite)
         saveItems()
     }
     
+    // function to store data after deleting
     private func saveItems(){
         do {
             try viewContext.save()
@@ -88,6 +85,8 @@ struct FavouriteListElementView: View {
 
 struct FavouriteListElementView_Previews: PreviewProvider {
     static var previews: some View {
+        
+        //creating dummy core data to pass to the preview
         let viewContext = PersistenceController.shared.container.viewContext
         let newRestaurant = Favourite(context: viewContext)
         newRestaurant.name = "Baskeri & Basso"

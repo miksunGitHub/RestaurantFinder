@@ -13,6 +13,7 @@ struct ListingElement: View {
     
     var restaurants : FetchedResults<Restaurant>
     
+    // background colors for the cards
     let colors: [Color] = [.customRed, .customBlue, .customGreen, .customOrange, .customYellow]
     
     let listLength: Int = 15

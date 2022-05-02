@@ -55,15 +55,15 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
             
             // Fucntion call for deleting Core-Data data
             let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
-              do {
-                  let data = try context.fetch(fetchRequest)
-                  if data.count > 0 {
-                      try batchDelete(in: context, fetchRequest: fetchRequest)
-                  }
-              } catch {
-                  print("Error deleting core-data")
-              }
-           
+            do {
+                let data = try context.fetch(fetchRequest)
+                if data.count > 0 {
+                    try batchDelete(in: context, fetchRequest: fetchRequest)
+                }
+            } catch {
+                print("Error deleting core-data")
+            }
+            
             jsonObject.results.data.forEach{ item in
                 
                 let newRestaurant = Restaurant(context: moc)
@@ -82,21 +82,19 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 newRestaurant.email = item.email
                 newRestaurant.phone = item.phone
                 newRestaurant.ranking = item.ranking
-        
-                    
-                    do {
-                        try moc.save()
-                    } catch {
-                        // Replace this implementation with code to handle the error appropriately.
-                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                        let nsError = error as NSError
-                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                    }
-                }
                 
+                
+                do {
+                    try moc.save()
+                } catch {
+                    let nsError = error as NSError
+                    print("Unresolved error \(nsError), \(nsError.userInfo)")
+                }
             }
-
-            //try? moc.save()
+            
+        }
+        
+        //try? moc.save()
         
         catch{
             print("Error printing \(error)")

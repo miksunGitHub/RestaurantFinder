@@ -34,12 +34,6 @@ struct TabBarView: View {
                     Image(systemName: "bookmark.fill")
                     Text(NSLocalizedString("favourites", comment: ""))
                 }
-            
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.circle.fill")
-                    Text("Profile")
-                }
         }.accentColor(.customBlue)
             }
         
