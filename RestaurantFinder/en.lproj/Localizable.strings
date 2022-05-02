@@ -17,8 +17,8 @@
 "search" = "Search ...";
 "details" = "Details";
 "about" = "About ";
-"walking" = "by walking";
-"byCar"= "by automobile";
+"walking" = " by walking";
+"byCar"= " by automobile";
 "directions" = "Directions";
 "walk" = "Walking";
 "car" = " Automobile";
@@ -26,3 +26,4 @@
 "tracking" = "tracking";
 "city" = "City";
 "website" = "Website";
+"distance" = "Distance: ";

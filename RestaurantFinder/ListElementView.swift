@@ -94,17 +94,13 @@ struct ListElementView: View {
         do {
             try viewContext.save()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             print(nsError)
-            //fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }
 
 struct ListElementView_Previews: PreviewProvider {
-    
     static var previews: some View {
         let viewContext = PersistenceController.shared.container.viewContext
         let newRestaurant = Restaurant(context: viewContext)
@@ -122,7 +118,6 @@ struct ListElementView_Previews: PreviewProvider {
         newRestaurant.email = "bas@bas.fi"
         newRestaurant.phone = "0428347473"
         newRestaurant.ranking = "no ranking"
-        
         
         return ListElementView(restaurant: newRestaurant, color: .gray)
             .environment(\.managedObjectContext, viewContext)

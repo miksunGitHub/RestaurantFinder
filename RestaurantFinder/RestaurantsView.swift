@@ -31,7 +31,6 @@ struct RestaurantsView: View {
                     
                     ListingElement(restaurants: restaurants)
                     
-                    
                     Text(NSLocalizedString("topRated", comment: ""))
                         .tracking(1)
                         .font(.system(size: 28.0, weight: .bold, design: .serif))

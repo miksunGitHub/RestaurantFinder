@@ -98,7 +98,7 @@ struct RestaurantAnnotation: View {
             
             if response?.routes != nil {
                 for route in (response?.routes)! {
-                    routeSteps = [RouteSteps(step: "Distance: \(Int(distance))m")]
+                    routeSteps = [RouteSteps(step: NSLocalizedString("distance", comment: "") + String(Int(distance)) + "m" )]
                     
                     for step in route.steps {
                         routeSteps.append(RouteSteps(step: step.instructions))

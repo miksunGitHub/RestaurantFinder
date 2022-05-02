@@ -17,8 +17,8 @@
 "search" = "Hae ...";
 "details" = "Lisätietoja";
 "about" = "Kuvaus: ";
-"walking" = "kävellen";
-"byCar" = "autolla";
+"walking" = " kävellen";
+"byCar" = " autolla";
 "directions" = "Reitti";
 "walk" = "Kävellen";
 "car" = " Autolla";
@@ -26,3 +26,4 @@
 "tracking" = "Sijainti";
 "city" = "Kaupunki";
 "website" = "Kotisivu";
+"distance" = "Välimatka: ";

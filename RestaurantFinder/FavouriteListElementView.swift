@@ -2,7 +2,7 @@
 //  FavouriteListElementView.swift
 //  RestaurantFinder
 //
-//  Created by iosdev on 28.4.2022.
+//  Created by Mikko on 28.4.2022.
 //
 
 import SwiftUI
@@ -65,7 +65,6 @@ struct FavouriteListElementView: View {
             Spacer()
                 .frame(height: 20)
         }
-        //.padding(10)
         .frame(width: 130, height: 150)
         .border(color, width: 2)
         .background(color)
@@ -81,11 +80,8 @@ struct FavouriteListElementView: View {
         do {
             try viewContext.save()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             print(nsError)
-            //fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }

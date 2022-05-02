@@ -82,8 +82,7 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 newRestaurant.email = item.email
                 newRestaurant.phone = item.phone
                 newRestaurant.ranking = item.ranking
-                
-                print(newRestaurant)
+        
                     
                     do {
                         try moc.save()
