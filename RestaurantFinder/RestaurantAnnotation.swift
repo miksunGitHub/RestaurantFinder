@@ -26,6 +26,12 @@ struct RestaurantAnnotation: View {
                     Text(restaurant.name)
                         .font(.headline)
                     Spacer()
+                    Button(action: {
+                        self.walking.toggle()
+                    }, label: {
+                        Text(walking ? NSLocalizedString("walk", comment: "") : NSLocalizedString("car", comment: ""))
+                    })
+                    Spacer()
                     Image(systemName: "location")
                         .foregroundColor(.red)
                         .frame(width: 15, height: 15)

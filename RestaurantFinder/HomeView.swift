@@ -57,13 +57,6 @@ struct HomeView: View {
     
     @State var routeSteps : [RouteSteps] = []
     
-    @State var annotations = [
-        Location(name: "Baskeri & Basso", coordinate: CLLocationCoordinate2D(latitude: 60.157803, longitude: 24.934328)),
-        Location(name: "Toca", coordinate: CLLocationCoordinate2D(latitude: 60.1655, longitude: 24.951344)),
-        Location(name: "Finlandia Caviar", coordinate: CLLocationCoordinate2D(latitude: 60.16717, longitude: 24.952295)),
-        Location(name: "Spis", coordinate: CLLocationCoordinate2D(latitude: 60.163624, longitude: 24.947996)),
-        Location(name: "my restaurant", coordinate: CLLocationCoordinate2D(latitude: 61.163624, longitude: 25.947996))
-    ]
     private let manage = CLLocationManager()
     
     @State var isNavigationBarHidden: Bool = true
@@ -82,38 +75,39 @@ struct HomeView: View {
     var body: some View {
         
         VStack {
-            HStack{
-                VStack {
-                    HStack {
-                        Button(action: {
-                            manage.desiredAccuracy = kCLLocationAccuracyBest
-                            manage.requestWhenInUseAuthorization()
-                            manage.startUpdatingHeading()
-                            print("startpoint is \($startPoint)")
-                            print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
-                            region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
-                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-                            print("Tracking user's cityName is \(city)")
-                        }, label: {
-                            Text(NSLocalizedString("tracking", comment: ""))
-                        })
-                        
-                        Button(action: {
-                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
-                            print("user's location is \(String(describing: UserDefaults.standard.string(forKey: "city")))")
-                            print("user's cityName is \(city)")
-                        }, label: {
-                            Text(NSLocalizedString("cityName", comment: ""))
-                        })
-                        Text(city)
-                        Button(action: {
-                            self.walking.toggle()
-                        }, label: {
-                            Text(walking ? NSLocalizedString("walk", comment: "") : NSLocalizedString("car", comment: ""))
-                        })
-                    }
-                }
-            }
+//            HStack{
+//                VStack {
+//                    HStack {
+//                        Button(action: {
+//                            manage.desiredAccuracy = kCLLocationAccuracyBest
+//                            manage.requestWhenInUseAuthorization()
+//                            manage.startUpdatingHeading()
+//                            print("startpoint is \($startPoint)")
+//                            print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
+//                            region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
+//                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+//                            print("Tracking user's cityName is \(city)")
+//                        }, label: {
+//                            Text(NSLocalizedString("tracking", comment: ""))
+//                        })
+//
+//
+//                        Button(action: {
+//                            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+//                            print("user's location is \(String(describing: UserDefaults.standard.string(forKey: "city")))")
+//                            print("user's cityName is \(city)")
+//                        }, label: {
+//                            Text(NSLocalizedString("cityName", comment: ""))
+//                        })
+//                        Text(city)
+//                        Button(action: {
+//                            self.walking.toggle()
+//                        }, label: {
+//                            Text(walking ? NSLocalizedString("walk", comment: "") : NSLocalizedString("car", comment: ""))
+//                        })
+//                    }
+//                }
+//            }
             ZStack {
                 Map(coordinateRegion: $region,
                     interactionModes: .all,
@@ -140,24 +134,7 @@ struct HomeView: View {
                         )
                         
                         RestaurantAnnotation(restaurant: newRestaurant, routeSteps: $routeSteps, showDirections: $showDirections, walking: $walking)
-                        /*
-                        NavigationLink {
-                            DetailsView(restaurant: newRestaurant)
-                        } label:{
-                            Image(systemName: "house.circle")
-                                .foregroundColor(.red)
-                                .frame(width: 15, height: 15)
-                                .onTapGesture {
-                                    print("Tapped on \(String(describing: restaurant.name))")
-                                    destination = CLLocationCoordinate2DMaker(latitude: Double(restaurant.latitude!)!, longitude: Double(restaurant.longitude!)!)
-                                    findDirections()
-                                    self.showDirections.toggle()
-                                    print(city)
-                                }
-                            Text(restaurant.name!)
-                            
-                        }
-                        */
+                        
                     }
                 }
                 VStack {
@@ -232,6 +209,22 @@ struct HomeView: View {
                         }
                     }
                     Spacer()
+                    Button(action:{
+                        manage.desiredAccuracy = kCLLocationAccuracyBest
+                        manage.requestWhenInUseAuthorization()
+                        manage.startUpdatingHeading()
+                        print("startpoint is \($startPoint)")
+                        print("LocationHelper.currentLocation is \(LocationHelper.currentLocation)")
+                        region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
+                        convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+                        print("Tracking user's cityName is \(city)")
+                    }) {
+                            Label("", systemImage: "location.circle")
+                            .font(.system(size: 30.0))
+                        }
+                    .offset(x: 140)
+                    .padding(.bottom, 20)
+                    
                 }.background(isEditing ? Color(.systemGray6) : nil)
             }
         }
