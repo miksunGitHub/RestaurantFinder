@@ -55,10 +55,10 @@ struct HomeView: View {
     var body: some View {
         VStack {
             ZStack {
+                // initiate the map view
                 Map(coordinateRegion: $region,
                     interactionModes: .all,
                     showsUserLocation: true,
-                    //                userTrackingMode: .constant(.follow),
                     userTrackingMode: $tracking,
                     annotationItems: fetchedRestaurants)
                 { restaurant in
@@ -174,14 +174,17 @@ struct HomeView: View {
         }
         .navigationBarHidden(true)
         .onAppear(){
+            // mute the map to make tha annotations on the map more conspicuous
             MKMapView.appearance().mapType = .mutedStandard
+            // filter out other default point of interests on the map
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
             self.isNavigationBarHidden = true
+            //convert the user's coordination to city name and make api call
             convertLatLongToAddress(
                 latitude: LocationHelper.currentLocation.latitude,
                 longitude: LocationHelper.currentLocation.longitude)
         }
-        // Directions to selected destination (restaurant)
+        // if showDirections is true show Directions to selected destination (restaurant) by sheet
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
                 Text(
@@ -214,7 +217,7 @@ struct HomeView: View {
         placeMark = placemarks?[0]
         
         if let city = placeMark.locality {
-            print(city)
+            // make the api call in the first time opening the app and when user's located city has changed
             if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
                 return
             } else {

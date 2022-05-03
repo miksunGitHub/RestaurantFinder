@@ -11,6 +11,7 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
+// set restaurant annotation, pop-up window, and direction calculation
 struct RestaurantAnnotation: View {
     @State private var showTitle = true
     @State private var defaultColor = true
@@ -29,6 +30,7 @@ struct RestaurantAnnotation: View {
                         .font(.headline)
                     Spacer()
                     Button(action: {
+                        //let user select transportation method
                         self.walking.toggle()
                     }, label: {
                         Text(walking ? NSLocalizedString("walk", comment: "") : NSLocalizedString("car", comment: ""))
@@ -39,7 +41,9 @@ struct RestaurantAnnotation: View {
                         .frame(width: 15, height: 15)
                         .onTapGesture {
                             print("Directions to \(String(describing: restaurant.name))")
+                            // call call function to calculate direcation
                             findDirections()
+                            //set showDirections to true and display the turn by turn route by sheet on the HomeView
                             self.showDirections.toggle()
                             
                         }
@@ -81,12 +85,15 @@ struct RestaurantAnnotation: View {
             Text(restaurant.name)
         }
     }
+    // function for computing direction between source and destination with MKDirections utility object
     func findDirections(){
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: LocationHelper.currentLocation, addressDictionary: nil)))
         request.destination = MKMapItem(placemark: MKPlacemark(placemark: MKPlacemark(coordinate: restaurant.coordinate, addressDictionary: nil)))
         request.requestsAlternateRoutes = false
+        // get distance info and add to directions
         let distance = LocationHelper.currentLocation.distance(from: restaurant.coordinate)
+        // let user to choose transportation method
         request.transportType = walking ? .walking : .automobile
         let directions = MKDirections(request: request)
         directions.calculate(completionHandler: {response, error in
