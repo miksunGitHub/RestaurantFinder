@@ -4,7 +4,7 @@
 //  - INSERT CLASS COMMENT -
 //
 //  Created by Alex on 11.4.2022.
-//
+// For display navigation bar and map view
 
 import SwiftUI
 import MapKit

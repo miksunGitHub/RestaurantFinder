@@ -5,7 +5,7 @@
 //  Map annotation for restaurant locations
 //
 //  Created by iosdev on 27.4.2022.
-//
+// for seting restaurant annotation, pop-up window, and direction calculation
 
 import SwiftUI
 import MapKit
