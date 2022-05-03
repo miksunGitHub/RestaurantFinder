@@ -16,6 +16,7 @@ struct ListElementView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    //fetch elements from Favourite entity
     @FetchRequest(
         entity: Favourite.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Favourite.rating, ascending: true)])
     var favourites: FetchedResults<Favourite>
@@ -40,7 +41,7 @@ struct ListElementView: View {
                             .gesture(
                                 TapGesture().onEnded{
                                     var notInFavourite = true
-                                    
+                                    // compare the name of this restaurant with the element in Favourite entity, if there is match set notInFavourite to false
                                     favourites.forEach{
                                         favourite in
                                         if favourite.name == restaurant.name {
@@ -48,6 +49,7 @@ struct ListElementView: View {
                                             showingAlert = true
                                         }
                                     }
+                                    // add the restanrant to Favourite list when notInFavourite is true
                                     if notInFavourite {
                                         addItem()
                                     }
@@ -58,7 +60,9 @@ struct ListElementView: View {
                             .padding(.top, 15)
                             .padding(.trailing, 20)
                             .font(Font.system(size: 18, weight: .semibold))
+
                             .alert(NSLocalizedString("favouriteAlert", comment: ""), isPresented: $showingAlert) {
+
                                 Button("OK", role: .cancel) { }
                             }
                         ,

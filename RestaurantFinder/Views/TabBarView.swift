@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+// create a tab bar for the app
 struct TabBarView: View {
     
     init() {
