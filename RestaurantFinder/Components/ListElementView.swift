@@ -58,7 +58,7 @@ struct ListElementView: View {
                             .padding(.top, 15)
                             .padding(.trailing, 20)
                             .font(Font.system(size: 18, weight: .semibold))
-                            .alert("This restaurant is already in your Favourite list!", isPresented: $showingAlert) {
+                            .alert(NSLocalizedString("favouriteAlert", comment: ""), isPresented: $showingAlert) {
                                 Button("OK", role: .cancel) { }
                             }
                         ,
