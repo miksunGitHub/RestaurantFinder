@@ -4,6 +4,7 @@
 //
 //  Created by Alex on 11.4.2022.
 //
+// View to display the favourites saved by the user
 
 import SwiftUI
 import CoreData
@@ -37,7 +38,7 @@ struct FavoritesView: View {
                         ForEach(favourites){ favourite in
                             let latitude = Double(favourite.latitude ?? "60.16364")
                             let longitude = Double(favourite.longitude ?? "24.947996")
-                            let newFavourite = RestaurantHC(
+                            let newFavourite = RestaurantInfo(
                                 name: favourite.name ?? "no name",
                                 imageURL: favourite.imageurl ?? "no",
                                 url: favourite.url ?? "no url",

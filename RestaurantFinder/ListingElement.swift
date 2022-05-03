@@ -4,6 +4,7 @@
 //
 //  Created by Mikko on 28.4.2022.
 //
+// List element used in the restaurans view
 
 import SwiftUI
 import CoreLocation
@@ -27,7 +28,7 @@ struct ListingElement: View {
                 ForEach(restaurants.prefix(listLength)){ restaurant in
                     let latitude = Double(restaurant.latitude ?? "60.16364")
                     let longitude = Double(restaurant.longitude ?? "24.947996")
-                    let newRestaurant = RestaurantHC(
+                    let newRestaurant = RestaurantInfo(
                         name: restaurant.name ?? "no name",
                         imageURL: restaurant.imageurl ?? "no",
                         url: restaurant.url ?? "no url",

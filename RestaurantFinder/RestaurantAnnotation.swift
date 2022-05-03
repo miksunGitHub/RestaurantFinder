@@ -13,7 +13,7 @@ struct RestaurantAnnotation: View {
     @State private var showTitle = true
     @State private var defaultColor = true
     
-    let restaurant: RestaurantHC
+    let restaurant: RestaurantInfo
     @Binding var routeSteps : [RouteSteps]
     @Binding var showDirections : Bool
     @Binding var walking: Bool

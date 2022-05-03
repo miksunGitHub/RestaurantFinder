@@ -75,7 +75,7 @@ struct HomeView: View {
                         
                         let latitude = Double(restaurant.latitude ?? "60.16364")
                         let longitude = Double(restaurant.longitude ?? "24.947996")
-                        let newRestaurant = RestaurantHC(
+                        let newRestaurant = RestaurantInfo(
                             name: restaurant.name ?? "no name",
                             imageURL: restaurant.imageurl ?? "no",
                             url: restaurant.url ?? "no url",
