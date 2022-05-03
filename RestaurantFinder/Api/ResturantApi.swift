@@ -9,7 +9,13 @@ import Foundation
 import SwiftUI
 import CoreData
 
-// Fetching resurant data from  Api
+/**
+ *  Fetching resurant data from  Api
+ *  Location id and context as parameter
+ *  Fetches resturants data through location id
+ *  Decodes Api response using json decoder
+ *  Finally stores decoded data in core-data
+ */
 func fetchData (_ location_id: String, context: NSManagedObjectContext){
     let moc = context
     @FetchRequest(
@@ -22,7 +28,6 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
     ]
     let postData = NSMutableData(data: "language=en_US".data(using: String.Encoding.utf8)!)
     postData.append("&limit=100".data(using: String.Encoding.utf8)!)
-    // hard coded location id(needs to be taken from fetchlocation function)
     postData.append("&location_id=\(location_id)".data(using: String.Encoding.utf8)!)
     postData.append("&currency=USD".data(using: String.Encoding.utf8)!)
     
@@ -41,19 +46,10 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
         }
         
         do{
-            
+            // Decoding api data
             let jsonObject = try JSONDecoder().decode(ApiData.self, from: data!)
             
-            jsonObject.results.data.forEach{restaurant in
-                //print(String(resturant.photo?.images?.medium?.url ?? "none") )
-                
-                //print(restaurant.latitude ?? "60.163624")
-                //print(restaurant.longitude ?? "24.947996")
-                //print(restaurant)
-                
-            }
-            
-            // Fucntion call for deleting Core-Data data
+            // Deleting Core-Data data
             let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
             do {
                 let data = try context.fetch(fetchRequest)
@@ -64,13 +60,13 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 print("Error deleting core-data")
             }
             
+            // Storing data in core-data for json array
             jsonObject.results.data.forEach{ item in
                 
                 let newRestaurant = Restaurant(context: moc)
                 newRestaurant.name = String(item.name ?? "no name")
                 newRestaurant.imageurl = String(item.photo?.images?.medium?.url ?? "https://via.placeholder.com/150/208aa3/208aa3?Text=RestaurantFinder")
                 newRestaurant.url = item.website
-                
                 newRestaurant.address = String(item.address_obj?.street1 ?? "no address")
                 newRestaurant.desc = String(item.description ?? "no description")
                 newRestaurant.rating = Double(item.rating ?? "1.0") ?? 1.0
@@ -83,7 +79,7 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
                 newRestaurant.phone = item.phone
                 newRestaurant.ranking = item.ranking
                 
-                
+                // Saves data
                 do {
                     try moc.save()
                 } catch {
@@ -93,13 +89,9 @@ func fetchData (_ location_id: String, context: NSManagedObjectContext){
             }
             
         }
-        
-        //try? moc.save()
-        
         catch{
             print("Error printing \(error)")
         }
-        
     })
     
     dataTask.resume()

@@ -9,7 +9,10 @@ import Foundation
 import SwiftUI
 import CoreData
 
-// Fetching location id from location name
+/**
+ *   Fetching location id through location name
+ *   Takes location and context as paramet
+ */
 func fetchLocationId(_ location: String, context: NSManagedObjectContext){
     let headers = [
         "content-type": "application/x-www-form-urlencoded",
@@ -36,17 +39,16 @@ func fetchLocationId(_ location: String, context: NSManagedObjectContext){
         }
         
         do{
+            // Decoding Api data
             let jsonObject = try JSONDecoder().decode(LocationData.self, from: data!)
-            //                    print("Data \(jsonObject.results.data.count)")
-//            print("Data \(jsonObject.results.data[0].result_object.location_id)")
+            // Stores the value of location id
             let location_id = jsonObject.results.data[0].result_object.location_id
+            // Passing location id as parameter to fetch resturant data of that specific location
             fetchData(location_id, context: context)
-            
         }
         catch{
             print("Error printing \(type(of: location))")
         }
-        
     })
     dataTask.resume()
 }

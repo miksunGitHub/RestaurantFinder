@@ -121,6 +121,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A679AE92820846400BA0C8F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6A7B3D4327FEEBFA0066BE83 /* TabBarView.swift */,
+				C600B6912803852B00CED028 /* HomeView.swift */,
+				C600B693280385F100CED028 /* RestaurantsView.swift */,
+				C600B6952803863000CED028 /* FavoritesView.swift */,
+				6A7B3DC328070FB60066BE83 /* DetailsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6A679AEA282084C200BA0C8F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				6A1ED72E281969CC002D06CF /* RestaurantAnnotation.swift */,
+				6AA941F6281B1C520018C207 /* ListingElement.swift */,
+				6AA941F4281B0E630018C207 /* FavouriteListElementView.swift */,
+				6A7B3DBE28048BE90066BE83 /* ListElementView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		6A7B3D3527FEEBFA0066BE83 = {
 			isa = PBXGroup;
 			children = (
@@ -146,23 +169,16 @@
 		6A7B3D4027FEEBFA0066BE83 /* RestaurantFinder */ = {
 			isa = PBXGroup;
 			children = (
+				6A6C8BC8280F089000DB81CF /* RestaurantFinder.xcdatamodeld */,
+				A7815D25280AB97F0096B664 /* Info.plist */,
 				A71299392815AEF200582C24 /* Api */,
 				A7397AAD28144A8200CA3670 /* Controller */,
-				6A6C8BC8280F089000DB81CF /* RestaurantFinder.xcdatamodeld */,
 				A7815D4E280ACBF40096B664 /* Color */,
-				A7815D25280AB97F0096B664 /* Info.plist */,
 				A7815D22280AB5C50096B664 /* Fonts */,
 				6A7B3DBD280489050066BE83 /* Models */,
+				6A679AE92820846400BA0C8F /* Views */,
+				6A679AEA282084C200BA0C8F /* Components */,
 				6A7B3D4127FEEBFA0066BE83 /* RestaurantFinderApp.swift */,
-				6A7B3D4327FEEBFA0066BE83 /* TabBarView.swift */,
-				C600B6912803852B00CED028 /* HomeView.swift */,
-				C600B693280385F100CED028 /* RestaurantsView.swift */,
-				C600B6952803863000CED028 /* FavoritesView.swift */,
-				6A7B3DBE28048BE90066BE83 /* ListElementView.swift */,
-				6AA941F4281B0E630018C207 /* FavouriteListElementView.swift */,
-				6AA941F6281B1C520018C207 /* ListingElement.swift */,
-				6A1ED72E281969CC002D06CF /* RestaurantAnnotation.swift */,
-				6A7B3DC328070FB60066BE83 /* DetailsView.swift */,
 				6A7B3D4527FEEBFE0066BE83 /* Assets.xcassets */,
 				6A7B3D4727FEEBFE0066BE83 /* Preview Content */,
 			);

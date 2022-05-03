@@ -1,17 +1,16 @@
-//
+
 //  HomeView.swift
 //  RestaurantFinder
+//  - INSERT CLASS COMMENT -
 //
 //  Created by Alex on 11.4.2022.
 //
-
-//60,159803 24,934328
 
 import SwiftUI
 import MapKit
 import CoreLocation
 
-// for create a route steps for a direction
+// For creating steps of a route to a destination
 struct RouteSteps: Identifiable {
     let id = UUID()
     let step : String
@@ -20,13 +19,12 @@ struct RouteSteps: Identifiable {
 struct HomeView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    
-    // Search
-    @State private var searchText = ""
-    @State private var isEditing = false
-    @FetchRequest(
-        entity: Restaurant.entity(), sortDescriptors: [])
+    @FetchRequest(entity: Restaurant.entity(), sortDescriptors: [])
     var fetchedRestaurants: FetchedResults<Restaurant>
+    
+    // Search Query using Predicates
+    @State private var isEditing = false // if searchbar is being edited
+    @State private var searchText = ""
     var searchQuery: Binding<String> {
         Binding {
             searchText
@@ -41,27 +39,20 @@ struct HomeView: View {
         }
     }
     
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328), span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
-    
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328),
+        span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
     @State var routeSteps : [RouteSteps] = []
-    
     private let manage = CLLocationManager()
-    
     @State var isNavigationBarHidden: Bool = true
     @State var mapFilters: MKPointOfInterestFilter = MKPointOfInterestFilter(including: [])
     @State private var showDirections = false
-    
     @State var tracking : MapUserTrackingMode = .follow
-    
     @State private var startPoint = LocationHelper.currentLocation
-    
     @State private var city = "no city"
-    
     @State var walking: Bool = true
     
-    
     var body: some View {
-        
         VStack {
             ZStack {
                 Map(coordinateRegion: $region,
@@ -92,12 +83,13 @@ struct HomeView: View {
                             ranking: restaurant.ranking ?? "no ranking"
                         )
                         
+                        // Creating map annotations from restaurant entities
                         RestaurantAnnotation(restaurant: newRestaurant, routeSteps: $routeSteps, showDirections: $showDirections, walking: $walking)
-                        
                     }
                 }
+                
                 VStack {
-                    HStack {
+                    HStack { // Searchbar
                         TextField(NSLocalizedString("search", comment: ""), text: searchQuery)
                             .padding(7)
                             .padding(.horizontal, 25)
@@ -126,7 +118,6 @@ struct HomeView: View {
                             .onTapGesture {
                                 isEditing = true
                             }
-                        
                         if isEditing {
                             Button(action: {
                                 isEditing = false
@@ -142,7 +133,7 @@ struct HomeView: View {
                         }
                     }.padding(.top, 10)
                     
-                    if(isEditing) {
+                    if(isEditing) { // Search results
                         List {
                             ForEach(fetchedRestaurants) { place in
                                 VStack {
@@ -161,14 +152,13 @@ struct HomeView: View {
                                                 region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(place.latitude!)!, longitude: Double(place.longitude!)!), span: MKCoordinateSpan(latitudeDelta: 0.002,longitudeDelta: 0.002))
                                                 isEditing = false
                                             }
-                                        
                                     }
                                 }
                             }
                         }
                     }
                     Spacer()
-                    if(!isEditing) {
+                    if(!isEditing) { // Button to locate user
                         Button(action:{
                             region = MKCoordinateRegion(center: LocationHelper.currentLocation, span: MKCoordinateSpan(latitudeDelta: 0.01,longitudeDelta: 0.01))
                             convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
@@ -179,8 +169,6 @@ struct HomeView: View {
                         .offset(x: 140)
                         .padding(.bottom, 20)
                     }
-                    
-                    
                 }.background(isEditing ? Color(.systemGray6) : nil)
             }
         }
@@ -189,32 +177,34 @@ struct HomeView: View {
             MKMapView.appearance().mapType = .mutedStandard
             MKMapView.appearance().pointOfInterestFilter = .some(mapFilters)
             self.isNavigationBarHidden = true
-            convertLatLongToAddress(latitude: LocationHelper.currentLocation.latitude, longitude: LocationHelper.currentLocation.longitude)
+            convertLatLongToAddress(
+                latitude: LocationHelper.currentLocation.latitude,
+                longitude: LocationHelper.currentLocation.longitude)
         }
+        // Directions to selected destination (restaurant)
         .sheet(isPresented: $showDirections, content: {
             VStack(spacing: 0) {
-                Text(NSLocalizedString("directions", comment: "") + (walking ? NSLocalizedString("walking", comment: "") : NSLocalizedString("byCar", comment: "")))
+                Text(
+                    NSLocalizedString("directions", comment: "")
+                    + (walking ? NSLocalizedString("walking", comment: "") : NSLocalizedString("byCar", comment: ""))
+                )
                     .font(.largeTitle)
                     .bold()
                     .padding()
-                
                 Divider().background(Color(UIColor.systemBlue))
-                
                 List(routeSteps) { r in
                     Text(r.step)
                 }
-                
             }
         })
-        
     }
-    //translate the latitude and longitude to CLLocationCoordinate2D data type
+    // Translate the latitude and longitude to CLLocationCoordinate2D data type
     func CLLocationCoordinate2DMaker(latitude: Double, longitude: Double) -> CLLocationCoordinate2D{
         let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         return location
     }
     
-    //convert coordinator to a real address
+    // Convert coordinator to a real address
     func convertLatLongToAddress(latitude:Double,longitude:Double){
     let geoCoder = CLGeocoder()
     let location = CLLocation(latitude: latitude, longitude: longitude)
@@ -225,7 +215,6 @@ struct HomeView: View {
         
         if let city = placeMark.locality {
             print(city)
-            
             if self.city == city || UserDefaults.standard.string(forKey: "city") == city {
                 return
             } else {
@@ -239,7 +228,7 @@ struct HomeView: View {
 }
 }
 
-// add distance calculation function to CLLocationCoordinate2D protoco
+// Add distance calculation function to CLLocationCoordinate2D protocol
 extension CLLocationCoordinate2D {
     func distance(from: CLLocationCoordinate2D) -> CLLocationDistance {
         let from = CLLocation(latitude: from.latitude, longitude: from.longitude)
@@ -248,7 +237,7 @@ extension CLLocationCoordinate2D {
     }
 }
 
-// for get user's coordinator of user's current location
+// For getting the coordinates of user's current location
 class LocationHelper: NSObject, ObservableObject {
     static let shared = LocationHelper()
     static let DefaultLocation = CLLocationCoordinate2D(latitude: 60.164803, longitude: 24.950328)
