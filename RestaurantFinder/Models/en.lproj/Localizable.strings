@@ -1,0 +1,30 @@
+/* 
+  Lozalizable.strings
+  RestaurantFinder
+
+  Created by Mikko on 17.4.2022.
+  
+*/
+"nearYou" = "NEAR YOU";
+"topRated" = "TOP RATED";
+"byPrice" = "BY PRICE";
+"favorites" = "FAVOURITES";
+"rating" = "Rating:";
+"restaurants" = "Restaurants";
+"favourites" = "Favorites";
+"home" = "Home";
+"cancel" = "Cancel";
+"search" = "Search ...";
+"details" = "Details";
+"about" = "About ";
+"walking" = " by walking";
+"byCar"= " by automobile";
+"directions" = "Directions";
+"walk" = "Walking";
+"car" = " Automobile";
+"cityName" = "City name";
+"tracking" = "tracking";
+"city" = "City";
+"website" = "Website";
+"distance" = "Distance: ";
+"favouriteAlert" = "This restaurant is already in your Favourite list!";

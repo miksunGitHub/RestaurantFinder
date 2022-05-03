@@ -7,47 +7,41 @@
 
 import SwiftUI
 
+// create a tab bar for the app
 struct TabBarView: View {
     
-//    init() {
-//    UITabBar.appearance().backgroundColor = UIColor.blue
-//
-//    }
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor.white
+
+    }
     
     var body: some View {
         TabView {
             HomeView()
                 .tabItem {
                     Image(systemName: "house")
-                    Text("Home")
+                    Text(NSLocalizedString("home", comment: ""))
                 }
             
             RestaurantsView()
                 .tabItem {
                     Image(systemName: "list.dash")
-                    Text("Restaurants")
+                    Text(NSLocalizedString("restaurants", comment: ""))
                 }
             
             FavoritesView()
                 .tabItem {
                     Image(systemName: "bookmark.fill")
-                    Text("Favorites")
+                    Text(NSLocalizedString("favourites", comment: ""))
                 }
-            
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.circle.fill")
-                    Text("Profile")
-                }
-            
-
-        }
-
+        }.accentColor(.customBlue)
             }
+        
+    
 }
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView()
+        TabBarView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

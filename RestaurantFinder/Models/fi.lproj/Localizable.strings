@@ -1,0 +1,30 @@
+/* 
+  Lozalizable.strings
+  RestaurantFinder
+
+  Created by Mikko on 17.4.2022.
+  
+*/
+"nearYou" = "LÄHELLÄSI";
+"topRated" = "PARHAAT ARVIOT";
+"byPrice" = "EDULLISIMMAT";
+"favorites" = "SUOSIKIT";
+"rating" = "Arviot:";
+"restaurants" = "Ravintolat";
+"favourites" = "Suosikit";
+"home" = "Koti";
+"cancel" = "Peru";
+"search" = "Hae ...";
+"details" = "Lisätietoja";
+"about" = "Kuvaus ";
+"walking" = "kävellen";
+"byCar" = "autolla";
+"directions" = "Reitti";
+"walk" = "Kävellen";
+"car" = " Autolla";
+"cityName" = "Kaupunki";
+"tracking" = "Sijainti";
+"city" = "Kaupunki";
+"website" = "Kotisivu";
+"distance" = "Välimatka: ";
+"favouriteAlert" = "Ravintola on jo lisätty suosikkeihin!";
