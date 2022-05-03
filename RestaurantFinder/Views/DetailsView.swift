@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 struct DetailsView: View {
-    let restaurant: RestaurantHC
+    let restaurant: RestaurantInfo
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 34.011_286, longitude: -116.166_868),
         span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
@@ -107,7 +107,7 @@ struct DetailsView: View {
 }
 
 struct DetailsView_Previews: PreviewProvider {
-    static var restaurant = RestaurantHC.sampleData[0]
+    static var restaurant = RestaurantInfo.sampleData[0]
     
     static var previews: some View {
         DetailsView(restaurant: restaurant)

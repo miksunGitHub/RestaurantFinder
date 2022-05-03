@@ -2,7 +2,7 @@
   Lozalizable.strings
   RestaurantFinder
 
-  Created by iosdev on 17.4.2022.
+  Created by Mikko on 17.4.2022.
   
 */
 "nearYou" = "NEAR YOU";
@@ -27,3 +27,4 @@
 "city" = "City";
 "website" = "Website";
 "distance" = "Distance: ";
+"favouriteAlert" = "This restaurant is already in your Favourite list!";

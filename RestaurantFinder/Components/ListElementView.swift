@@ -2,8 +2,10 @@
 //  ListElementView.swift
 //  RestaurantFinder
 //
-//  Created by Mikko Suhonen on 11.4.2022.
+//  Created by Mikko on 11.4.2022.
 //
+//List element (card) used in the restaurants view
+
 
 import SwiftUI
 import CoreData
@@ -58,8 +60,9 @@ struct ListElementView: View {
                             .padding(.top, 15)
                             .padding(.trailing, 20)
                             .font(Font.system(size: 18, weight: .semibold))
-                        // show alert message when showingAlert is true
-                            .alert("This restaurant is already in your Favourite list!", isPresented: $showingAlert) {
+
+                            .alert(NSLocalizedString("favouriteAlert", comment: ""), isPresented: $showingAlert) {
+
                                 Button("OK", role: .cancel) { }
                             }
                         ,
@@ -77,7 +80,7 @@ struct ListElementView: View {
             Spacer()
             HStack{
                 ForEach(0..<Int(round(restaurant.rating))){ i in
-                    Image(systemName: "star")
+                    Image(systemName: "star.fill")
                         .resizable().frame(width: 14, height: 14)
                         .foregroundColor(Color.white)
                 }

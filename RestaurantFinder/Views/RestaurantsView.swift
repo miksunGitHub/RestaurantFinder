@@ -5,6 +5,8 @@
 //  Created by Alex on 11.4.2022.
 //
 
+// View for the restaurant listings
+
 import SwiftUI
 import CoreLocation
 import CoreData

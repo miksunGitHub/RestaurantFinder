@@ -4,6 +4,7 @@
 //
 //  Created by Mikko on 28.4.2022.
 //
+//List element (card) used in the favorites view
 
 import SwiftUI
 import CoreData
